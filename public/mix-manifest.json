@@ -1,0 +1,19 @@
+{
+    "/assets/admin/css/styles.css": "/assets/admin/css/styles.css",
+    "/assets/admin/css/styles-vendor.css": "/assets/admin/css/styles-vendor.css",
+    "/assets/admin/js/scripts.js": "/assets/admin/js/scripts.js",
+    "/assets/admin/images/cuba-logo1.png": "/assets/admin/images/cuba-logo1.png",
+    "/assets/admin/images/details_open.png": "/assets/admin/images/details_open.png",
+    "/assets/admin/images/favicon.png": "/assets/admin/images/favicon.png",
+    "/assets/admin/images/hour.svg": "/assets/admin/images/hour.svg",
+    "/assets/admin/images/js-grid.png": "/assets/admin/images/js-grid.png",
+    "/assets/admin/images/min.svg": "/assets/admin/images/min.svg",
+    "/assets/admin/images/sec.svg": "/assets/admin/images/sec.svg",
+    "/assets/admin/images/smiley.png": "/assets/admin/images/smiley.png",
+    "/assets/admin/images/sort_asc.png": "/assets/admin/images/sort_asc.png",
+    "/assets/admin/images/sort_asc_disabled.png": "/assets/admin/images/sort_asc_disabled.png",
+    "/assets/admin/images/sort_both.png": "/assets/admin/images/sort_both.png",
+    "/assets/admin/images/sort_desc.png": "/assets/admin/images/sort_desc.png",
+    "/assets/admin/images/sort_desc_disabled.png": "/assets/admin/images/sort_desc_disabled.png",
+    "/assets/admin/images/user.jpg": "/assets/admin/images/user.jpg"
+}
