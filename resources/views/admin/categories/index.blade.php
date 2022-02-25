@@ -44,7 +44,7 @@
                                         <td>{{$category->slug}}</td>
                                         <td>
                                             <a class="btn btn-success btn-s" data-original-title="btn btn-danger btn-xs" title="" href="{{route('categories.edit', $category->id)}}" data-bs-original-title=""><i class="fa fa-pencil"></i></a>
-                                            <form action="{{route('categories.destroy', $category->id)}}" method="POST">
+                                            <form action="{{route('categories.destroy', $category->id)}}" class="d-inline-block" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-danger btn-s" type="submit" data-original-title="btn btn-danger btn-xs" title="" data-bs-original-title=""><i class="fa fa-trash-o"></i></button>

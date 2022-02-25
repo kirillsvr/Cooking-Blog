@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 
 class RecipeTagRepository
 {
-    public function getAllTitle(): Collection
+    public function getAllTitle(): array
     {
         return RecipeTags::pluck('title', 'id')->all();
     }

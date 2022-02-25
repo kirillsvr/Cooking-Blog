@@ -68,7 +68,7 @@
                                 </div>
                                 <div class="row g-3 mb-4">
                                     <label class="form-label" for="description">Краткое описание</label>
-                                    <textarea class="form-control @error('description') is-invalid @enderror" name="content" id="description" rows="3"></textarea>
+                                    <textarea class="form-control @error('description') is-invalid @enderror" id="editor1" cols="30" rows="10" name="content"></textarea>
                                 </div>
                                 <div class="mb-5 g-3 row">
                                     <div class="col-md-6">
@@ -202,5 +202,8 @@
 @endsection
 
 @section('dopScripts')
-
+    <script src="{{asset('assets/admin/js/editor/ckeditor/ckeditor.js')}}"></script>
+    <script src="{{asset('assets/admin/js/editor/ckeditor/adapters/jquery.js')}}"></script>
+    <script src="{{asset('assets/admin/js/editor/ckeditor/styles.js')}}"></script>
+    <script src="{{asset('assets/admin/js/editor/ckeditor/ckeditor.custom.js')}}"></script>
 @endsection

@@ -2,7 +2,10 @@
 
 namespace App\Services\RecipeComments;
 
+use App\DTO\RecipeCreateRequestData;
 use App\Models\Recipe;
+use App\Repositories\RecipeIngredientsRepository;
+use App\Repositories\RecipeStepsRepository;
 use App\Services\ImageSaveService;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -10,39 +13,30 @@ use Illuminate\Support\Facades\Storage;
 
 class ChangeRecipeRequestService
 {
-    private $recipe;
     private $imageService;
 
-    public function __construct(Recipe $recipe, ImageSaveService $image)
+    public function __construct(ImageSaveService $image)
     {
-        $this->recipe = $recipe;
         $this->imageService = $image;
     }
 
-    public function change(Request $request, Recipe $recipe = null): array
+    public function change(array $recipe, string|null $oldRecipeImage = null): array
     {
-        $this->request = $request;
-        $this->recipe = $recipe;
+        $recipe['thumbnail'] = $this->imageService->uploadImage($recipe['thumbnail'], $oldRecipeImage ?? null);
 
-        if ($this->recipe){
-            $recipe->recipeIngredients()->delete();
-            $recipe->recipeSteps()->delete();
-        }
+        $steps = $this->steps($recipe['steps']);
+        $ingredients = $this->ingredients($recipe['ing']);
+        $tags = $this->tags($recipe['tags']);
 
-        $data['recipe'] = $this->request->all();
-        $data['recipe']['thumbnail'] = $this->uploadImage($data['recipe']['thumbnail'], $recipe->thumbnail ?? null);
-
-        $data['steps'] = $this->steps($data['recipe']['steps']);
-        $data['ingredients'] = $data['recipe']['ing'];
-        $data['tags'] = $data['recipe']['tags'];
-        unset($data['recipe']['steps']);
-        unset($data['recipe']['ing']);
-        unset($data['recipe']['tags']);
-
-        return $data;
+        return compact(
+            'recipe',
+            'steps',
+            'ingredients',
+            'tags'
+        );
     }
 
-    private function steps(array $steps): array
+    private function steps(array &$steps): array
     {
         $newArray = [];
         $i = 0;
@@ -50,18 +44,26 @@ class ChangeRecipeRequestService
             $newArray[$i]['step'] = $step['step'];
             $newArray[$i]['info'] = $step['description'];
             if (!is_null($step['image'])){
-                $newArray[$i]['image'] = $this->uploadImage($step['image']);
+                $newArray[$i]['image'] = $this->imageService->uploadImage($step['image']);
             }
             $i++;
         }
 
+        unset($steps);
         return $newArray;
     }
 
-    private function uploadImage(UploadedFile $file, string $image = null): string
+    private function ingredients(array &$ingredients): array
     {
-        if ($image) Storage::delete($image);
-        $folder = date('Y-m-d');
-        return $file->store("images/{$folder}");
+        $ingsArr = $ingredients;
+        unset($ingredients);
+        return $ingsArr;
+    }
+
+    private function tags(array &$tags): array
+    {
+        $tagsArr = $tags;
+        unset($tags);
+        return $tagsArr;
     }
 }

@@ -3,19 +3,15 @@
 namespace App\Services;
 
 
-use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 class ImageSaveService
 {
-    public function uploadImage(Request $request, string $imageName, string|null $oldImage = null)
+    public function uploadImage(UploadedFile $data, string|null $oldImage = null)
     {
-        if ($request->hasFile($imageName)){
-            if ($oldImage) Storage::delete($oldImage);
-            $folder = date('Y-m-d');
-            return $request->file($imageName)->store("images/{$folder}");
-        }
-
-        return null;
+        if ($oldImage) Storage::delete($oldImage);
+        $folder = date('Y-m-d');
+        return $data->store("images/{$folder}");
     }
 }

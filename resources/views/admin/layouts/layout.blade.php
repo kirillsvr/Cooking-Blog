@@ -398,14 +398,14 @@
                                 </ul>
                             </li>
                             <li class="sidebar-list">
-                                <label class="badge badge-success">2</label><a class="sidebar-link sidebar-title" href="#"><i data-feather="list"></i><span>Тэги              </span></a>
+                                <label class="badge badge-success">2</label><a class="sidebar-link sidebar-title" href="#"><i data-feather="tag"></i><span>Тэги              </span></a>
                                 <ul class="sidebar-submenu">
                                     <li><a href="{{route('tags.index')}}">Все тэги</a></li>
                                     <li><a href="{{route('tags.create')}}">Добавить тэг</a></li>
                                 </ul>
                             </li>
                             <li class="sidebar-list">
-                                <label class="badge badge-success">2</label><a class="sidebar-link sidebar-title" href="#"><i data-feather="list"></i><span>Статьи              </span></a>
+                                <label class="badge badge-success">2</label><a class="sidebar-link sidebar-title" href="#"><i data-feather="file-text"></i><span>Статьи              </span></a>
                                 <ul class="sidebar-submenu">
                                     <li><a href="{{route('posts.index')}}">Все статьи</a></li>
                                     <li><a href="{{route('posts.create')}}">Добавить статью</a></li>
@@ -425,14 +425,14 @@
                                 </ul>
                             </li>
                             <li class="sidebar-list">
-                                <label class="badge badge-success">2</label><a class="sidebar-link sidebar-title" href="#"><i data-feather="list"></i><span>Рецепты              </span></a>
+                                <label class="badge badge-success">2</label><a class="sidebar-link sidebar-title" href="#"><i data-feather="book"></i><span>Рецепты              </span></a>
                                 <ul class="sidebar-submenu">
                                     <li><a href="{{route('recipe.index')}}">Все рецепты</a></li>
                                     <li><a href="{{route('recipe.create')}}">Добавить рецепт</a></li>
                                 </ul>
                             </li>
                             <li class="sidebar-list">
-                                <label class="badge badge-success">2</label><a class="sidebar-link sidebar-title" href="#"><i data-feather="list"></i><span>Тэги рецептов              </span></a>
+                                <label class="badge badge-success">2</label><a class="sidebar-link sidebar-title" href="#"><i data-feather="tag"></i><span>Тэги рецептов              </span></a>
                                 <ul class="sidebar-submenu">
                                     <li><a href="{{route('recipe_tags.index')}}">Все тэги</a></li>
                                     <li><a href="{{route('recipe_tags.create')}}">Добавить тэг</a></li>
@@ -441,13 +441,23 @@
                             @can('view', auth()->user())
                             <li class="sidebar-main-title">
                                 <div>
+                                    <h6>Страницы сайта</h6>
+                                    <p>Раздел пользователей</p>
+                                </div>
+                            </li>
+                            <li class="sidebar-list">
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{route('about.edit')}}"><i data-feather="briefcase"> </i><span>О нас</span></a></li>
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{route('contact.edit')}}"><i data-feather="phone"> </i><span>Контакты</span></a></li>
+                            </li>
+
+                            <li class="sidebar-main-title">
+                                <div>
                                     <h6>Пользователи</h6>
                                     <p>Раздел пользователей</p>
                                 </div>
                             </li>
-
                             <li class="sidebar-list">
-                                <label class="badge badge-success">2</label><a class="sidebar-link sidebar-title" href="#"><i data-feather="list"></i><span>Пользователи              </span></a>
+                                <label class="badge badge-success">2</label><a class="sidebar-link sidebar-title" href="#"><i data-feather="users"></i><span>Пользователи              </span></a>
                                 <ul class="sidebar-submenu">
                                     <li><a href="{{route('users.index')}}">Все пользователи</a></li>
                                     <li><a href="{{route('users.create')}}">Добавить пользователя</a></li>

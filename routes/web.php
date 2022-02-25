@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\AboutPageController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ContactPageController;
 use App\Http\Controllers\Admin\MainController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\RecipeCategoryController;
@@ -44,6 +46,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function (){
    Route::resource('/recipe_category', RecipeCategoryController::class);
    Route::get('/recipe_comments/{id}', [RecipeCommentsController::class, 'index'])->name('recipe_comments.show');
    Route::resource('/users', \App\Http\Controllers\Admin\UserController::class);
+   Route::get('/about', [AboutPageController::class, 'edit'])->name('about.edit');
+   Route::post('/about', [AboutPageController::class, 'update'])->name('about.update');
+   Route::get('/contact', [ContactPageController::class, 'edit'])->name('contact.edit');
+   Route::post('/contact', [ContactPageController::class, 'update'])->name('contact.update');
 });
 
 Route::group(['middleware' => 'guest'], function (){

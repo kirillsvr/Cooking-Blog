@@ -93,9 +93,14 @@
                                 </div>
                             </div>
                             <div class="mb-5 row">
-                                <label class="col-sm-3 col-form-label">Upload File</label>
-                                <div class="col-sm-9">
-                                    <input class="form-control" type="file" name="thumbnail">
+                                <div class="col-md-4">
+                                    <img src="/uploads/{{$recipe->thumbnail}}" width="300" alt="">
+                                </div>
+                                <div class="col-md-8">
+                                    <label class="col-sm-3 col-form-label">Upload File</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="file" name="thumbnail">
+                                    </div>
                                 </div>
                             </div>
                             <div class="row g-3 mb-5">
@@ -136,11 +141,23 @@
                                         <input class="form-control" id="prep_time" name="ing[{{$loop->index}}][title]" type="text" placeholder="City" value="{{$ingredient['title']}}" required="">
                                         <div class="invalid-feedback">Please provide a valid city.</div>
                                     </div>
+                                    @if($loop->first)
                                     <div class="col-md-6">
                                         <label class="form-label" for="cook_time">Количество</label>
                                         <input class="form-control" id="cook_time" name="ing[{{$loop->index}}][quantity]" type="text" placeholder="Zip" value="{{$ingredient['quantity']}}" required="">
                                         <div class="invalid-feedback">Please select a valid state.</div>
                                     </div>
+                                    @endif
+                                    @if(!$loop->first)
+                                        <div class="col-md-5">
+                                            <label class="form-label" for="cook_time">Количество</label>
+                                            <input class="form-control" id="cook_time" name="ing[{{$loop->index}}][quantity]" type="text" placeholder="Zip" value="{{$ingredient['quantity']}}" required="">
+                                            <div class="invalid-feedback">Please select a valid state.</div>
+                                        </div>
+                                        <div class="col-md-1 d-flex align-items-center">
+                                            <a href="javascript:void(0)" class="mt-3 ml-2 mx-auto delete-inputs text-decoration-none text-reset"><i class="fa fa-times"></i></a>
+                                        </div>
+                                    @endif
                                 </div>
                                 @endforeach
                             </div>
@@ -161,10 +178,22 @@
                                         <input class="form-control" id="step" name="steps[{{$loop->index}}][step]" type="text" placeholder="Zip" value="{{$step['step']}}" required="">
                                         <div class="invalid-feedback">Please select a valid state.</div>
                                     </div>
+                                    @if($loop->first)
                                     <div class="col-md-6">
                                         <label class="col-sm-3 col-form-label">Upload File</label>
                                         <input class="form-control" type="file" name="steps[{{$loop->index}}][image]" value="http://site.lara/assets/front/{{$step['image']}}">
                                     </div>
+                                    @endif
+
+                                    @if(!$loop->first)
+                                        <div class="col-md-5">
+                                            <label class="col-sm-3 col-form-label">Upload File</label>
+                                            <input class="form-control" type="file" name="steps[{{$loop->index}}][image]" value="http://site.lara/assets/front/{{$step['image']}}">
+                                        </div>
+                                        <div class="col-md-1 d-flex align-items-center">
+                                            <a href="javascript:void(0)" class="mt-3 ml-2 mx-auto delete-inputs text-decoration-none text-reset"><i class="fa fa-times"></i></a>
+                                        </div>
+                                    @endif
                                     <div class="col-md-12">
                                         <label class="form-label" for="exampleFormControlTextarea4">Описание шага</label>
                                         <textarea class="form-control @error('description') is-invalid @enderror" name="steps[{{$loop->index}}][description]" id="exampleFormControlTextarea4" rows="3">{{$step['info']}}</textarea>

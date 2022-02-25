@@ -372,3 +372,122 @@ $("#flip-btn").click(function(){
 $("#flip-back").click(function(){
     $(".flip-card-inner").removeClass("flipped")
 })
+
+$(document).ready(function () {
+
+    $('.add-inputs').on('click', function () {
+        var i = $('.more-da').data('int') + 1;
+        $('.more-da').data('int', i);
+        $('.more-da').append('<div class="row g-3 mb-2">\n' +
+            '<div class="col-md-6">\n' +
+            '<label class="form-label" for="prep_time">Ингредиент</label>\n' +
+            '<input class="form-control" id="prep_time" name="ing[' + i + '][title]" type="text" placeholder="City" required="">\n' +
+            '<div class="invalid-feedback">Please provide a valid city.</div>\n' +
+            '</div>\n' +
+            '<div class="col-md-5">\n' +
+            '<label class="form-label" for="cook_time">Количество</label>\n' +
+            '<input class="form-control" id="cook_time" name="ing[' + i + '][quantity]" type="text" placeholder="Zip" required="">\n' +
+            '<div class="invalid-feedback">Please select a valid state.</div>\n' +
+            '</div>\n' +
+            '<div class="col-md-1 d-flex align-items-center">\n' +
+            '<a href="javascript:void(0)" class="mt-3 ml-2 mx-auto delete-inputs text-decoration-none text-reset"><i class="fa fa-times"></i></a>\n' +
+            '</div>\n' +
+            '</div>');
+    });
+
+    $('body').on('click', '.delete-inputs', function () {
+        $(this).parent().parent().remove();
+    });
+
+
+    $('.add-step').on('click', function () {
+        var i = $('.steps').data('int') + 1;
+        $('.steps').data('int', i);
+        $('.steps').append('<div class="row g-3 mb-2">\n' +
+            '<div class="col-md-6">\n' +
+            '<label class="form-label" for="step">Номер шага</label>\n' +
+            '<input class="form-control" id="step" name="steps[' + i + '][step]" type="text" placeholder="Zip" required="">\n' +
+            '<div class="invalid-feedback">Please select a valid state.</div>\n' +
+            '</div>\n' +
+            '<div class="col-md-5">\n' +
+            '<label class="col-sm-3 col-form-label">Upload File</label>\n' +
+            '<input class="form-control" type="file" name="steps[' + i + '][image]">\n' +
+            '</div>\n' +
+            '<div class="col-md-1 d-flex align-items-center">\n' +
+            '<a href="javascript:void(0)" class="mt-3 ml-2 mx-auto delete-inputs text-decoration-none text-reset"><i class="fa fa-times"></i></a>\n' +
+            '</div>\n' +
+            '<div class="col-md-12">\n' +
+            '<label class="form-label" for="exampleFormControlTextarea4">Описание шага</label>\n' +
+            '<textarea class="form-control" name="steps[' + i + '][description]" id="exampleFormControlTextarea4" rows="3"></textarea>\n' +
+            '</div>\n' +
+            '</div>');
+    });
+
+
+    $('.category-filter').on('click', function (e){
+        var data = $(this).data('value');
+        if (data !== undefined){
+            var url = location.search.replace(/category(.+?)(&|$)/g, '');
+            var url = url.replace(/page(.+?)(&|$)/g, '');
+            var urls = location.pathname.replace(/\/[0-9]{1,3}$/g, '');
+            var newURL = urls + url + (location.search ? "&" : "?") + "category=" + data;
+            newURL = newURL.replace('&&', '&');
+            newURL = newURL.replace('?&', '?');
+            history.pushState({}, '', newURL);
+            location.reload();
+        }else {
+            var url = location.search.replace(/size(.+?)(&|$)/g, '');
+            var url = url.replace(/size(.+?)(&|$)/g, '');
+            var urls = location.pathname.replace(/\/[0-9]{1,3}$/g, '');
+            var newURL = urls + url;
+            newURL = newURL.replace('&&', '&');
+            newURL = newURL.replace('?&', '?');
+            newURL = newURL.replace('&?', '?');
+            var slic = newURL.slice(-1);
+            if (slic == '?' || slic == '&'){
+                newURL = newURL.substring (0, newURL.length - 1);
+            }
+            history.pushState({}, '', newURL);
+            location.reload();
+        }
+    })
+
+
+    $('.del-recipe').on('click', function (e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        var token = $('input[name=_token]').val();
+        Swal.fire({
+            title: 'Вы уверены что хотите удалить рецепт?',
+            text: "Вы не сможете отменить это действие!",
+            icon: 'Внимание',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Удалить',
+            cancelButtonText: 'Отмена',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/admin/recipe/' + id,
+                    method: 'POST',
+                    data: {_token: token, _method: 'DELETE'},
+                    success: function(data){
+                        console.log(data);
+                        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+
+                        function func1() {
+                            $(location).attr('href', '/admin/recipe');
+                        }
+
+                        setTimeout(func1, 2000);
+                    },
+                    error: function(jqXHR, exception) {
+                        Swal.fire({ title: "Waring", text: jqXHR['responseText'], icon: "error" });
+                    }
+                })
+            }
+        })
+    });
+
+});
