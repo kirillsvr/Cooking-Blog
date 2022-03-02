@@ -448,41 +448,190 @@ $('.category-filter').on('click', function (e){
 })
 
 
-$('.del-recipe').on('click', function (e) {
-    e.preventDefault();
-    var id = $(this).data('id');
-    var token = $('input[name=_token]').val();
-    Swal.fire({
-        title: 'Вы уверены что хотите удалить рецепт?',
-        text: "Вы не сможете отменить это действие!",
-        icon: 'Внимание',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Удалить',
-        cancelButtonText: 'Отмена',
-    }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-                url: '/admin/recipe/' + id,
-                method: 'POST',
-                data: {_token: token, _method: 'DELETE'},
-                success: function(data){
-                    console.log(data);
-                    Swal.fire("Deleted!", "Your file has been deleted.", "success");
+    $('.del-recipe').on('click', function (e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        var token = $('input[name=_token]').val();
+        Swal.fire({
+            title: 'Вы уверены что хотите удалить рецепт?',
+            text: "Вы не сможете отменить это действие!",
+            icon: 'Внимание',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Удалить',
+            cancelButtonText: 'Отмена',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/admin/recipe/' + id,
+                    method: 'POST',
+                    data: {_token: token, _method: 'DELETE'},
+                    success: function(data){
+                        console.log(data);
+                        Swal.fire("Deleted!", "Your file has been deleted.", "success");
 
-                    function func1() {
-                        $(location).attr('href', '/admin/recipe');
+                        function func1() {
+                            $(location).attr('href', '/admin/recipe');
+                        }
+
+                        setTimeout(func1, 2000);
+                    },
+                    error: function(jqXHR, exception) {
+                        Swal.fire({ title: "Waring", text: jqXHR['responseText'], icon: "error" });
                     }
+                })
+            }
+        })
+    });
 
-                    setTimeout(func1, 2000);
-                },
-                error: function(jqXHR, exception) {
-                    Swal.fire({ title: "Waring", text: jqXHR['responseText'], icon: "error" });
+    $('.delete-img-step').on('click', function (e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        var token = $('input[name=_token]').val();
+        var url = location.href;
+        Swal.fire({
+            title: 'Вы уверены что хотите удалить изображение?',
+            text: "Вы не сможете отменить это действие!",
+            icon: 'Внимание',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Удалить',
+            cancelButtonText: 'Отмена',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/admin/steps/' + id,
+                    method: 'POST',
+                    data: {_token: token, _method: 'DELETE'},
+                    success: function(data){
+                        console.log(data);
+                        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+
+                        function func1() {
+                            $(location).attr('href', url);
+                        }
+
+                        setTimeout(func1, 2000);
+                    },
+                    error: function(jqXHR, exception) {
+                        Swal.fire({ title: "Waring", text: jqXHR['responseText'], icon: "error" });
+                    }
+                })
+            }
+        })
+    });
+
+    $('.delete-comments').on('click', function (e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        var token = $('input[name=_token]').val();
+        var url = location.href;
+        Swal.fire({
+            title: 'Вы уверены что хотите удалить комментарий?',
+            text: "Вы удалите все комментарии, которые являются ответом!",
+            icon: 'Внимание',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Удалить',
+            cancelButtonText: 'Отмена',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: {_token: token, _method: 'DELETE', id: id},
+                    success: function(data){
+                        console.log(data);
+                        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+
+                        function func1() {
+                            $(location).attr('href', url);
+                        }
+
+                        setTimeout(func1, 2000);
+                    },
+                    error: function(jqXHR, exception) {
+                        Swal.fire({ title: "Waring", text: jqXHR['responseText'], icon: "error" });
+                    }
+                })
+            }
+        })
+    });
+
+    $('.switch-comments').change(function (e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        var token = $('input[name=_token]').val();
+        var url = location.href;
+        if($(this).prop('checked')) {
+            Swal.fire({
+                title: 'Вы уверены, что хотите опубликовать комментарий?',
+                text: "Вы опубликуете все комментарии, которые являются ответом!",
+                icon: 'Внимание',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Опубликовать',
+                cancelButtonText: 'Отмена',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: url + '/enable',
+                        method: 'POST',
+                        data: {_token: token, id: id},
+                        success: function(data){
+                            console.log(data);
+                            Swal.fire("Deleted!", "Your file has been deleted.", "success");
+
+                            function func1() {
+                                $(location).attr('href', url);
+                            }
+
+                            setTimeout(func1, 2000);
+                        },
+                        error: function(jqXHR, exception) {
+                            Swal.fire({ title: "Waring", text: jqXHR['responseText'], icon: "error" });
+                        }
+                    })
                 }
             })
         }
-    })
-});
+        else {
+            Swal.fire({
+                title: 'Вы уверены, что хотите убрать комментарий из публикации?',
+                text: "Вы уберете из публикации комментарии, которые являются ответом!",
+                icon: 'Внимание',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Убрать',
+                cancelButtonText: 'Отмена',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: url + '/disable',
+                        method: 'POST',
+                        data: {_token: token, id: id},
+                        success: function(data){
+                            console.log(data);
+                            Swal.fire("Deleted!", "Your file has been deleted.", "success");
+
+                            function func1() {
+                                $(location).attr('href', url);
+                            }
+
+                            setTimeout(func1, 2000);
+                        },
+                        error: function(jqXHR, exception) {
+                            Swal.fire({ title: "Waring", text: jqXHR['responseText'], icon: "error" });
+                        }
+                    })
+                }
+            })
+        }
+    });
 
 });

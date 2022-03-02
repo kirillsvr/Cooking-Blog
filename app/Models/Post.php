@@ -13,7 +13,6 @@ class Post extends Model
 {
     use HasFactory;
     use Sluggable;
-    use Imageable;
 
     protected $fillable = ['title', 'description', 'content', 'category_id', 'thumbnail'];
 

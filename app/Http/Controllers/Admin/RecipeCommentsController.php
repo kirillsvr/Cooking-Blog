@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\RecipeCommentsDeleteAction;
+use App\Actions\RecipeCommentsDisableAction;
 use App\Http\Controllers\Controller;
 use App\Models\Recipe;
 use App\Models\RecipeComments;
@@ -23,5 +25,23 @@ class RecipeCommentsController extends Controller
         $comments = $this->service->show($recipe);
 
         return view('admin.recipe_comments.index', compact('comments'));
+    }
+
+    public function enable(Request $request, $id, RecipeCommentsDisableAction $action)
+    {
+        $action->execute($request->id, $id, 1);
+        return response()->json('OK', 200);
+    }
+
+    public function disable(Request $request, $id, RecipeCommentsDisableAction $action)
+    {
+        $action->execute($request->id, $id, 0);
+        return response()->json('OK', 200);
+    }
+
+    public function destroy(Request $request, $id, RecipeCommentsDeleteAction $action)
+    {
+        $action->execute($request->id, $id);
+        return response()->json('OK', 200);
     }
 }

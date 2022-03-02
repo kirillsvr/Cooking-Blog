@@ -42,7 +42,7 @@ class UserController extends Controller
             'password' => $request->password,
         ])){
             session()->flash('success', 'Авторизация пройдена');
-            if (Auth::user()->is_admin){
+            if (Auth::user()->role == 2 || Auth::user()->role == 3){
                 return redirect()->route('admin.index');
             }
             return redirect()->home();

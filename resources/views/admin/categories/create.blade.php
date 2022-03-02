@@ -28,7 +28,7 @@
                         <div class="card-body">
                             <form class="needs-validation" method="post" action="{{route('categories.store')}}" novalidate="">
                                 @csrf
-                                <div class="row g-3">
+                                <div class="row g-3 mb-4">
                                     <label class="form-label" for="validationCustom01">Название категории</label>
                                     <input class="form-control @error('title') is-invalid @enderror" id="validationCustom01" type="text" name="title" placeholder="Название категории" required="">
                                     <div class="valid-feedback">Looks good!</div>

@@ -83,7 +83,7 @@ class RecipeController extends Controller
      */
     public function update(Request $request, Recipe $recipe, RecipeUpdateAction $action)
     {
-        $action->execute($request->validated(), $recipe);
+        $action->execute($request->all(), $recipe);
         return redirect()->home();
     }
 

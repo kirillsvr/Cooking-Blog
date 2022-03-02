@@ -25,9 +25,9 @@
                         <div class="card-header">
                             <h5>Hoverable rows</h5><span>Use a class <code>table-hover</code> to enable a hover state on table rows within a <code>tbody</code>.</span>
                         </div>
-                        <div class="table-responsive">
+                        <div class="table-responsive card-body">
                             @if(count($tags))
-                            <table class="table table-hover">
+                            <table class="table table-hover mb-4">
                                 <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -56,7 +56,7 @@
                             </table>
                             {{$tags->links()}}
                             @else
-                            <div class="card-body">
+                            <div>
                                 Тэгов пока нет...
                             </div>
                             @endif

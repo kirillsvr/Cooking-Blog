@@ -2,18 +2,12 @@
 
 namespace App\Services\RecipeComments;
 
-use App\DTO\RecipeCreateRequestData;
-use App\Models\Recipe;
-use App\Repositories\RecipeIngredientsRepository;
-use App\Repositories\RecipeStepsRepository;
 use App\Services\ImageSaveService;
-use Illuminate\Http\Request;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 
 class ChangeRecipeRequestService
 {
-    private $imageService;
+    private ImageSaveService $imageService;
+    private array $recipe;
 
     public function __construct(ImageSaveService $image)
     {
@@ -22,11 +16,14 @@ class ChangeRecipeRequestService
 
     public function change(array $recipe, string|null $oldRecipeImage = null): array
     {
-        $recipe['thumbnail'] = $this->imageService->uploadImage($recipe['thumbnail'], $oldRecipeImage ?? null);
+        $this->recipe = $recipe;
 
-        $steps = $this->steps($recipe['steps']);
-        $ingredients = $this->ingredients($recipe['ing']);
-        $tags = $this->tags($recipe['tags']);
+        $this->recipe['thumbnail'] = $this->checkPresenceImage($this->recipe, 'thumbnail');
+
+        $steps = $this->createStepsArray();
+        $tags = $this->createTagsArray();
+        $ingredients = $this->createIngredientsArray();
+        $recipe = $this->recipe;
 
         return compact(
             'recipe',
@@ -36,34 +33,62 @@ class ChangeRecipeRequestService
         );
     }
 
-    private function steps(array &$steps): array
+    private function checkPresenceImage(array &$data, string $nameImage)
     {
+        if (isset($data[$nameImage]) && !is_null($data[$nameImage])){
+            $oldImage = $data['oldImage'] ?? null;
+            unset($data['oldImage']);
+            return $this->imageService->uploadImage($data[$nameImage], $oldImage);
+        }
+
+        if (isset($data['oldImage']) && !is_null($data['oldImage'])){
+            $image = $data['oldImage'];
+            unset($data['oldImage']);
+            return $image;
+        }
+
+        return null;
+    }
+
+    private function createStepsArray(): array|null
+    {
+        if (!isset($this->recipe['steps'])) return null;
+
         $newArray = [];
         $i = 0;
-        foreach ($steps as $step){
+        foreach ($this->recipe['steps'] as $step){
             $newArray[$i]['step'] = $step['step'];
             $newArray[$i]['info'] = $step['description'];
-            if (!is_null($step['image'])){
-                $newArray[$i]['image'] = $this->imageService->uploadImage($step['image']);
-            }
+            $newArray[$i]['image'] = $this->checkPresenceImage($step, 'image');
             $i++;
         }
 
-        unset($steps);
+        unset($this->recipe['steps']);
+
         return $newArray;
     }
 
-    private function ingredients(array &$ingredients): array
+    private function createIngredientsArray(): array|null
     {
-        $ingsArr = $ingredients;
-        unset($ingredients);
-        return $ingsArr;
+        if (isset($this->recipe['ing'])){
+            $ingredients = $this->recipe['ing'];
+            unset($this->recipe['ing']);
+
+            return $ingredients;
+        }
+
+        return null;
     }
 
-    private function tags(array &$tags): array
+    private function createTagsArray(): array|null
     {
-        $tagsArr = $tags;
-        unset($tags);
-        return $tagsArr;
+        if (isset($this->recipe['tags'])){
+            $tags = $this->recipe['tags'];
+            unset($this->recipe['tags']);
+
+            return $tags;
+        }
+
+        return null;
     }
 }

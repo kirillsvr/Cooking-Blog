@@ -1,5 +1,9 @@
 @extends('admin.layouts.layout')
 
+@section('dopStyles')
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/css/vendors/sweetalert2.css')}}">
+@endsection
+
 @section('content')
     <div class="container-fluid">
         <div class="page-title">
@@ -26,6 +30,7 @@
                         <h5>Hoverable rows</h5><span>Use a class <code>table-hover</code> to enable a hover state on table rows within a <code>tbody</code>.</span>
                     </div>
                     <div class="col-md-10 offset-md-1 mt-5 mb-5">
+                        @csrf
                         @if(!empty($comments))
 
                             <?php function renderComments($comments, int $nesting){?>
@@ -33,10 +38,20 @@
                                     <div class="card" style="margin-left: <?=40*$nesting?>px">
                                         <div class="job-search">
                                             <div class="card-body">
-                                                <div class="media">
-                                                    <div class="media-body">
+                                                <div class="media row">
+                                                    <div class="media-body col-md-8">
                                                         <h6 class="f-w-600"><?=$value['name']; echo $nesting?></h6>
                                                         <p> <?=$value['updated_at'];?></p>
+                                                    </div>
+                                                    <div class="row col-md-4">
+                                                        <div class="col-md-6 text-end icon-state">
+                                                            <label class="switch">
+                                                                <input type="checkbox" class="switch-comments" @if($value['is_published']) checked @endif data-id="{{$value['id']}}"><span class="switch-state"></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <a class="btn btn-danger delete-comments" data-id="{{$value['id']}}" href="javascript:void(0)">Удалить</a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <p>
@@ -63,4 +78,8 @@
         </div>
     </div>
     <!-- Container-fluid Ends-->
+@endsection
+
+@section('dopScripts')
+    <script src="{{asset('assets/admin/js/sweet-alert/sweetalert.min.js')}}"></script>
 @endsection

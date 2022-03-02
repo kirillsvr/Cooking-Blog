@@ -5,7 +5,7 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-6">
-                    <h3>Редактирование тэга</h3>
+                    <h3>Новая статья</h3>
                 </div>
                 <div class="col-6">
                     <ol class="breadcrumb">
@@ -23,16 +23,19 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Категория "{{$tag->title}}"</h5><span>Use a class <code>table-hover</code> to enable a hover state on table rows within a <code>tbody</code>.</span>
+                        <h5>Hoverable rows</h5><span>Use a class <code>table-hover</code> to enable a hover state on table rows within a <code>tbody</code>.</span>
                     </div>
                     <div class="card-body">
-                        <form class="needs-validation" method="post" action="{{route('tags.update', $tag->id)}}" novalidate="">
+                        <form class="needs-validation" method="post" action="{{route('about.update')}}" novalidate="">
                             @csrf
-                            @method("PUT")
                             <div class="row g-3 mb-4">
-                                <label class="form-label" for="validationCustom01">Название тэга</label>
-                                <input class="form-control @error('title') is-invalid @enderror" id="validationCustom01" type="text" name="title" value="{{$tag->title}}" required="">
+                                <label class="form-label" for="validationCustom01">Заголовок</label>
+                                <input class="form-control @error('title') is-invalid @enderror" id="validationCustom01" type="text" name="title" placeholder="г. Москва, ул. Мира, 1, оф. 12" value="{{$about->title}}" required="">
                                 <div class="valid-feedback">Looks good!</div>
+                            </div>
+                            <div class="row g-3 mb-4">
+                                <label class="form-label" for="validationCustom02">Текст страницы</label>
+                                <textarea class="@error('content') is-invalid @enderror" name="content" cols="10" rows="2">{{$about->content}}</textarea>
                             </div>
 
                             <button class="btn btn-primary" type="submit">Сохранить</button>
@@ -44,4 +47,8 @@
         </div>
     </div>
     <!-- Container-fluid Ends-->
+@endsection
+
+@section('dopScripts')
+
 @endsection

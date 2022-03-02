@@ -1,5 +1,9 @@
 @extends('admin.layouts.layout')
 
+@section('dopStyles')
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/css/vendors/sweetalert2.css')}}">
+@endsection
+
 @section('content')
     <div class="container-fluid">
         <div class="page-title">
@@ -99,6 +103,7 @@
                                 <div class="col-md-8">
                                     <label class="col-sm-3 col-form-label">Upload File</label>
                                     <div class="col-sm-9">
+                                        <input type="hidden" name="oldImage" value="{{$recipe->thumbnail}}">
                                         <input class="form-control" type="file" name="thumbnail">
                                     </div>
                                 </div>
@@ -180,6 +185,11 @@
                                     </div>
                                     @if($loop->first)
                                     <div class="col-md-6">
+                                        @if(!empty($step['image']))
+                                            <img src="/uploads/{{$step['image']}}" width="200" alt="">
+                                            <a href="javascript:void(0)" class="mt-3 ml-2 mx-auto delete-img-step" data-id="{{$step['id']}}"><i class="fa fa-times"></i></a>
+                                        @endif
+                                        <input type="hidden" name="steps[{{$loop->index}}][oldImage]" value="{{$step['image']}}">
                                         <label class="col-sm-3 col-form-label">Upload File</label>
                                         <input class="form-control" type="file" name="steps[{{$loop->index}}][image]" value="http://site.lara/assets/front/{{$step['image']}}">
                                     </div>
@@ -187,6 +197,11 @@
 
                                     @if(!$loop->first)
                                         <div class="col-md-5">
+                                            @if(!empty($step['image']))
+                                                <img src="/uploads/{{$step['image']}}" width="200" alt="">
+                                                <a href="javascript:void(0)" class="mt-3 ml-2 mx-auto delete-img-step" data-id="{{$step['id']}}"><i class="fa fa-times"></i></a>
+                                            @endif
+                                                <input type="hidden" name="steps[{{$loop->index}}][oldImage]" value="{{$step['image']}}">
                                             <label class="col-sm-3 col-form-label">Upload File</label>
                                             <input class="form-control" type="file" name="steps[{{$loop->index}}][image]" value="http://site.lara/assets/front/{{$step['image']}}">
                                         </div>
@@ -214,5 +229,5 @@
 @endsection
 
 @section('dopScripts')
-
+    <script src="{{asset('assets/admin/js/sweet-alert/sweetalert.min.js')}}"></script>
 @endsection

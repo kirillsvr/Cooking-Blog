@@ -16,6 +16,7 @@ class RecipeEditAction extends AbstractRecipeAction
         $authors = $this->getAuthors();
 
         return compact(
+            'recipe',
             'categories',
             'ingredients',
             'steps',

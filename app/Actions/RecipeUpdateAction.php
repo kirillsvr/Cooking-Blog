@@ -26,12 +26,12 @@ class RecipeUpdateAction
 
     public function execute(array $data, Recipe $recipe): void
     {
-        $this->ingredientsRepository->deleteIngredients($data['id']);
-        $this->stepsRepository->deleteSteps($data['id']);
+        $this->ingredientsRepository->deleteIngredients($recipe->id);
+        $this->stepsRepository->deleteSteps($recipe->id);
 
         $data = $this->service->change($data, $recipe->thumbnail);
         $recipe->update($data['recipe']);
-        $recipe->recipeSteps()->createMany($data['steps']);
-        $recipe->recipeIngredients()->createMany($data['ingredients']);
+        if (!is_null($data['steps'])) $recipe->recipeSteps()->createMany($data['steps']);
+        if (!is_null($data['ingredients'])) $recipe->recipeIngredients()->createMany($data['ingredients']);
     }
 }

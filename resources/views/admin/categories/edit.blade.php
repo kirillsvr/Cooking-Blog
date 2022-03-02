@@ -29,7 +29,7 @@
                         <form class="needs-validation" method="post" action="{{route('categories.update', $category->id)}}" novalidate="">
                             @csrf
                             @method("PUT")
-                            <div class="row g-3">
+                            <div class="row g-3 mb-4">
                                 <label class="form-label" for="validationCustom01">Название категории</label>
                                 <input class="form-control @error('title') is-invalid @enderror" id="validationCustom01" type="text" name="title" value="{{$category->title}}" required="">
                                 <div class="valid-feedback">Looks good!</div>
