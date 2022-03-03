@@ -561,8 +561,9 @@ $('.category-filter').on('click', function (e){
         })
     });
 
-    $('.switch-comments').change(function (e) {
+    $('.switch-comments').click(function (e) {
         e.preventDefault();
+        var th = $(this);
         var id = $(this).data('id');
         var token = $('input[name=_token]').val();
         var url = location.href;
@@ -583,17 +584,10 @@ $('.category-filter').on('click', function (e){
                         method: 'POST',
                         data: {_token: token, id: id},
                         success: function(data){
-                            console.log(data);
-                            Swal.fire("Deleted!", "Your file has been deleted.", "success");
-
-                            function func1() {
-                                $(location).attr('href', url);
-                            }
-
-                            setTimeout(func1, 2000);
+                            th.prop('checked', true);
                         },
                         error: function(jqXHR, exception) {
-                            Swal.fire({ title: "Waring", text: jqXHR['responseText'], icon: "error" });
+                            Swal.fire({ title: "Waring", text: jqXHR.responseJSON.error, icon: "error" });
                         }
                     })
                 }

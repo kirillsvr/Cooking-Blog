@@ -2,25 +2,27 @@
 
 namespace App\Actions;
 
+use App\Exceptions\CheckParentCommentException;
 use App\Models\RecipeComments;
+use App\Services\RecipeComments\CheckDisableParentComments;
 use App\Services\RecipeComments\GetRelatedIdCommentsService;
 use Illuminate\Support\Facades\DB;
 
 class RecipeCommentsDisableAction
 {
-    private GetRelatedIdCommentsService $service;
+    private GetRelatedIdCommentsService $relatedComments;
 
-    public function __construct(GetRelatedIdCommentsService $service)
+    public function __construct(GetRelatedIdCommentsService $relatedComments)
     {
-        $this->service = $service;
+        $this->relatedComments = $relatedComments;
     }
 
-    public function execute($commentId, $recipeId, int $enable)
+    public function execute($commentId, $recipeId)
     {
         $comments = RecipeComments::where('recipe_id', $recipeId)->get()->toArray();
-        $relatedComments = $this->service->generateRelatedIdsArray($commentId, $comments);
+        $relatedComments = $this->relatedComments->generateRelatedIdsArray($commentId, $comments);
         DB::table('recipe_comments')
             ->whereIn('id', $relatedComments)
-            ->update(['is_published' => $enable]);
+            ->update(['is_published' => 0]);
     }
 }
