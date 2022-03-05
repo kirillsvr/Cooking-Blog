@@ -1,29 +1,14 @@
 @extends('admin.layouts.layout')
 
 @section('content')
-        <div class="container-fluid">
-            <div class="page-title">
-                <div class="row">
-                    <div class="col-6">
-                        <h3>Sample Page</h3>
-                    </div>
-                    <div class="col-6">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">                                       <i data-feather="home"></i></a></li>
-                            <li class="breadcrumb-item">Pages</li>
-                            <li class="breadcrumb-item active">Sample Page</li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <x-admin-titles header="Тэги постов" />
         <!-- Container-fluid starts-->
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            <h5>Hoverable rows</h5><span>Use a class <code>table-hover</code> to enable a hover state on table rows within a <code>tbody</code>.</span>
+                            <x-admin-subtitles headtitle="Список тэгов" subtitle="Тэги, по которым можно найти посты"/>
                         </div>
                         <div class="table-responsive card-body">
                             @if(count($tags))
@@ -44,7 +29,7 @@
                                         <td>{{$tag->slug}}</td>
                                         <td>
                                             <a class="btn btn-success btn-s" data-original-title="btn btn-danger btn-xs" title="" href="{{route('tags.edit', $tag->id)}}" data-bs-original-title=""><i class="fa fa-pencil"></i></a>
-                                            <form action="{{route('tags.destroy', $tag->id)}}" method="POST">
+                                            <form action="{{route('tags.destroy', $tag->id)}}" class="d-inline-block" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-danger btn-s" type="submit" data-original-title="btn btn-danger btn-xs" title="" data-bs-original-title=""><i class="fa fa-trash-o"></i></button>

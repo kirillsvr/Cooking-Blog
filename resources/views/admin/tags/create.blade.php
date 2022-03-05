@@ -1,29 +1,14 @@
 @extends('admin.layouts.layout')
 
 @section('content')
-        <div class="container-fluid">
-            <div class="page-title">
-                <div class="row">
-                    <div class="col-6">
-                        <h3>Sample Page</h3>
-                    </div>
-                    <div class="col-6">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">                                       <i data-feather="home"></i></a></li>
-                            <li class="breadcrumb-item">Pages</li>
-                            <li class="breadcrumb-item active">Sample Page</li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <x-admin-titles header="Создание тэга" />
         <!-- Container-fluid starts-->
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            <h5>Hoverable rows</h5><span>Use a class <code>table-hover</code> to enable a hover state on table rows within a <code>tbody</code>.</span>
+                            <x-admin-subtitles headtitle="Добавление нового тэга" subtitle="Заполните необходимые поля"/>
                         </div>
                         <div class="card-body">
                             <form class="needs-validation" method="post" action="{{route('tags.store')}}" novalidate="">

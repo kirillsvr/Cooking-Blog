@@ -9,7 +9,13 @@
     <meta name="author" content="pixelstrap">
     <link rel="icon" href="../assets/images/favicon.png')}}" type="image/x-icon">
     <link rel="shortcut icon" href="../assets/images/favicon.png')}}" type="image/x-icon">
-    <title>Cuba - Premium Admin Template</title>
+    <title>
+        @hasSection('title')
+            @yield('title') | {{config('app.name')}}
+        @else
+            {{config('app.name')}}
+        @endif
+    </title>
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap" rel="stylesheet">
@@ -192,25 +198,7 @@
                     </li>
                     <li>                         <span class="header-search"><i data-feather="search"></i></span></li>
                     <li class="onhover-dropdown">
-                        <div class="notification-box"><i data-feather="bell"> </i><span class="badge rounded-pill badge-secondary">4                                </span></div>
-                        <ul class="notification-dropdown onhover-show-div">
-                            <li><i data-feather="bell"></i>
-                                <h6 class="f-18 mb-0">Notitications</h6>
-                            </li>
-                            <li>
-                                <p><i class="fa fa-circle-o me-3 font-primary"> </i>Delivery processing <span class="pull-right">10 min.</span></p>
-                            </li>
-                            <li>
-                                <p><i class="fa fa-circle-o me-3 font-success"></i>Order Complete<span class="pull-right">1 hr</span></p>
-                            </li>
-                            <li>
-                                <p><i class="fa fa-circle-o me-3 font-info"></i>Tickets Generated<span class="pull-right">3 hr</span></p>
-                            </li>
-                            <li>
-                                <p><i class="fa fa-circle-o me-3 font-danger"></i>Delivery Complete<span class="pull-right">6 hr</span></p>
-                            </li>
-                            <li><a class="btn btn-primary" href="#">Check all notification</a></li>
-                        </ul>
+                        <x-admin-notitications />
                     </li>
                     <li class="onhover-dropdown">
                         <div class="notification-box"><i data-feather="star"></i></div>
@@ -345,7 +333,7 @@
                             </div>
                         </div>
                         <ul class="profile-dropdown onhover-show-div">
-                            <li><a href="{{route('users.edit', auth()->user()->id)}}"><i data-feather="user"></i><span>Account </span></a></li>
+                            <li><a href="{{route('users.show', auth()->user()->id)}}"><i data-feather="user"></i><span>Account </span></a></li>
                             <li><a href="#"><i data-feather="mail"></i><span>Inbox</span></a></li>
                             <li><a href="#"><i data-feather="file-text"></i><span>Taskboard</span></a></li>
                             <li><a href="#"><i data-feather="settings"></i><span>Settings</span></a></li>
@@ -384,6 +372,9 @@
                                 <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div>
                             </li>
                             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{route('admin.index')}}"><i data-feather="home"> </i><span>Главная</span></a></li>
+                            @can('edit', \App\Models\Setting::class)
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{route('settings.edit')}}"><i data-feather="settings"> </i><span>Настройки сайта</span></a></li>
+                            @endcan
                             <li class="sidebar-main-title">
                                 <div>
                                     <h6>Блог</h6>
@@ -391,21 +382,21 @@
                                 </div>
                             </li>
                             <li class="sidebar-list">
-                                <label class="badge badge-success">2</label><a class="sidebar-link sidebar-title" href="#"><i data-feather="list"></i><span>Категории              </span></a>
+                                <a class="sidebar-link sidebar-title" href="#"><i data-feather="list"></i><span>Категории              </span></a>
                                 <ul class="sidebar-submenu">
                                     <li><a href="{{route('categories.index')}}">Все категории</a></li>
                                     <li><a href="{{route('categories.create')}}">Добавить категорию</a></li>
                                 </ul>
                             </li>
                             <li class="sidebar-list">
-                                <label class="badge badge-success">2</label><a class="sidebar-link sidebar-title" href="#"><i data-feather="tag"></i><span>Тэги              </span></a>
+                                <a class="sidebar-link sidebar-title" href="#"><i data-feather="tag"></i><span>Тэги              </span></a>
                                 <ul class="sidebar-submenu">
                                     <li><a href="{{route('tags.index')}}">Все тэги</a></li>
                                     <li><a href="{{route('tags.create')}}">Добавить тэг</a></li>
                                 </ul>
                             </li>
                             <li class="sidebar-list">
-                                <label class="badge badge-success">2</label><a class="sidebar-link sidebar-title" href="#"><i data-feather="file-text"></i><span>Статьи              </span></a>
+                                <a class="sidebar-link sidebar-title" href="#"><i data-feather="file-text"></i><span>Статьи              </span></a>
                                 <ul class="sidebar-submenu">
                                     <li><a href="{{route('posts.index')}}">Все статьи</a></li>
                                     <li><a href="{{route('posts.create')}}">Добавить статью</a></li>
@@ -418,21 +409,21 @@
                                 </div>
                             </li>
                             <li class="sidebar-list">
-                                <label class="badge badge-success">2</label><a class="sidebar-link sidebar-title" href="#"><i data-feather="list"></i><span>Категории рецептов              </span></a>
+                                <a class="sidebar-link sidebar-title" href="#"><i data-feather="list"></i><span>Категории рецептов              </span></a>
                                 <ul class="sidebar-submenu">
                                     <li><a href="{{route('recipe_category.index')}}">Все категории</a></li>
                                     <li><a href="{{route('recipe_category.create')}}">Добавить категорию</a></li>
                                 </ul>
                             </li>
                             <li class="sidebar-list">
-                                <label class="badge badge-success">2</label><a class="sidebar-link sidebar-title" href="#"><i data-feather="book"></i><span>Рецепты              </span></a>
+                                <a class="sidebar-link sidebar-title" href="#"><i data-feather="book"></i><span>Рецепты              </span></a>
                                 <ul class="sidebar-submenu">
                                     <li><a href="{{route('recipe.index')}}">Все рецепты</a></li>
                                     <li><a href="{{route('recipe.create')}}">Добавить рецепт</a></li>
                                 </ul>
                             </li>
                             <li class="sidebar-list">
-                                <label class="badge badge-success">2</label><a class="sidebar-link sidebar-title" href="#"><i data-feather="tag"></i><span>Тэги рецептов              </span></a>
+                                <a class="sidebar-link sidebar-title" href="#"><i data-feather="tag"></i><span>Тэги рецептов              </span></a>
                                 <ul class="sidebar-submenu">
                                     <li><a href="{{route('recipe_tags.index')}}">Все тэги</a></li>
                                     <li><a href="{{route('recipe_tags.create')}}">Добавить тэг</a></li>
@@ -457,7 +448,7 @@
                                 </div>
                             </li>
                             <li class="sidebar-list">
-                                <label class="badge badge-success">2</label><a class="sidebar-link sidebar-title" href="#"><i data-feather="users"></i><span>Пользователи              </span></a>
+                                <a class="sidebar-link sidebar-title" href="#"><i data-feather="users"></i><span>Пользователи              </span></a>
                                 <ul class="sidebar-submenu">
                                     <li><a href="{{route('users.index')}}">Все пользователи</a></li>
                                     <li><a href="{{route('users.create')}}">Добавить пользователя</a></li>

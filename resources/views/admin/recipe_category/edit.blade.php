@@ -1,7 +1,7 @@
 @extends('admin.layouts.layout')
 
 @section('content')
-    <x-admin-titles header="Редактирование категории" />
+    <x-admin-titles header="Редактирование категории рецептов" />
     <!-- Container-fluid starts-->
     <div class="container-fluid">
         <div class="row">
@@ -11,14 +11,21 @@
                         <x-admin-subtitles headtitle="Категория «{{$category->title}}»" subtitle="Заполните необходимые поля"/>
                     </div>
                     <div class="card-body">
-                        <form class="needs-validation" method="post" action="{{route('categories.update', $category->id)}}" novalidate="">
+                        <form class="needs-validation" method="post" action="{{route('recipe_category.update', $category->id)}}" novalidate="" enctype="multipart/form-data">
                             @csrf
-                            @method("PUT")
                             <div class="row g-3 mb-4">
                                 <label class="form-label" for="validationCustom01">Название категории</label>
-                                <input class="form-control @error('title') is-invalid @enderror" id="validationCustom01" type="text" name="title" value="{{$category->title}}" required="">
+                                <input class="form-control @error('title') is-invalid @enderror" id="validationCustom01" value="{{$category->title}}" type="text" name="title" placeholder="Название категории" required="">
                                 <div class="valid-feedback">Looks good!</div>
                             </div>
+
+                            <div class="mb-4 row">
+                                <label class="col-sm-3 col-form-label">Upload File</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="file" name="thumbnail">
+                                </div>
+                            </div>
+
 
                             <button class="btn btn-primary" type="submit">Сохранить</button>
                         </form>

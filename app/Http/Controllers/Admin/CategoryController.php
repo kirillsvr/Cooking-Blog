@@ -54,9 +54,8 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        $category = Category::find($id);
         return view('admin.categories.edit', compact('category'));
     }
 
@@ -67,9 +66,8 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreCategory $request, $id)
+    public function update(StoreCategory $request, Category $category)
     {
-        $category = Category::find($id);
         $category->slug = null;
         $category->update($request->all());
         return redirect()->route('categories.index')->with('success', 'Изменения сохранены');
@@ -81,9 +79,8 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        $category = Category::find($id);
         $category->delete();
         return redirect()->route('categories.index')->with('success', 'Категория удалена');
     }

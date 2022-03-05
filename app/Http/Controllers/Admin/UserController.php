@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\UserStoreAction;
+use App\Actions\UserUpdateAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCreateUser;
 use App\Http\Requests\StoreEditUser;
@@ -12,13 +14,6 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    protected $service;
-
-    public function __construct(ImageSaveService $service)
-    {
-        $this->service = $service;
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -48,13 +43,10 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCreateUser $request)
+    public function store(StoreCreateUser $request, UserStoreAction $action)
     {
         $this->authorize('create', User::class);
-        $data = $request->all();
-        $data['image'] = $this->service->uploadImage($request, 'image');
-        $data['password'] = bcrypt($data['password']);
-        User::create($data);
+        $action->execute($request->validated());
         return redirect()->home();
     }
 
@@ -64,11 +56,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        $user = User::find($id);
         $this->authorize('view', $user);
-//        $posts = $user->posts;
         $recipes = $user->recipes;
         return view('admin.users.show', compact('user', 'recipes'));
     }
@@ -79,9 +69,8 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        $user = User::find($id);
         $this->authorize('update', $user);
         return view('admin.users.edit', compact('user'));
     }
@@ -93,18 +82,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreEditUser $request, $id)
+    public function update(StoreEditUser $request, User $user, UserUpdateAction $action)
     {
-        $user = User::find($id);
         $this->authorize('update', $user);
-        $data = $request->all();
-        if (empty($data['password'])) unset($data['password']);
-            else $data['password'] = bcrypt($data['password']);
-
-        if (empty($data['image'])) unset($data['image']);
-            else $data['image'] = $this->service->uploadImage($request, 'image', $user->image);
-
-        $up = $user->update($data);
+        $action->execute($request->validated(), $user);
         return redirect()->home();
     }
 
@@ -114,9 +95,8 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        $user = User::find($id);
         $this->authorize('delete', $user);
     }
 }

@@ -5,35 +5,20 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid">
-        <div class="page-title">
-            <div class="row">
-                <div class="col-6">
-                    <h3>Sample Page</h3>
-                </div>
-                <div class="col-6">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">                                       <i data-feather="home"></i></a></li>
-                        <li class="breadcrumb-item">Pages</li>
-                        <li class="breadcrumb-item active">Sample Page</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-    </div>
+    <x-admin-titles header="Рецепт «{{$recipe->title}}»" />
     <!-- Container-fluid starts-->
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Hoverable rows</h5><span>Use a class <code>table-hover</code> to enable a hover state on table rows within a <code>tbody</code>.</span>
+                        <x-admin-subtitles headtitle="Список комментариев" subtitle="На этой странице можно отредактировать комментарии"/>
                     </div>
                     <div class="col-md-10 offset-md-1 mt-5 mb-5">
                         @csrf
                         @if(!empty($comments))
 
-                            <?php function renderComments($comments, int $nesting){?>
+                            <?php function renderComments($comments, int $nesting, bool $parentDisable){?>
                                 <?php foreach($comments as $value):?>
                                     <div class="card" style="margin-left: <?=40*$nesting?>px">
                                         <div class="job-search">
@@ -46,7 +31,7 @@
                                                     <div class="row col-md-4">
                                                         <div class="col-md-6 text-end icon-state">
                                                             <label class="switch">
-                                                                <input type="checkbox" class="switch-comments" @if($value['is_published']) checked @endif data-id="{{$value['id']}}"><span class="switch-state"></span>
+                                                                <input type="checkbox" class="switch-comments" @if($value['is_published']) checked @endif @if($parentDisable) disabled @endif data-id="{{$value['id']}}"><span class="switch-state"></span>
                                                             </label>
                                                         </div>
                                                         <div class="col-md-6">
@@ -61,12 +46,12 @@
                                         </div>
                                     </div>
                                     <?php if (isset($value['childs'])):?>
-                                            <?php renderComments($value['childs'], $nesting + 1);?>
+                                            <?php renderComments($value['childs'], $nesting + 1, $value['is_published'] == 0);?>
                                     <?php endif;?>
                                 <?php endforeach;?>
                             <?php };?>
 
-                            <?php renderComments($comments, 0);?>
+                            <?php renderComments($comments, 0, false);?>
 
                         @else
                             Комментариев пока нет...

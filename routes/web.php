@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\RecipeCategoryController;
 use App\Http\Controllers\Admin\RecipeCommentsController;
 use App\Http\Controllers\Admin\RecipeTagController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\StepsController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\ArticleController;
@@ -55,6 +56,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function (){
    Route::get('/contact', [ContactPageController::class, 'edit'])->name('contact.edit');
    Route::post('/contact', [ContactPageController::class, 'update'])->name('contact.update');
    Route::delete('/steps/{id}', [StepsController::class, 'deleteImage'])->name('steps.deleteImage');
+   Route::get('/settings', [SettingController::class, 'edit'])->name('settings.edit');
+   Route::put('/settings', [SettingController::class, 'update'])->name('settings.update');
 });
 
 Route::group(['middleware' => 'guest'], function (){

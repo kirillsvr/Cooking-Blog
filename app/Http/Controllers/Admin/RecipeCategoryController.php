@@ -64,7 +64,8 @@ class RecipeCategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = RecipeCategory::find($id);
+        return view('admin.recipe_category.edit', compact('category'));
     }
 
     /**

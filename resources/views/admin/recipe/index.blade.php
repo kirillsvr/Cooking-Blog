@@ -1,5 +1,7 @@
 @extends('admin.layouts.layout')
 
+@section('title', 'Рецепты')
+
 @section('dopStyles')
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/css/vendors/range-slider.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/css/vendors/sweetalert2.css')}}">
@@ -81,7 +83,10 @@
                                 <div class="card">
                                     <div class="product-box">
                                         <div class="product-img">
-                                            <div class="ribbon ribbon-success ribbon-right">50%</div><img class="img-fluid" src="/uploads/{{$recipe->thumbnail}}" alt="">
+                                            @if(isset($recipe['newComm']))
+                                            <div class="ribbon ribbon-bookmark ribbon-vertical-right ribbon-info"><i class="icofont icofont-comment"></i></div>
+                                            @endif
+                                            <img class="img-fluid" src="/uploads/{{$recipe->thumbnail}}" alt="">
                                             @can('edit', $recipe)
                                             <div class="product-hover">
                                                 <ul>
@@ -98,12 +103,16 @@
                                         <div class="product-details">
                                             <div class="rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
                                             <h4><a href="{{route('recipe.edit', $recipe->id)}}" class="text-decoration-none text-reset">{{$recipe->title}}</a></h4>
-                                            <div class="stats">
-                                                <div class="views">
-                                                    {{$recipe->views}}
+                                            <div class="stats row m-t-15">
+                                                <div class="views col-md-6">
+                                                    <i data-feather="eye"></i>
+                                                    <span class="va-s">{{$recipe->views}}</span>
                                                 </div>
-                                                <div class="comms">
-                                                    <a href="{{route('recipe_comments.show', $recipe->id)}}">{{$recipe->countComm}}</a>
+                                                <div class="comms col-md-6">
+                                                    <a class="text-decoration-none text-reset" href="{{route('recipe_comments.show', $recipe->id)}}">
+                                                        <i data-feather="message-circle"></i>
+                                                        <span class="va-s">{{$recipe->countComm}}</span>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>

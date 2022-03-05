@@ -17,13 +17,6 @@ use Illuminate\Http\Request;
 class RecipeController extends Controller
 {
 
-    protected $service;
-
-    public function __construct(ChangeRecipeRequestService $service)
-    {
-        $this->service = $service;
-    }
-
     public function index(FilterRequest $request, RecipeIndexAction $action)
     {
         return view('admin.recipe.index', $action->execute($request->validated()));

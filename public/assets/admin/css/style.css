@@ -38569,3 +38569,8 @@ html[dir="rtl"] body.dark-only .page-wrapper .page-body-wrapper .page-body .card
         display: none !important;
     }
 }
+
+.va-s{
+    vertical-align: super !important;
+    margin-left: 3px;
+}

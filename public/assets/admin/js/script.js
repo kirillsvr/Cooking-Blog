@@ -585,6 +585,12 @@ $('.category-filter').on('click', function (e){
                         data: {_token: token, id: id},
                         success: function(data){
                             th.prop('checked', true);
+
+                            function func1() {
+                                $(location).attr('href', url);
+                            }
+
+                            setTimeout(func1, 2000);
                         },
                         error: function(jqXHR, exception) {
                             Swal.fire({ title: "Waring", text: jqXHR.responseJSON.error, icon: "error" });

@@ -60,9 +60,8 @@ class RecipeTagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(RecipeTags $tag)
     {
-        $tag = RecipeTags::find($id);
         return view('admin.recipe_tags.edit', compact('tag'));
     }
 
@@ -73,9 +72,8 @@ class RecipeTagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, RecipeTags $tag)
     {
-        $tag = RecipeTags::find($id);
         $tag->slug = null;
         $tag->update($request->all());
         return redirect()->route('recipe_tags.index')->with('success', 'Изменения сохранены');
@@ -87,9 +85,8 @@ class RecipeTagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(RecipeTags $tag)
     {
-        $tag = RecipeTags::find($id);
         $tag->delete();
         return redirect()->route('recipe_tags.index')->with('success', 'Тэг удален');
     }
