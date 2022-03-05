@@ -26,6 +26,7 @@ class FilterRequest extends FormRequest
         return [
             'category' => 'nullable',
             'sort' => 'nullable',
+            'tag' => 'nullable'
         ];
     }
 
