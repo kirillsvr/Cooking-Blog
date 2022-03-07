@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Actions\RecipeCommentsDeleteAction;
-use App\Actions\RecipeCommentsDisableAction;
-use App\Actions\RecipeCommentsEnableAction;
-use App\Actions\RecipeCommentsIndexAction;
+use App\Actions\RecipeComments\RecipeCommentsDeleteAction;
+use App\Actions\RecipeComments\RecipeCommentsDisableAction;
+use App\Actions\RecipeComments\RecipeCommentsEnableAction;
+use App\Actions\RecipeComments\RecipeCommentsIndexAction;
 use App\Http\Controllers\Controller;
 use App\Models\Recipe;
 use App\Models\RecipeComments;

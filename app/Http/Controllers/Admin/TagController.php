@@ -60,9 +60,8 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Tag $tag)
     {
-        $tag = Tag::find($id);
         return view('admin.tags.edit', compact('tag'));
     }
 
@@ -73,9 +72,8 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Tag $tag)
     {
-        $tag = Tag::find($id);
         $tag->slug = null;
         $tag->update($request->all());
         return redirect()->route('tags.index')->with('success', 'Изменения сохранены');
@@ -87,9 +85,8 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Tag $tag)
     {
-        $tag = Tag::find($id);
         $tag->delete();
         return redirect()->route('tags.index')->with('success', 'Тэг удален');
     }

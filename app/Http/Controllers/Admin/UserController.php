@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Actions\UserStoreAction;
-use App\Actions\UserUpdateAction;
+use App\Actions\User\UserStoreAction;
+use App\Actions\User\UserUpdateAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCreateUser;
 use App\Http\Requests\StoreEditUser;

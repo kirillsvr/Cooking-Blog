@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\Recipe;
 
 
+use App\Actions\AbstractRecipeAction;
 use App\Http\Filters\AdminRecipeFilter;
 use App\Models\Recipe;
 use Illuminate\Pagination\LengthAwarePaginator;
+use function app;
+use function config;
 
 class RecipeIndexAction extends AbstractRecipeAction
 {

@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\Post\GetPostCategoriesTags;
+use App\Actions\Post\PostDestroyAction;
+use App\Actions\Post\PostEditAction;
+use App\Actions\Post\PostStoreAction;
+use App\Actions\Post\PostUpdateAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePost;
 use App\Models\Category;
@@ -19,9 +24,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('category', 'tags')->paginate(12);
-        $currentPage = $posts->currentPage();
-        return view('admin.posts.index', compact('posts', 'currentPage'));
+        $posts = Post::with('category', 'tags')->paginate(config('settings.post_on_page'));
+        return view('admin.posts.index', compact('posts'));
     }
 
     /**
@@ -29,11 +33,9 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(GetPostCategoriesTags $action)
     {
-        $categories = Category::pluck('title', 'id')->all();
-        $tags = Tag::pluck('title', 'id')->all();
-        return view('admin.posts.create', compact('categories', 'tags'));
+        return view('admin.posts.create', $action->execute());
     }
 
     /**
@@ -42,15 +44,9 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePost $request)
+    public function store(StorePost $request, PostStoreAction $action)
     {
-        $data = $request->all();
-
-        $data['thumbnail'] = Post::uploadImage($request);
-
-        $post = Post::create($data);
-        $post->tags()->sync($request->tags);
-
+        $action->execute($request->validated());
         $request->session()->flash('success', 'Статья добавлена');
         return redirect()->route('posts.index');
     }
@@ -72,12 +68,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post, PostEditAction $action)
     {
-        $categories = Category::pluck('title', 'id')->all();
-        $tags = Tag::pluck('title', 'id')->all();
-        $post = Post::find($id);
-        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
+        return view('admin.posts.edit', $action->execute($post));
     }
 
     /**
@@ -87,14 +80,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StorePost $request, $id)
+    public function update(StorePost $request, Post $post, PostUpdateAction $action)
     {
-        $post = Post::find($id);
-        $data = $request->all();
-        $data['thumbnail'] = Post::uploadImage($request, $post->thumbnail);
-
-        $post->update($data);
-        $post->tags()->sync($request->tags);
+        $action->execute($request->validated(), $post);
         return redirect()->route('posts.index')->with('success', 'Изменения сохранены');
     }
 
@@ -104,12 +92,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post, PostDestroyAction $action)
     {
-        $post = Post::find($id);
-        $post->tags()->sync([]);
-        Storage::delete($post->thumbnail);
-        $post->delete();
+        $action->execute($post);
         return redirect()->route('posts.index')->with('success', 'Статья удалена');
     }
 }

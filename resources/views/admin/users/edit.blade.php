@@ -1,7 +1,11 @@
 @extends('admin.layouts.layout')
 
 @section('content')
-    <x-admin-titles header="Редактирование пользователя «{{$user->name}}»" />
+    <x-admin-titles
+        header="Редактирование пользователя «{{$user->name}}»"
+        breadcrumb="admin.user"
+        paramBreadcrumb="{{$user->id}}"
+    />
     <!-- Container-fluid starts-->
     <div class="container-fluid">
         <div class="edit-profile">

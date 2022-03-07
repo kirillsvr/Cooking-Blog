@@ -1,7 +1,10 @@
 @extends('admin.layouts.layout')
 
 @section('content')
-    <x-admin-titles header="Создание пользователя" />
+    <x-admin-titles
+        header="Создание пользователя"
+        breadcrumb="admin.user.create"
+    />
     <!-- Container-fluid starts-->
     <div class="container-fluid">
         <div class="edit-profile">

@@ -1,18 +1,27 @@
 @extends('admin.layouts.layout')
 
 @section('content')
-        <x-admin-titles header="Тэги постов" />
+        <x-admin-titles
+            header="Тэги постов"
+            breadcrumb="admin.breadcrumb"
+            paramBreadcrumb="Тэги"
+        />
         <!-- Container-fluid starts-->
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            <x-admin-subtitles headtitle="Список тэгов" subtitle="Тэги, по которым можно найти посты"/>
+                            <div class="pull-left">
+                                <x-admin-subtitles headtitle="Список тэгов" subtitle="Тэги, по которым можно найти посты"/>
+                            </div>
+                            <div class="pull-right">
+                                <a href="{{route('tags.create')}}" class="btn btn-primary">Добавить тэг</a>
+                            </div>
                         </div>
+                        @if(count($tags))
                         <div class="table-responsive card-body">
-                            @if(count($tags))
-                            <table class="table table-hover mb-4">
+                            <table class="table table-hover">
                                 <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -39,14 +48,17 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            {{$tags->links()}}
-                            @else
-                            <div>
-                                Тэгов пока нет...
-                            </div>
-                            @endif
                         </div>
-
+                        @if($tags->hasPages())
+                            <div class="card-footer text-end">
+                                {{$tags->links()}}
+                            </div>
+                        @endif
+                        @else
+                        <div class="card-body">
+                            Тэгов пока нет...
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>

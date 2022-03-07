@@ -3,7 +3,11 @@
 @section('title', 'Настройки сайта')
 
 @section('content')
-    <x-admin-titles header="Настройки сайта" />
+    <x-admin-titles
+        header="Настройки сайта"
+        breadcrumb="admin.breadcrumb"
+        paramBreadcrumb="Настройки сайта"
+    />
     <!-- Container-fluid starts-->
     <div class="container-fluid">
         <div class="row">
@@ -31,8 +35,8 @@
                         </div>
                         <div class="card-footer text-end">
                             <div class="col-sm-9 offset-sm-3">
-                                <button class="btn btn-primary" type="submit">Submit</button>
-                                <input class="btn btn-light" type="reset" value="Cancel">
+                                <button class="btn btn-primary" type="submit">Сохранить</button>
+                                <a class="btn btn-light" href="{{route('admin.index')}}">Отмена</a>
                             </div>
                         </div>
                     </form>

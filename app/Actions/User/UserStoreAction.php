@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\User;
 
 use App\Models\User;
 use App\Services\ImageSaveService;
+use function bcrypt;
 
 class UserStoreAction
 {

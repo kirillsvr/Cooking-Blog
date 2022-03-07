@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Actions\SettingUpdateAction;
+use App\Actions\Settings\SettingUpdateAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSetting;
 use App\Models\Setting;

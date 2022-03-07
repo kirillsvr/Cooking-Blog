@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\RecipeComments;
 
 use App\Models\Recipe;
 use App\Services\RecipeComments\CommentsService;

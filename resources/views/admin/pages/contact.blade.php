@@ -1,17 +1,21 @@
 @extends('admin.layouts.layout')
 
 @section('content')
-    <x-admin-titles header="Страница «Контакты»" />
+    <x-admin-titles
+        header="Страница «Контакты»"
+        breadcrumb="admin.breadcrumb"
+        paramBreadcrumb="Контакты"
+    />
     <!-- Container-fluid starts-->
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header">
-                        <x-admin-subtitles headtitle="Редактирование страницы" subtitle="Заполните необходимые поля"/>
-                    </div>
-                    <div class="card-body">
-                        <form class="needs-validation" method="post" action="{{route('contact.update')}}" novalidate="">
+                    <form class="needs-validation" method="post" action="{{route('contact.update')}}" novalidate="">
+                        <div class="card-header">
+                            <x-admin-subtitles headtitle="Редактирование страницы" subtitle="Заполните необходимые поля"/>
+                        </div>
+                        <div class="card-body">
                             @csrf
                             <div class="row g-3 mb-4">
                                 <label class="form-label" for="validationCustom01">Адрес офиса</label>
@@ -33,11 +37,13 @@
                                 <input class="form-control @error('title') is-invalid @enderror" id="validationCustom04" type="text" name="map" placeholder="" value="{{$contact->map}}" required="">
                                 <div class="valid-feedback">Looks good!</div>
                             </div>
-
-                            <button class="btn btn-primary" type="submit">Сохранить</button>
-                        </form>
-                    </div>
-
+                        </div>
+                        <div class="card-footer text-end">
+                            <div class="col-sm-9 offset-sm-3">
+                                <button class="btn btn-primary" type="submit">Сохранить</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

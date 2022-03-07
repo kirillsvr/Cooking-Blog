@@ -7,14 +7,28 @@ use Illuminate\View\Component;
 class AdminTitles extends Component
 {
     public string $header;
+
+    public string|null $breadcrumb;
+
+    public $paramBreadcrumb;
+
+    public $routeBreadcrumb;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(string $header)
+    public function __construct(
+        string $header,
+        string|null $breadcrumb = null,
+        string|null $paramBreadcrumb = null,
+        string|null $routeBreadcrumb = null
+    )
     {
         $this->header = $header;
+        $this->breadcrumb = $breadcrumb;
+        $this->paramBreadcrumb = $paramBreadcrumb;
+        $this->routeBreadcrumb = $routeBreadcrumb;
     }
 
     /**

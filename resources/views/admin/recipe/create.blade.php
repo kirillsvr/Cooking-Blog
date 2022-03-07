@@ -1,7 +1,10 @@
 @extends('admin.layouts.layout')
 
 @section('content')
-        <x-admin-titles header="Создание рецепта" />
+        <x-admin-titles
+            header="Создание рецепта"
+            breadcrumb="admin.recipe.create"
+        />
         <!-- Container-fluid starts-->
         <div class="container-fluid">
             <div class="row">

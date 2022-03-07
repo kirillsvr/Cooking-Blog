@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Actions\StepsDeleteImageAction;
+use App\Actions\Recipe\StepsDeleteImageAction;
 use App\Http\Controllers\Controller;
 use App\Models\RecipeSteps;
 use Illuminate\Http\Request;

@@ -1,17 +1,20 @@
 @extends('admin.layouts.layout')
 
 @section('content')
-        <x-admin-titles header="Создание поста" />
+        <x-admin-titles
+            header="Создание поста"
+            breadcrumb="admin.post.create"
+        />
         <!-- Container-fluid starts-->
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
-                        <div class="card-header">
-                            <x-admin-subtitles headtitle="Добавление нового поста" subtitle="Заполните необходимые поля"/>
-                        </div>
-                        <div class="card-body">
-                            <form class="needs-validation" method="post" action="{{route('posts.store')}}" novalidate="" enctype="multipart/form-data">
+                        <form class="needs-validation" method="post" action="{{route('posts.store')}}" novalidate="" enctype="multipart/form-data">
+                            <div class="card-header">
+                                <x-admin-subtitles headtitle="Добавление нового поста" subtitle="Заполните необходимые поля"/>
+                            </div>
+                            <div class="card-body">
                                 @csrf
                                 <div class="row g-3">
                                     <label class="form-label" for="validationCustom01">Название статьи</label>
@@ -50,11 +53,13 @@
                                         <input class="form-control" type="file" name="thumbnail">
                                     </div>
                                 </div>
-
-                                <button class="btn btn-primary" type="submit">Сохранить</button>
-                            </form>
-                        </div>
-
+                            </div>
+                            <div class="card-footer text-end">
+                                <div class="col-sm-9 offset-sm-3">
+                                    <button class="btn btn-primary" type="submit">Сохранить</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

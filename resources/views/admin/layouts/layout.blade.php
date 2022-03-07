@@ -89,11 +89,9 @@
                             </div>
                         </div>
                         <ul class="profile-dropdown onhover-show-div">
-                            <li><a href="{{route('users.show', auth()->user()->id)}}"><i data-feather="user"></i><span>Account </span></a></li>
-                            <li><a href="#"><i data-feather="mail"></i><span>Inbox</span></a></li>
-                            <li><a href="#"><i data-feather="file-text"></i><span>Taskboard</span></a></li>
-                            <li><a href="#"><i data-feather="settings"></i><span>Settings</span></a></li>
-                            <li><a href="{{route('logout')}}"><i data-feather="log-in"> </i><span>Log in</span></a></li>
+                            <li><a href="{{route('users.show', auth()->user()->id)}}"><i data-feather="user"></i><span>Аккаунт </span></a></li>
+                            <li><a href="{{route('settings.edit')}}"><i data-feather="settings"></i><span>Настройки</span></a></li>
+                            <li><a href="{{route('logout')}}"><i data-feather="log-in"> </i><span>Выход</span></a></li>
                         </ul>
                     </li>
                 </ul>

@@ -1,17 +1,26 @@
 @extends('admin.layouts.layout')
 
 @section('content')
-        <x-admin-titles header="Категории постов" />
+        <x-admin-titles
+            header="Категории постов"
+            breadcrumb="admin.breadcrumb"
+            paramBreadcrumb="Категории"
+        />
         <!-- Container-fluid starts-->
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            <x-admin-subtitles headtitle="Список категорий" subtitle=""/>
+                            <div class="pull-left">
+                                <x-admin-subtitles headtitle="Список категорий" subtitle=""/>
+                            </div>
+                            <div class="pull-right">
+                                <a href="{{route('categories.create')}}" class="btn btn-primary">Добавить категорию</a>
+                            </div>
                         </div>
-                        <div class="table-responsive">
-                            @if(count($categories))
+                        @if(count($categories))
+                        <div class="card-body table-responsive">
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
@@ -39,13 +48,17 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            {{$categories->links()}}
-                            @else
-                            <div class="card-body">
-                                Категорий пока нет...
-                            </div>
-                            @endif
                         </div>
+                        @if($categories->hasPages())
+                        <div class="card-footer text-end">
+                            {{$categories->links()}}
+                        </div>
+                        @endif
+                        @else
+                        <div class="card-body">
+                            Категорий пока нет...
+                        </div>
+                        @endif
 
                     </div>
                 </div>

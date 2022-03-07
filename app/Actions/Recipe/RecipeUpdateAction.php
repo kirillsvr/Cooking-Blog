@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\Recipe;
 
 use App\Models\Recipe;
 use App\Repositories\RecipeIngredientsRepository;

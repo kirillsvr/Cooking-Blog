@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\Recipe;
 
+use App\Actions\AbstractRecipeAction;
 use App\Models\Recipe;
 use App\Models\RecipeCategory;
 use App\Models\User;

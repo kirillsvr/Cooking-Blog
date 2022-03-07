@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\Recipe;
 
-class GetCategoriesTagsAuthorsAction extends AbstractRecipeAction
+use App\Actions\AbstractRecipeAction;
+
+class RecipeGetCategoriesTagsAuthorsAction extends AbstractRecipeAction
 {
     public function execute(): array
     {

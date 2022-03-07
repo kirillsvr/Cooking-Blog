@@ -5,7 +5,11 @@
 @endsection
 
 @section('content')
-    <x-admin-titles header="Редактирование рецепта" />
+    <x-admin-titles
+        header="Редактирование рецепта"
+        breadcrumb="admin.recipe.edit"
+        paramBreadcrumb="{{$recipe->id}}"
+    />
     <!-- Container-fluid starts-->
     <div class="container-fluid">
         <div class="row">

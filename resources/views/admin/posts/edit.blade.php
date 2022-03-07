@@ -1,17 +1,21 @@
 @extends('admin.layouts.layout')
 
 @section('content')
-    <x-admin-titles header="Редактирование поста" />
+    <x-admin-titles
+        header="Редактирование поста"
+        breadcrumb="admin.post.edit"
+        paramBreadcrumb="{{$post->id}}"
+    />
     <!-- Container-fluid starts-->
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header">
-                        <x-admin-subtitles headtitle="Пост «{{$post->title}}»" subtitle="Измените необходимые поля"/>
-                    </div>
-                    <div class="card-body">
-                        <form class="needs-validation" method="post" action="{{route('posts.update', $post->id)}}" novalidate="" enctype="multipart/form-data">
+                    <form class="needs-validation" method="post" action="{{route('posts.update', $post->id)}}" novalidate="" enctype="multipart/form-data">
+                        <div class="card-header">
+                            <x-admin-subtitles headtitle="Пост «{{$post->title}}»" subtitle="Измените необходимые поля"/>
+                        </div>
+                        <div class="card-body">
                             @csrf
                             @method('PUT')
                             <div class="row g-3">
@@ -56,11 +60,13 @@
                                 </div>
                                 @endif
                             </div>
-
-                            <button class="btn btn-primary" type="submit">Сохранить</button>
-                        </form>
-                    </div>
-
+                        </div>
+                        <div class="card-footer text-end">
+                            <div class="col-sm-9 offset-sm-3">
+                                <button class="btn btn-primary" type="submit">Сохранить</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

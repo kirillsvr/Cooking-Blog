@@ -1,20 +1,31 @@
 @extends('admin.layouts.layout')
 
 @section('content')
-        <x-admin-titles header="Посты" />
+        <x-admin-titles
+            header="Посты"
+            breadcrumb="admin.breadcrumb"
+            paramBreadcrumb="Посты"
+            routeBreadcrumb='posts.index'
+        />
         <!-- Container-fluid starts-->
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            <x-admin-subtitles headtitle="Список постов" subtitle=""/>
+                            <div class="pull-left">
+                                <x-admin-subtitles headtitle="Список постов" subtitle=""/>
+                            </div>
+                            <div class="pull-right">
+                                <a href="{{route('posts.create')}}" class="btn btn-primary">Добавить пост</a>
+                            </div>
                         </div>
                         <div class="container-fluid">
                             <div class="row">
                                 @if(count($posts))
+                                    <div class="card-body row">
                                     @for($i = 0; $i < count($posts); $i++)
-                                        @if($currentPage === 1 && $i < 2)
+                                        @if($posts->currentPage() === 1 && $i < 2)
                                             <div class="col-xl-6 set-col-12 box-col-12">
                                                 <div class="card">
                                                     <div class="blog-box blog-shadow"><img class="img-fluid" src="{{asset('assets/admin/images/blog/blog.jpg')}}" alt="">
@@ -61,7 +72,12 @@
                                         </div>
                                     </div>
                                     @endfor
-                                {{$posts->links()}}
+                                    </div>
+                                    @if($posts->hasPages())
+                                    <div class="card-footer text-end">
+                                        {{$posts->links()}}
+                                    </div>
+                                    @endif
                                 @else
                                 <div class="card-body">
                                     Статей пока нет...

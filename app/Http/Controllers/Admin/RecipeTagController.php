@@ -60,8 +60,9 @@ class RecipeTagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(RecipeTags $tag)
+    public function edit($id)
     {
+        $tag = RecipeTags::find($id);
         return view('admin.recipe_tags.edit', compact('tag'));
     }
 

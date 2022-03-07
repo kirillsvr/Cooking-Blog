@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Actions\GetCategoriesTagsAuthorsAction;
-use App\Actions\RecipeDestroyAction;
-use App\Actions\RecipeEditAction;
-use App\Actions\RecipeIndexAction;
-use App\Actions\RecipeStoreAction;
-use App\Actions\RecipeUpdateAction;
+use App\Actions\Recipe\RecipeGetCategoriesTagsAuthorsAction;
+use App\Actions\Recipe\RecipeDestroyAction;
+use App\Actions\Recipe\RecipeEditAction;
+use App\Actions\Recipe\RecipeIndexAction;
+use App\Actions\Recipe\RecipeStoreAction;
+use App\Actions\Recipe\RecipeUpdateAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FilterRequest;
 use App\Models\Recipe;
@@ -27,7 +27,7 @@ class RecipeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(GetCategoriesTagsAuthorsAction $action)
+    public function create(RecipeGetCategoriesTagsAuthorsAction $action)
     {
         return view('admin.recipe.create', $action->execute());
     }

@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Actions\GetSettingsAction;
+use App\Actions\Settings\GetSettingsAction;
 use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Pagination\Paginator;
