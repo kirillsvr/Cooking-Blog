@@ -17,7 +17,7 @@ class CreateRecipeCategoriesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('slug');
-            $table->string('image');
+            $table->string('thumbnail');
             $table->timestamps();
         });
     }

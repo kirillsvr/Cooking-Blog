@@ -9,6 +9,7 @@
         "cviebrock/eloquent-sluggable": "*",
         "diglactic/laravel-breadcrumbs": "^7.1",
         "doctrine/dbal": "^3.3",
+        "drandin/declension-nouns": "dev-master",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.75",

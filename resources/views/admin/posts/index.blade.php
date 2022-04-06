@@ -1,5 +1,9 @@
 @extends('admin.layouts.layout')
 
+@section('dopStyles')
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/css/vendors/sweetalert2.css')}}">
+@endsection
+
 @section('content')
         <x-admin-titles
             header="Посты"
@@ -23,55 +27,37 @@
                         <div class="container-fluid">
                             <div class="row">
                                 @if(count($posts))
+                                    @csrf
                                     <div class="card-body row">
-                                    @for($i = 0; $i < count($posts); $i++)
-                                        @if($posts->currentPage() === 1 && $i < 2)
-                                            <div class="col-xl-6 set-col-12 box-col-12">
-                                                <div class="card">
-                                                    <div class="blog-box blog-shadow"><img class="img-fluid" src="{{asset('assets/admin/images/blog/blog.jpg')}}" alt="">
-                                                        <div class="blog-details">
-                                                            <p>25 July 2018</p>
-                                                            <h4><a href="{{route('posts.edit', $posts[$i]->id)}}">{{$posts[$i]->title}}</a></h4>
-                                                            <ul class="blog-social">
-                                                                <li><i class="icofont icofont-user"></i>Mark Jecno</li>
-                                                                <li><i class="icofont icofont-thumbs-up"></i>02 Hits</li>
-                                                                <li><i class="icofont icofont-ui-chat"></i>598 Comments</li>
-                                                            </ul>
-                                                            <form action="{{route('posts.destroy', $posts[$i]->id)}}" method="post">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit">Удалить</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @continue
-                                        @endif
-
+                                    @foreach($posts as $post)
                                         <div class="col-md-6 col-xl-3 box-col-6">
                                         <div class="card">
-                                            <div class="blog-box blog-grid text-center"><img class="img-fluid top-radius-blog" src="{{asset('assets/admin/images/blog/blog-5.jpg')}}" alt="">
+                                            <div class="blog-box blog-grid text-center product-box">
+                                                <div class="product-img">
+                                                    <img class="img-fluid top-radius-blog" src="/uploads/{{$post->thumbnail}}" alt="">
+                                                    <div class="product-hover">
+                                                        <ul>
+                                                            <li>
+                                                                <a class="btn" href="{{route('posts.edit', $post->id)}}"><i class="icon-pencil"></i></a>
+                                                            </li>
+                                                            <li class="trash">
+                                                                <button class="btn del-post" type="button" data-id="{{$post->id}}"><i class="icon-trash"></i></button>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
                                                 <div class="blog-details-main">
                                                     <ul class="blog-social">
-                                                        <li>{{$posts[$i]->created_at}}</li>
-                                                        <li>by: Admin</li>
-                                                        <li>0 Hits</li>
-                                                        <li>{{$posts[$i]->category->title}}</li>
-                                                        <li>{{$posts[$i]->tags->pluck('title')->join(', ')}}</li>
+                                                        <li>{{$post->created_at->translatedFormat('d F Y')}}</li>
+                                                        <li>{{$post->user->name}}</li>
                                                     </ul>
                                                     <hr>
-                                                    <h6 class="blog-bottom-details"><a href="{{route('posts.edit', $posts[$i]->id)}}">{{$posts[$i]->title}}</a></h6>
-                                                    <form action="{{route('posts.destroy', $posts[$i]->id)}}" method="post">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit">Удалить</button>
-                                                    </form>
+                                                    <h6 class="blog-bottom-details"><a href="{{route('posts.edit', $post->id)}}" class="text-decoration-none text-reset">{{$post->title}}</a></h6>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    @endfor
+                                    @endforeach
                                     </div>
                                     @if($posts->hasPages())
                                     <div class="card-footer text-end">
@@ -91,4 +77,8 @@
             </div>
         </div>
         <!-- Container-fluid Ends-->
+@endsection
+
+@section('dopScripts')
+    <script src="{{asset('assets/admin/js/sweet-alert/sweetalert.min.js')}}"></script>
 @endsection

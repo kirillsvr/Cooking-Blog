@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 
 class RecipeCategoryRepository
 {
-    public function getAllTitle(): array
+    public static function getAllTitle(): array
     {
         return RecipeCategory::pluck('title', 'id')->all();
     }

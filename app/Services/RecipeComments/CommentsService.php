@@ -2,13 +2,12 @@
 
 namespace App\Services\RecipeComments;
 
-use App\Models\Recipe;
 
 class CommentsService
 {
-    public function show(Recipe $recipe): array
+    public function modify(array $comments): array
     {
-        return $this->createTree($recipe->recipeComments->toArray());
+        return $this->createTree($comments);
     }
 
     private function createTree($comments): array

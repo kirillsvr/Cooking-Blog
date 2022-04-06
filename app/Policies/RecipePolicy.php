@@ -54,7 +54,7 @@ class RecipePolicy
      */
     public function edit(User $user, Recipe $recipe)
     {
-        return $user->role == 3 || $recipe->user_id == $user->id;
+        return $user->role_id == 3 || $recipe->user_id == $user->id;
     }
 
     /**
@@ -66,7 +66,7 @@ class RecipePolicy
      */
     public function update(User $user, Recipe $recipe)
     {
-        return $user->role == 3 || $recipe->user_id == $user->id;
+        return $user->role_id == 3 || $recipe->user_id == $user->id;
     }
 
     /**
@@ -78,7 +78,7 @@ class RecipePolicy
      */
     public function delete(User $user, Recipe $recipe)
     {
-        return $user->role == 3 || $recipe->user_id == $user->id;
+        return $user->role_id == 3 || $recipe->user_id == $user->id;
     }
 
     /**
@@ -90,7 +90,7 @@ class RecipePolicy
      */
     public function restore(User $user, Recipe $recipe)
     {
-        return $user->role == 3 || $recipe->user_id == $user->id;
+        return $user->role_id == 3 || $recipe->user_id == $user->id;
     }
 
     /**

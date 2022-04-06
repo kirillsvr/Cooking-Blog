@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreRecipeTag;
 use App\Http\Requests\StoreTag;
 use App\Models\RecipeTags;
 use Illuminate\Http\Request;
@@ -36,11 +37,10 @@ class RecipeTagController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTag $request)
+    public function store(StoreRecipeTag $request)
     {
         RecipeTags::create($request->all());
-        $request->session()->flash('success', 'Тэг добавлен');
-        return redirect()->route('recipe_tags.index');
+        return response()->json('Рубрика успешно добавлена', 200);
     }
 
     /**
@@ -60,10 +60,9 @@ class RecipeTagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(RecipeTags $recipeTag)
     {
-        $tag = RecipeTags::find($id);
-        return view('admin.recipe_tags.edit', compact('tag'));
+        return view('admin.recipe_tags.edit', compact('recipeTag'));
     }
 
     /**
@@ -73,11 +72,11 @@ class RecipeTagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RecipeTags $tag)
+    public function update(StoreRecipeTag $request, RecipeTags $recipeTag)
     {
-        $tag->slug = null;
-        $tag->update($request->all());
-        return redirect()->route('recipe_tags.index')->with('success', 'Изменения сохранены');
+        $recipeTag->slug = null;
+        $recipeTag->update($request->validated());
+        return response()->json('Рубрика успешно изменена', 200);
     }
 
     /**
@@ -86,9 +85,9 @@ class RecipeTagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RecipeTags $tag)
+    public function destroy(RecipeTags $recipeTag)
     {
-        $tag->delete();
-        return redirect()->route('recipe_tags.index')->with('success', 'Тэг удален');
+        $recipeTag->delete();
+        return response()->json('Рубрика успешно удалена', 200);
     }
 }

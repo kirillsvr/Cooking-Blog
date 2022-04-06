@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ImageSaveService
 {
-    public function uploadImage(UploadedFile $data, string|null $oldImage = null)
+    public static function uploadImage(UploadedFile $data, string|null $oldImage = null): string
     {
         if ($oldImage) Storage::delete($oldImage);
         $folder = date('Y-m-d');

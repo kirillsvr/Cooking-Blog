@@ -19,7 +19,6 @@ class AboutPageController extends Controller
     {
         $about = About::find(1);
         $about->update($request->validated());
-        $request->session()->flash('success', 'Страница "Контакты" обновлена');
-        return redirect()->home();
+        return response()->json('Страница "О нас" обновлена', 200);
     }
 }

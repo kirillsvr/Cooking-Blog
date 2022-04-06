@@ -8,11 +8,11 @@ use App\Actions\Recipe\RecipeEditAction;
 use App\Actions\Recipe\RecipeIndexAction;
 use App\Actions\Recipe\RecipeStoreAction;
 use App\Actions\Recipe\RecipeUpdateAction;
+use App\DTO\RecipeCreateRequestData;
+use App\DTO\RecipeUpdateRequestData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FilterRequest;
 use App\Models\Recipe;
-use App\Services\RecipeComments\ChangeRecipeRequestService;
-use Illuminate\Http\Request;
 
 class RecipeController extends Controller
 {
@@ -38,10 +38,10 @@ class RecipeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, RecipeStoreAction $action)
+    public function store(RecipeCreateRequestData $request, RecipeStoreAction $action)
     {
-        $action->execute($request->all());
-        return redirect()->home();
+        $action->execute($request);
+        return redirect()->route('recipe.index');
     }
 
     /**
@@ -74,9 +74,9 @@ class RecipeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Recipe $recipe, RecipeUpdateAction $action)
+    public function update(RecipeUpdateRequestData $request, Recipe $recipe, RecipeUpdateAction $action)
     {
-        $action->execute($request->all(), $recipe);
+        $action->execute($request, $recipe);
         return redirect()->home();
     }
 

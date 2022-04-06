@@ -379,12 +379,12 @@ $('.add-inputs').on('click', function () {
    $('.more-da').append('<div class="row g-3 mb-2">\n' +
                             '<div class="col-md-6">\n' +
                                 '<label class="form-label" for="prep_time">Ингредиент</label>\n' +
-                                '<input class="form-control" id="prep_time" name="ing[' + i + '][title]" type="text" placeholder="City" required="">\n' +
+                                '<input class="form-control" id="prep_time" name="ing[' + i + '][title]" type="text" placeholder="Ингредиент">\n' +
                                 '<div class="invalid-feedback">Please provide a valid city.</div>\n' +
                             '</div>\n' +
                             '<div class="col-md-5">\n' +
                                 '<label class="form-label" for="cook_time">Количество</label>\n' +
-                                '<input class="form-control" id="cook_time" name="ing[' + i + '][quantity]" type="text" placeholder="Zip" required="">\n' +
+                                '<input class="form-control" id="cook_time" name="ing[' + i + '][quantity]" type="text" placeholder="Количество">\n' +
                                 '<div class="invalid-feedback">Please select a valid state.</div>\n' +
                             '</div>\n' +
                             '<div class="col-md-1 d-flex align-items-center">\n' +
@@ -404,7 +404,7 @@ $('.add-step').on('click', function () {
     $('.steps').append('<div class="row g-3 mb-2">\n' +
                             '<div class="col-md-6">\n' +
                                 '<label class="form-label" for="step">Номер шага</label>\n' +
-                                '<input class="form-control" id="step" name="steps[' + i + '][step]" type="text" placeholder="Zip" required="">\n' +
+                                '<input class="form-control" id="step" name="steps[' + i + '][step]" type="text" placeholder="Номер шага">\n' +
                                 '<div class="invalid-feedback">Please select a valid state.</div>\n' +
                             '</div>\n' +
                             '<div class="col-md-6">\n' +
@@ -413,39 +413,373 @@ $('.add-step').on('click', function () {
                             '</div>\n' +
                             '<div class="col-md-12">\n' +
                                 '<label class="form-label" for="exampleFormControlTextarea4">Описание шага</label>\n' +
-                                '<textarea class="form-control" name="steps[' + i + '][description]" id="exampleFormControlTextarea4" rows="3"></textarea>\n' +
+                                '<textarea class="form-control" name="steps[' + i + '][info]" id="exampleFormControlTextarea4" rows="3"></textarea>\n' +
                             '</div>\n' +
                         '</div>');
 });
 
 
-$('.category-filter').on('click', function (e){
-    var data = $(this).data('value');
-    if (data !== undefined){
-        var url = location.search.replace(/category(.+?)(&|$)/g, '');
-        var url = url.replace(/page(.+?)(&|$)/g, '');
-        var urls = location.pathname.replace(/\/[0-9]{1,3}$/g, '');
-        var newURL = urls + url + (location.search ? "&" : "?") + "category=" + data;
-        newURL = newURL.replace('&&', '&');
-        newURL = newURL.replace('?&', '?');
-        history.pushState({}, '', newURL);
-        location.reload();
-    }else {
-        var url = location.search.replace(/size(.+?)(&|$)/g, '');
-        var url = url.replace(/size(.+?)(&|$)/g, '');
-        var urls = location.pathname.replace(/\/[0-9]{1,3}$/g, '');
-        var newURL = urls + url;
-        newURL = newURL.replace('&&', '&');
-        newURL = newURL.replace('?&', '?');
-        newURL = newURL.replace('&?', '?');
-        var slic = newURL.slice(-1);
-        if (slic == '?' || slic == '&'){
-            newURL = newURL.substring (0, newURL.length - 1);
+    $('.category-filter').change(function (e){
+        var data = $(this).data('value');
+        var urls = location.pathname;
+        if(this.checked) {
+            var url = location.search.replace(/page(.+?)(&|$)/g, '');
+            if (/(category=[0-9,]+)/g.test(location.search)){
+                url = urls + url.replace(/(category=[0-9,]+)(&|$)/g, '$1,' + data + '$2');
+            }else{
+                url = urls + url + (location.search ? "&" : "?") + "category=" + data;
+            }
+            url = url.replace('&&', '&');
+            url = url.replace('?&', '?');
+            history.pushState({}, '', url);
+            location.reload();
+        }else {
+            var url = location.search.replace(/page(.+?)(&|$)/g, '');
+            if (/(?<=category=[0-9]),/g.test(location.search)) {
+                var regex = '(?<=category=)([0-9,]+)?(' + data + ')([0-9,]+)?(&|$)';
+                var reg = new RegExp(regex, 'i');
+                url = urls + location.search.replace(reg, '$1$3$4');
+                url = url.replace('=,', '=');
+                url = url.replace(',,', ',');
+                url = url.replace(',&', '&');
+            } else {
+                url = urls + location.search.replace(/category(.+?)(&|$)/g, '');
+            }
+            url = url.replace('&&', '&');
+            url = url.replace('?&', '?');
+            var slic = url.slice(-1);
+            if (slic == '?' || slic == '&' || slic == ','){
+                url = url.substring(0, url.length - 1);
+            }
+            history.pushState({}, '', url);
+            location.reload();
         }
-        history.pushState({}, '', newURL);
+    })
+
+    $('.tag-filter').change(function (e){
+        var data = $(this).data('value');
+        var urls = location.pathname;
+        if(this.checked) {
+            var url = location.search.replace(/page(.+?)(&|$)/g, '');
+            if (/(tag=[0-9,]+)/g.test(location.search)){
+                url = urls + url.replace(/(tag=[0-9,]+)(&|$)/g, '$1,' + data + '$2');
+            }else{
+                url = urls + url + (location.search ? "&" : "?") + "tag=" + data;
+            }
+            url = url.replace('&&', '&');
+            url = url.replace('?&', '?');
+            history.pushState({}, '', url);
+            location.reload();
+        }else {
+            var url = location.search.replace(/page(.+?)(&|$)/g, '');
+            if (/(?<=tag=[0-9]),/g.test(location.search)) {
+                var regex = '(?<=tag=)([0-9,]+)?(' + data + ')([0-9,]+)?(&|$)';
+                var reg = new RegExp(regex, 'i');
+                url = urls + location.search.replace(reg, '$1$3$4');
+                url = url.replace('=,', '=');
+                url = url.replace(',,', ',');
+                url = url.replace(',&', '&');
+            } else {
+                url = urls + location.search.replace(/tag(.+?)(&|$)/g, '');
+            }
+            url = url.replace('&&', '&');
+            url = url.replace('?&', '?');
+            var slic = url.slice(-1);
+            if (slic == '?' || slic == '&' || slic == ','){
+                url = url.substring(0, url.length - 1);
+            }
+            history.pushState({}, '', url);
+            location.reload();
+        }
+    })
+
+    $('.level-filter').change(function (e){
+        var data = $(this).data('value');
+        var urls = location.pathname;
+        if(this.checked) {
+            var url = location.search.replace(/page(.+?)(&|$)/g, '');
+            if (/(level=[0-9,]+)/g.test(location.search)){
+                url = urls + url.replace(/(level=[0-9,]+)(&|$)/g, '$1,' + data + '$2');
+            }else{
+                url = urls + url + (location.search ? "&" : "?") + "level=" + data;
+            }
+            url = url.replace('&&', '&');
+            url = url.replace('?&', '?');
+            history.pushState({}, '', url);
+            location.reload();
+        }else {
+            var url = location.search.replace(/page(.+?)(&|$)/g, '');
+            if (/(?<=level=[0-9]),/g.test(location.search)) {
+                var regex = '(?<=level=)([0-9,]+)?(' + data + ')([0-9,]+)?(&|$)';
+                var reg = new RegExp(regex, 'i');
+                url = urls + location.search.replace(reg, '$1$3$4');
+                url = url.replace('=,', '=');
+                url = url.replace(',,', ',');
+                url = url.replace(',&', '&');
+            } else {
+                url = urls + location.search.replace(/level(.+?)(&|$)/g, '');
+            }
+            url = url.replace('&&', '&');
+            url = url.replace('?&', '?');
+            var slic = url.slice(-1);
+            if (slic == '?' || slic == '&' || slic == ','){
+                url = url.substring(0, url.length - 1);
+            }
+            history.pushState({}, '', url);
+            location.reload();
+        }
+    })
+
+    $('.change-sort').change(function (e){
+        var data = $(this).val();
+        var urls = location.pathname;
+        var url = location.search.replace(/page(.+?)(&|$)/g, '');
+        url = url.replace(/(sort=[a-z_]+)(&|$)/ig, '');
+        url = urls + url + (location.search ? "&" : "?") + "sort=" + data;
+        url = url.replace('&&', '&');
+        url = url.replace('?&', '?');
+        history.pushState({}, '', url);
         location.reload();
-    }
-})
+    });
+
+    $('.save-recipe').on('click', function (e) {
+        e.preventDefault();
+        var status = true;
+        $( ':input[required]', '.needs-validation' ).each( function () {
+            if ( this.value.trim() == '' ) {
+                $('.needs-validation').addClass('was-validated');
+                Swal.fire({ title: "Ошибка", text: 'Заполните все необходимые поля', icon: "error" });
+                status = false;
+                return false;
+            }
+        });
+        if(status){
+            $('.needs-validation').submit();
+        }
+    });
+
+    $(".create-recipe-category").submit(function(e) {
+        e.preventDefault();
+        var status = true;
+        $( ':input[required]', '.create-recipe-category' ).each( function () {
+            if ( this.value.trim() == '' ) {
+                $('.needs-validation').addClass('was-validated');
+                status = false;
+                return false;
+            }
+        });
+        if(status == true){
+            const fd = new FormData(this);
+            var url = $(this).attr('action');
+            $.ajax({
+                url: url,
+                method: 'post',
+                data: fd,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function(data) {
+                    Swal.fire("Готово!", data, "success");
+
+                    function func1() {
+                        $(location).attr('href', url);
+                    }
+
+                    setTimeout(func1, 2000);
+                },
+                error: function(jqXHR, exception) {
+                    Swal.fire({ title: "Ошибка", text: jqXHR.responseJSON.errors.title[0], icon: "error" });
+                }
+            });
+        }
+    });
+
+    $(".post-create-form").on('submit',function(e) {
+        e.preventDefault();
+        var status = true;
+        $( ':input[required]', '.post-create-form' ).each( function () {
+            if ( this.value.trim() == '' ) {
+                $('.needs-validation').addClass('was-validated');
+                status = false;
+                return false;
+            }
+        });
+        if(status == true){
+            var fd = new FormData(this);
+            fd.append("content", CKEDITOR.instances['editor1'].getData())
+            var url = $(this).attr('action');
+            $.ajax({
+                url: url,
+                method: 'post',
+                data: fd,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function(data) {
+                    Swal.fire("Готово!", data, "success");
+
+                    function func1() {
+                        $(location).attr('href', url);
+                    }
+
+                    setTimeout(func1, 2000);
+                },
+                error: function(jqXHR, exception) {
+                    Swal.fire({ title: "Ошибка", text: jqXHR.responseJSON.errors.title[0], icon: "error" });
+                }
+            });
+        }
+    });
+
+    $(".user-create-form").on('click', '.usr-create', function(e) {
+        e.preventDefault();
+        var status = true;
+        $( ':input[required]', '.user-create-form' ).each( function () {
+            if ( this.value.trim() == '' ) {
+                $('.needs-validation').addClass('was-validated');
+                status = false;
+                return false;
+            }
+        });
+        if(status == true){
+            var form = document.getElementById('form-user');
+            var fd = new FormData(form);
+            var url = $('.user-create-form').attr('action');
+            $.ajax({
+                url: url,
+                method: 'post',
+                data: fd,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function(data) {
+                    Swal.fire("Готово!", data, "success");
+
+                    function func1() {
+                        $(location).attr('href', url);
+                    }
+
+                    setTimeout(func1, 2000);
+                },
+                error: function(jqXHR, exception) {
+                    Swal.fire({ title: "Ошибка", text: jqXHR.responseJSON.errors.title[0], icon: "error" });
+                }
+            });
+        }
+    });
+
+    $(".user-edit-form").on('click', '.usr-edit', function(e) {
+        e.preventDefault();
+        var status = true;
+        $( ':input[required]', '.user-edit-form' ).each( function () {
+            if ( this.value.trim() == '' ) {
+                $('.needs-validation').addClass('was-validated');
+                status = false;
+                return false;
+            }
+        });
+        if(status == true){
+            var form = document.getElementById('form-user');
+            var fd = new FormData(form);
+            var url = $('.user-edit-form').attr('action');
+            $.ajax({
+                url: url,
+                method: 'post',
+                data: fd,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function(data) {
+                    Swal.fire("Готово!", data, "success");
+
+                    function func1() {
+                        $(location).attr('href', url.replace(/\/[0-9]{1,3}$/i, ''));
+                    }
+
+                    setTimeout(func1, 2000);
+                },
+                error: function(jqXHR, exception) {
+                    Swal.fire({ title: "Ошибка", text: jqXHR.responseJSON.errors.title[0], icon: "error" });
+                }
+            });
+        }
+    });
+
+    // $('.save-recipe-category').on('click', function (e) {
+    //     e.preventDefault();
+    //     var status = true;
+    //     $( ':input[required]', '.create-recipe-category' ).each( function () {
+    //         if ( this.value.trim() == '' ) {
+    //             $('.needs-validation').addClass('was-validated');
+    //             status = false;
+    //             return false;
+    //         }
+    //     });
+    //     if(status == true){
+    //         $('.create-recipe-category').submit();
+    //     }
+    // });
+
+    $('.create-element').on('submit', function (e) {
+        e.preventDefault();
+        var title = $('input[name=title]').val();
+        if (title == ''){
+            $(this).addClass('was-validated');
+            return false;
+        }
+        var token = $('input[name=_token]').val();
+        var url = $(this).attr('action');
+        $.ajax({
+            url: url,
+            method: 'POST',
+            data: {_token: token, title: title},
+            success: function(data){
+                Swal.fire("Готово!", data, "success");
+
+                function func1() {
+                    $(location).attr('href', url);
+                }
+
+                setTimeout(func1, 2000);
+            },
+            error: function(jqXHR, exception) {
+                Swal.fire({ title: "Ошибка", text: jqXHR.responseJSON.errors.title[0], icon: "error" });
+            }
+        })
+    });
+
+    $('.change-element').on('submit', function (e) {
+        e.preventDefault();
+        var title = $('input[name=title]').val();
+        if (title == ''){
+            $(this).addClass('was-validated');
+            return false;
+        }
+        var token = $('input[name=_token]').val();
+        var url = $(this).attr('action');
+        $.ajax({
+            url: url,
+            method: 'POST',
+            data: {_token: token, _method: 'PUT', title: title},
+            success: function(data){
+                console.log(data);
+                Swal.fire("Готово!", data, "success");
+
+                function func1() {
+                    $(location).attr('href', url.replace(/\/[0-9]{1,3}$/i, ''));
+                }
+
+                setTimeout(func1, 2000);
+            },
+            error: function(jqXHR, exception) {
+                Swal.fire({ title: "Ошибка", text: jqXHR.responseJSON.errors.title[0], icon: "error" });
+            }
+        })
+    });
 
 
     $('.del-recipe').on('click', function (e) {
@@ -469,10 +803,47 @@ $('.category-filter').on('click', function (e){
                     data: {_token: token, _method: 'DELETE'},
                     success: function(data){
                         console.log(data);
-                        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+                        Swal.fire("Рецепт удален!", "Сейчас вы будете перенаправлены на страницу с рецептами.", "success");
 
                         function func1() {
                             $(location).attr('href', '/admin/recipe');
+                        }
+
+                        setTimeout(func1, 2000);
+                    },
+                    error: function(jqXHR, exception) {
+                        Swal.fire({ title: "Waring", text: jqXHR['responseText'], icon: "error" });
+                    }
+                })
+            }
+        })
+    });
+
+    $('.del-post').on('click', function (e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        var token = $('input[name=_token]').val();
+        Swal.fire({
+            title: 'Вы уверены что хотите удалить статью?',
+            text: "Вы не сможете отменить это действие!",
+            icon: 'Внимание',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Удалить',
+            cancelButtonText: 'Отмена',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/admin/posts/' + id,
+                    method: 'POST',
+                    data: {_token: token, _method: 'DELETE'},
+                    success: function(data){
+                        console.log(data);
+                        Swal.fire("Статья удалена!", "Сейчас вы будете перенаправлены на страницу со статьями.", "success");
+
+                        function func1() {
+                            $(location).attr('href', '/admin/posts');
                         }
 
                         setTimeout(func1, 2000);
@@ -523,6 +894,189 @@ $('.category-filter').on('click', function (e){
         })
     });
 
+    $('.delete-tag').on('click', function (e){
+        e.preventDefault();
+        deleteElement('Вы уверены что хотите удалить тэг?', $(this));
+    });
+
+    $('.delete-category').on('click', function (e){
+        e.preventDefault();
+        deleteElement('Вы уверены что хотите удалить категорию?', $(this));
+    });
+
+    $('.delete-recipe-tag').on('click', function (e){
+        e.preventDefault();
+        deleteElement('Вы уверены что хотите удалить рубрику?', $(this));
+    });
+
+    $('.delete-recipe-category').on('click', function (e){
+        e.preventDefault();
+        deleteElement('Вы уверены что хотите удалить категорию?', $(this));
+    });
+
+    $('.delete-user').on('click', function (e){
+        e.preventDefault();
+        deleteElement('Вы уверены что хотите удалить пользователя?', $(this));
+    });
+
+    function deleteElement(title, element) {
+        var token = $('input[name=_token]').val();
+        var url = location.href.replace(/\?page=[0-9]{1,3}$/i, '');
+        var action = element.data('href');
+            Swal.fire({
+                title: title,
+                text: "Вы не сможете отменить это действие!",
+                icon: 'Внимание',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Удалить',
+                cancelButtonText: 'Отмена',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: action,
+                        method: 'POST',
+                        data: {_token: token, _method: 'DELETE'},
+                        success: function(data){
+                            console.log(data);
+                            Swal.fire("Готово!", data, "success");
+
+                            function func1() {
+                                $(location).attr('href', url);
+                            }
+
+                            setTimeout(func1, 2000);
+                        },
+                        error: function(jqXHR, exception) {
+                            Swal.fire({ title: "Waring", text: jqXHR['responseText'], icon: "error" });
+                        }
+                    })
+                }
+            })
+    }
+
+    $('.save-settings').on('click', function (e) {
+        e.preventDefault();
+        var $front = {};
+        var $admin = {};
+        $('.front-settings').find ('input').each(function() {
+            $front[this.name] = $(this).val();
+        });
+
+        $('.admin-settings').find ('input').each(function() {
+            $admin[this.name] = $(this).val();
+        });
+
+        var token = $('input[name=_token]').val();
+        var url = location.href;
+        Swal.fire({
+            title: 'Вы уверены что хотите сохранить настройки?',
+            icon: 'Внимание',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Cохранить',
+            cancelButtonText: 'Отмена',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/admin/settings',
+                    method: 'POST',
+                    data: {_token: token, _method: 'PUT', front: $front, admin: $admin},
+                    success: function(data){
+                        console.log(data);
+                        Swal.fire("Готово!", data, "success");
+
+                        // function func1() {
+                        //     $(location).attr('href', url);
+                        // }
+                        //
+                        // setTimeout(func1, 2000);
+                    },
+                    error: function(jqXHR, exception) {
+                        Swal.fire({ title: "Waring", text: jqXHR['responseText'], icon: "error" });
+                    }
+                })
+            }
+        })
+    });
+
+    $('.save-about').on('click', function (e) {
+        e.preventDefault();
+        var data = {};
+        var status = true;
+        $( 'input', '.about-form' ).each( function () {
+            if ( this.value.trim() == '' ) {
+                $('.needs-validation').addClass('was-validated');
+                status = false;
+                return false;
+            }
+        });
+        $('.about-form').find('input').each(function() {
+            data[this.name] = $(this).val();
+        });
+        data['content'] = CKEDITOR.instances['editor1'].getData();
+        var url = $('.about-form').attr('action');
+        if (status == true) {
+            $.ajax({
+                url: url,
+                method: 'POST',
+                data: data,
+                success: function(data){
+                    console.log(data);
+                    Swal.fire("Готово!", data, "success");
+
+                    function func1() {
+                        $(location).attr('href', '/admin');
+                    }
+
+                    setTimeout(func1, 2000);
+                },
+                error: function(jqXHR, exception) {
+                    Swal.fire({ title: "Waring", text: jqXHR['responseJSON'], icon: "error" });
+                }
+            })
+        }
+    });
+
+    $('.save-contact').on('click', function (e) {
+        e.preventDefault();
+        var data = {};
+        var status = true;
+        $( 'input', '.contact-form' ).each( function () {
+            if ( this.value.trim() == '' ) {
+                $('.needs-validation').addClass('was-validated');
+                status = false;
+                return false;
+            }
+        });
+        $('.contact-form').find('input').each(function() {
+            data[this.name] = $(this).val();
+        });
+        var url = $('.contact-form').attr('action');
+        if (status == true) {
+            $.ajax({
+                url: url,
+                method: 'POST',
+                data: data,
+                success: function(data){
+                    console.log(data);
+                    Swal.fire("Готово!", data, "success");
+
+                    function func1() {
+                        $(location).attr('href', '/admin');
+                    }
+
+                    setTimeout(func1, 2000);
+                },
+                error: function(jqXHR, exception) {
+                    Swal.fire({ title: "Waring", text: jqXHR['responseJSON'], icon: "error" });
+                }
+            })
+        }
+    });
+
     $('.delete-comments').on('click', function (e) {
         e.preventDefault();
         var id = $(this).data('id');
@@ -545,7 +1099,7 @@ $('.category-filter').on('click', function (e){
                     data: {_token: token, _method: 'DELETE', id: id},
                     success: function(data){
                         console.log(data);
-                        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+                        Swal.fire("Готово!", data, "success");
 
                         function func1() {
                             $(location).attr('href', url);
@@ -559,6 +1113,42 @@ $('.category-filter').on('click', function (e){
                 })
             }
         })
+    });
+
+    $('.create-usr').on('click', function (e) {
+        e.preventDefault();
+        var status = true;
+        $( ':input[required]', '.create-user-with-pass' ).each( function () {
+            if ( this.value == '' ) {
+                $('.create-user-with-pass').addClass('was-validated');
+                status = false;
+                return false;
+            }
+        });
+        if(status == true){
+            var fd = {};
+            $('.create-user-with-pass').find ('input').each(function() {
+                fd[this.name] = $(this).val();
+            });
+            var url = location.href;
+            $.ajax({
+                url: url,
+                method: 'POST',
+                data: fd,
+                success: function(data){
+                    Swal.fire("Готово!", data, "success");
+
+                    function func1() {
+                        $(location).attr('href', '/');
+                    }
+
+                    setTimeout(func1, 2000);
+                },
+                error: function(jqXHR, exception) {
+                    Swal.fire({ title: "Waring", text: jqXHR['responseText'], icon: "error" });
+                }
+            })
+        }
     });
 
     $('.switch-comments').click(function (e) {
@@ -617,7 +1207,7 @@ $('.category-filter').on('click', function (e){
                         data: {_token: token, id: id},
                         success: function(data){
                             console.log(data);
-                            Swal.fire("Deleted!", "Your file has been deleted.", "success");
+                            Swal.fire("Готово!", data, "success");
 
                             function func1() {
                                 $(location).attr('href', url);
@@ -634,4 +1224,45 @@ $('.category-filter').on('click', function (e){
         }
     });
 
+    $('.one').each(function(index, el) {
+        var $El = $(el);
+        $El.barrating('show', {
+            initialRating: $El.data('raiting'),
+            theme: 'fontawesome-stars',
+            showSelectedRating: false,
+            readonly: true,
+        });
+    });
+
 });
+
+
+var options = {
+    url: function(phrase) {
+        return "/admin/search/live-search?search=" + phrase;
+    },
+
+    getValue: "title",
+
+    requestDelay: 500,
+
+    list: {
+        match: {
+            enabled: true
+        },
+        maxNumberOfElements: 8
+    },
+
+    template: {
+        type: "custom",
+        method: function(value, item) {
+            return "<a class='text-decoration-none text-reset' href='/admin/" + item.model + "/" + item.id + "/edit'>" + value + "</a>";
+        }
+    },
+
+    theme: "square"
+
+};
+
+$("#square").easyAutocomplete(options);
+

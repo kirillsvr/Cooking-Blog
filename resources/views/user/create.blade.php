@@ -24,6 +24,8 @@
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/css/vendors/feather-icon.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/css/vendors/bootstrap.css')}}">
     <!-- App css-->
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/css/vendors/sweetalert2.css')}}">
+
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/css/style.css')}}">
     <link id="color" rel="stylesheet" href="{{asset('assets/admin/css/color-1.css')}}" media="screen">
     <!-- Responsive css-->
@@ -47,31 +49,33 @@
                     @endif
                     <div><a class="logo" href="index.html"><img class="img-fluid for-light" src="{{asset('/assets/admin/images/logo/login.png')}}" alt="looginpage"><img class="img-fluid for-dark" src="../assets/images/logo/logo_dark.png" alt="looginpage"></a></div>
                     <div class="login-main">
-                        <form class="theme-form" action="{{route('register.store')}}" method="post">
+                        <form class="theme-form create-user-with-pass needs-validation" action="{{route('register.store')}}" method="post">
                             @csrf
-                            <h4>Create your account</h4>
-                            <p>Enter your personal details to create account</p>
+                            <h4>Регистрация</h4>
+                            <p>Впишите данные вашего аккаунта</p>
                             <div class="form-group">
-                                <label class="col-form-label pt-0">Your Name</label>
+                                <label class="col-form-label pt-0">Ваше Имя</label>
                                 <div class="row g-2">
-                                    <input class="form-control" type="text" name="name" value="{{old('name')}}" placeholder="Name">
+                                    <input class="form-control" type="text" name="name" value="{{old('name')}}" placeholder="Имя" required>
+                                    <div class="invalid-feedback">Заполните имя</div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-form-label">Email Address</label>
-                                <input class="form-control" name="email" type="email" value="{{old('email')}}" placeholder="Test@gmail.com">
+                                <label class="col-form-label">Ваш Email</label>
+                                <input class="form-control" name="email" type="email" value="{{old('email')}}" placeholder="Test@gmail.com" required>
+                                <div class="invalid-feedback">Заполните email</div>
                             </div>
                             <div class="form-group">
-                                <label class="col-form-label">Password</label>
+                                <label class="col-form-label">Пароль</label>
                                 <div class="form-input position-relative">
-                                    <input class="form-control" type="password" name="password" placeholder="*********">
-                                    <div class="show-hide"><span class="show"></span></div>
+                                    <input class="form-control" type="password" name="password" placeholder="*********" required>
+                                    <div class="invalid-feedback">Заполните пароль</div>
                                 </div>
                             </div>
                             <div class="form-group mb-0">
-                                <button class="btn btn-primary btn-block w-100" type="submit">Create Account</button>
+                                <button class="btn btn-primary btn-block w-100 create-usr" type="submit">Создать аккаунт</button>
                             </div>
-                            <p class="mt-4 mb-0">Already have an account?<a class="ms-2" href="{{route('login')}}">Sign in</a></p>
+                            <p class="mt-4 mb-0">Уже есть аккаунт?<a class="ms-2" href="{{route('login')}}">Вход</a></p>
                         </form>
                     </div>
                 </div>
@@ -89,6 +93,7 @@
     <script src="{{asset('assets/admin/js/config.js')}}"></script>
     <!-- Plugins JS start-->
     <!-- Plugins JS Ends-->
+    <script src="{{asset('assets/admin/js/sweet-alert/sweetalert.min.js')}}"></script>
     <!-- Theme js-->
     <script src="{{asset('assets/admin/js/script.js')}}"></script>
     <!-- login js-->

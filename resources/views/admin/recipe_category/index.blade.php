@@ -20,6 +20,7 @@
                         </div>
                     </div>
                         @if(count($categories))
+                        @csrf
                         <div class="table-responsive card-body">
                             <table class="table table-hover">
                                 <thead>
@@ -38,11 +39,7 @@
                                         <td>{{$category->slug}}</td>
                                         <td>
                                             <a class="btn btn-success btn-s" data-original-title="btn btn-danger btn-xs" title="" href="{{route('recipe_category.edit', $category->id)}}" data-bs-original-title=""><i class="fa fa-pencil"></i></a>
-                                            <form action="{{route('categories.destroy', $category->id)}}" class="d-inline-block" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-danger btn-s" type="submit" data-original-title="btn btn-danger btn-xs" title="" data-bs-original-title=""><i class="fa fa-trash-o"></i></button>
-                                            </form>
+                                            <a class="btn btn-danger btn-s delete-recipe-category" data-href="{{route('recipe_category.destroy', $category->id)}}" data-original-title="btn btn-danger btn-xs" title="" data-bs-original-title=""><i class="fa fa-trash-o"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

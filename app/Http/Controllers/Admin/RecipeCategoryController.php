@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\RecipeCategory\RecipeCategoryUpdateAction;
+use App\DTO\RecipeCategoryUpdateRequestData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRecipeCategory;
 use App\Models\RecipeCategory;
-use Illuminate\Http\Request;
+use App\Services\ImageSaveService;
+use Illuminate\Support\Facades\Storage;
 
 class RecipeCategoryController extends Controller
 {
@@ -39,10 +42,9 @@ class RecipeCategoryController extends Controller
     public function store(StoreRecipeCategory $request)
     {
         $data = $request->all();
-        $data['thumbnail'] = RecipeCategory::uploadImage($request);
+        $data->thumbnail = ImageSaveService::uploadImage($data->thumbnail);
         RecipeCategory::create($data);
-        $request->session()->flash('success', 'Категория добавлена');
-        return redirect()->route('recipe_category.index');
+        return response()->json('Категория успешно добавлена', 200);
     }
 
     /**
@@ -62,10 +64,9 @@ class RecipeCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(RecipeCategory $recipeCategory)
     {
-        $category = RecipeCategory::find($id);
-        return view('admin.recipe_category.edit', compact('category'));
+        return view('admin.recipe_category.edit', compact('recipeCategory'));
     }
 
     /**
@@ -75,9 +76,10 @@ class RecipeCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(RecipeCategoryUpdateRequestData $data, RecipeCategory $recipeCategory, RecipeCategoryUpdateAction $action)
     {
-        //
+        $action->execute($data, $recipeCategory);
+        return response()->json('Категория успешно изменена', 200);
     }
 
     /**
@@ -86,8 +88,10 @@ class RecipeCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(RecipeCategory $recipeCategory)
     {
-        //
+        Storage::delete($recipeCategory->thumbnail);
+        $recipeCategory->delete();
+        return response()->json('Категория успешно удалена', 200);
     }
 }

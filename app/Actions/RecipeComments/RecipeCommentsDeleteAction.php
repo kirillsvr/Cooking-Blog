@@ -3,6 +3,7 @@
 namespace App\Actions\RecipeComments;
 
 use App\Models\RecipeComments;
+use App\Repositories\RecipeCommentsRepository;
 use App\Services\RecipeComments\GetRelatedIdCommentsService;
 use Illuminate\Support\Facades\DB;
 
@@ -17,7 +18,7 @@ class RecipeCommentsDeleteAction
 
     public function execute($commentId, $recipeId)
     {
-        $comments = RecipeComments::where('recipe_id', $recipeId)->get()->toArray();
+        $comments = RecipeCommentsRepository::sameRecipe($recipeId);
         $relatedComments = $this->service->generateRelatedIdsArray($commentId, $comments);
         DB::table('recipe_comments')
             ->whereIn('id', $relatedComments)

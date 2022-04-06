@@ -11,11 +11,11 @@ class SettingPolicy
 
     public function edit(User $user)
     {
-        return $user->role == 3;
+        return $user->role_id == 3;
     }
 
     public function update(User $user)
     {
-        return $user->role == 3;
+        return $user->role_id == 3;
     }
 }

@@ -19,7 +19,6 @@ class ContactPageController extends Controller
     {
         $contact = Contact::find(1);
         $contact->update($request->validated());
-        $request->session()->flash('success', 'Страница "Контакты" обновлена');
-        return redirect()->home();
+        return response()->json('Страница "Контакты" обновлена', 200);
     }
 }

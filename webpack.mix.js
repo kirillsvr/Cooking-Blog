@@ -39,7 +39,7 @@ mix.scripts([
     'resources/assets/admin/js/tooltip-init.js',
     'resources/assets/admin/js/script.js',
     'resources/assets/admin/js/theme-customizer/customizer.js',
-], 'public/assets/admin/js/scripts.js');
+], 'public/assets/admin/js/script.js');
 
 mix.copyDirectory('resources/assets/admin/fonts', 'public/assets/admin/fonts');
 mix.copyDirectory('resources/assets/admin/images', 'public/assets/admin/images');

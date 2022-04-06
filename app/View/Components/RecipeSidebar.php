@@ -2,7 +2,13 @@
 
 namespace App\View\Components;
 
+use App\Models\Recipe;
 use App\Models\RecipeCategory;
+use App\Models\RecipeTags;
+use App\Models\Tag;
+use App\Models\User;
+use App\Repositories\RecipeRepository;
+use App\Repositories\RecipeTagRepository;
 use Illuminate\View\Component;
 
 class RecipeSidebar extends Component
@@ -24,7 +30,15 @@ class RecipeSidebar extends Component
      */
     public function render()
     {
+        $admin = User::find(4);
         $categories = RecipeCategory::all();
-        return view('components.recipe-sidebar', compact('categories'));
+        $tags = RecipeTagRepository::tagWithCountPosts();
+        $recipes = RecipeRepository::fourMorePopularRecipes();
+        return view('components.recipe-sidebar', compact(
+            'categories',
+            'tags',
+            'recipes',
+            'admin'
+        ));
     }
 }

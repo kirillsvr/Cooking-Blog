@@ -129,3 +129,38 @@ Breadcrumbs::for('admin.comments', function (BreadcrumbTrail $trail, string $id)
     $trail->parent('admin.recipe', $id);
     $trail->push('Комментарии');
 });
+
+
+
+
+// Home
+Breadcrumbs::for('front.home', function (BreadcrumbTrail $trail) {
+    $trail->push('Главная', route('home'));
+});
+
+// Home > [Breadcrumb]
+Breadcrumbs::for('front.breadcrumb', function (BreadcrumbTrail $trail, string $title, string|null $route = null) {
+    $trail->parent('front.home');
+    $trail->push($title, !is_null($route) ? route($route) : null);
+});
+
+// Home > Blog > [Article]
+Breadcrumbs::for('front.article', function (BreadcrumbTrail $trail, string $id) {
+    $post = \App\Models\Post::where('slug', $id)->first();
+    $trail->parent('front.breadcrumb', 'Блог', 'blog.index');
+    $trail->push($post->title, route('article.show', $post->slug));
+});
+
+// Home > Recipes > [Recipe]
+Breadcrumbs::for('front.recipe', function (BreadcrumbTrail $trail, string $id) {
+    $recipe = \App\Models\Recipe::where('slug', $id)->first();
+    $trail->parent('front.breadcrumb', 'Рецепты', 'front.recipes.index');
+    $trail->push($recipe->title, route('front.recipe.index', $recipe->slug));
+});
+
+// Home > Authors > [Author]
+Breadcrumbs::for('front.author', function (BreadcrumbTrail $trail, string $id) {
+    $author = \App\Models\User::find($id);
+    $trail->parent('front.breadcrumb', 'Авторы', 'authors.index');
+    $trail->push($author->name, route('authors.show', $author->id));
+});

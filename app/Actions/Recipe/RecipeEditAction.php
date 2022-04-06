@@ -12,6 +12,7 @@ class RecipeEditAction extends AbstractRecipeAction
     public function execute(Recipe $recipe)
     {
         $categories = $this->getCategories();
+        $tags = $this->getTags();
         $ingredients = $recipe->recipeIngredients->toArray();
         $steps = $recipe->recipeSteps->toArray();
         $authors = $this->getAuthors();
@@ -21,7 +22,8 @@ class RecipeEditAction extends AbstractRecipeAction
             'categories',
             'ingredients',
             'steps',
-            'authors'
+            'authors',
+            'tags'
         );
     }
 }

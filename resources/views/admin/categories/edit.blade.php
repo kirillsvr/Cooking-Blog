@@ -11,17 +11,16 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <form class="needs-validation" method="post" action="{{route('categories.update', $category->id)}}" novalidate="">
+                    <form class="needs-validation change-element" method="post" action="{{route('categories.update', $category->id)}}" novalidate="">
                         <div class="card-header">
                             <x-admin-subtitles headtitle="Категория «{{$category->title}}»" subtitle="Заполните необходимые поля"/>
                         </div>
                         <div class="card-body">
                             @csrf
-                            @method("PUT")
                             <div class="row g-3">
                                 <label class="form-label" for="validationCustom01">Название категории</label>
                                 <input class="form-control @error('title') is-invalid @enderror" id="validationCustom01" type="text" name="title" value="{{$category->title}}" required="">
-                                <div class="valid-feedback">Looks good!</div>
+                                <div class="invalid-feedback">Заполните название категории</div>
                             </div>
                         </div>
                         <div class="card-footer text-end">

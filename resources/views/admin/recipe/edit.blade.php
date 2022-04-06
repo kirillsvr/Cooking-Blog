@@ -30,12 +30,12 @@
                             <div class="row g-3 mb-3">
                                 <div class="col-md-4">
                                     <label class="form-label" for="prep_time">Время на подготовку</label>
-                                    <input class="form-control" id="prep_time" name="prep_time" type="text" placeholder="City" value="{{$recipe->prep_time}}" required="">
+                                    <input class="form-control" id="prep_time" name="prep_time" type="text" placeholder="30 мин." value="{{$recipe->prep_time}}" required="">
                                     <div class="invalid-feedback">Please provide a valid city.</div>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label" for="cook_time">Время приготовления</label>
-                                    <input class="form-control" id="cook_time" name="cook_time" type="text" placeholder="Zip" value="{{$recipe->cook_time}}" required="">
+                                    <input class="form-control" id="cook_time" name="cook_time" type="text" placeholder="30 мин." value="{{$recipe->cook_time}}" required="">
                                     <div class="invalid-feedback">Please select a valid state.</div>
                                 </div>
                                 <div class="col-md-4 mb-3">
@@ -56,12 +56,13 @@
                                     @foreach($authors as $author)
                                         <option value="{{$author->id}}" id="user_id" @if($author->id == $recipe->user_id) selected @endif>{{$author->name}}</option>
                                     @endforeach
+                                    </select>
                                 </div>
                             </div>
                             @endcan
                             <div class="row g-3 mb-4">
                                 <label class="form-label" for="description">Краткое описание</label>
-                                <textarea class="form-control @error('content') is-invalid @enderror" name="content" id="description" rows="3">{{$recipe->content}}</textarea>
+                                <textarea class="form-control @error('content') is-invalid @enderror" name="content" id="editor1" rows="3">{{$recipe->content}}</textarea>
                             </div>
                             <div class="mb-5 g-3 row">
                                 <div class="col-md-6">
@@ -74,13 +75,11 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-2">
-                                        <div class="col-form-label">Default Placeholder</div>
-                                        <select class="js-example-placeholder-multiple col-sm-12" multiple="multiple">
-                                            <option value="AL">Alabama</option>
-                                            <option value="WY">Wyoming</option>
-                                            <option value="WY">Coming</option>
-                                            <option value="WY">Hanry Die</option>
-                                            <option value="WY">John Doe</option>
+                                        <div class="col-form-label">Рубрики</div>
+                                        <select class="js-example-placeholder-multiple col-sm-12" name="tags[]" multiple="multiple">
+                                            @foreach($tags as $key => $tag)
+                                            <option name="tags[{{$key}}]" value="{{$key}}">{{$tag}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -90,9 +89,9 @@
                                     <img src="/uploads/{{$recipe->thumbnail}}" width="300" alt="">
                                 </div>
                                 <div class="col-md-8">
-                                    <label class="col-sm-3 col-form-label">Upload File</label>
+                                    <label class="col-sm-3 col-form-label">Загрузить изображение</label>
                                     <div class="col-sm-9">
-                                        <input type="hidden" name="oldImage" value="{{$recipe->thumbnail}}">
+                                        <input type="hidden" name="old_image" value="{{$recipe->thumbnail}}">
                                         <input class="form-control" type="file" name="thumbnail">
                                     </div>
                                 </div>
@@ -178,7 +177,7 @@
                                             <img src="/uploads/{{$step['image']}}" width="200" alt="">
                                             <a href="javascript:void(0)" class="mt-3 ml-2 mx-auto delete-img-step" data-id="{{$step['id']}}"><i class="fa fa-times"></i></a>
                                         @endif
-                                        <input type="hidden" name="steps[{{$loop->index}}][oldImage]" value="{{$step['image']}}">
+                                        <input type="hidden" name="steps[{{$loop->index}}][old_image]" value="{{$step['image']}}">
                                         <label class="col-sm-3 col-form-label">Upload File</label>
                                         <input class="form-control" type="file" name="steps[{{$loop->index}}][image]" value="http://site.lara/assets/front/{{$step['image']}}">
                                     </div>
@@ -190,7 +189,7 @@
                                                 <img src="/uploads/{{$step['image']}}" width="200" alt="">
                                                 <a href="javascript:void(0)" class="mt-3 ml-2 mx-auto delete-img-step" data-id="{{$step['id']}}"><i class="fa fa-times"></i></a>
                                             @endif
-                                                <input type="hidden" name="steps[{{$loop->index}}][oldImage]" value="{{$step['image']}}">
+                                            <input type="hidden" name="steps[{{$loop->index}}][old_image]" value="{{$step['image']}}">
                                             <label class="col-sm-3 col-form-label">Upload File</label>
                                             <input class="form-control" type="file" name="steps[{{$loop->index}}][image]" value="http://site.lara/assets/front/{{$step['image']}}">
                                         </div>
@@ -200,7 +199,7 @@
                                     @endif
                                     <div class="col-md-12">
                                         <label class="form-label" for="exampleFormControlTextarea4">Описание шага</label>
-                                        <textarea class="form-control @error('description') is-invalid @enderror" name="steps[{{$loop->index}}][description]" id="exampleFormControlTextarea4" rows="3">{{$step['info']}}</textarea>
+                                        <textarea class="form-control @error('description') is-invalid @enderror" name="steps[{{$loop->index}}][info]" id="exampleFormControlTextarea4" rows="3">{{$step['info']}}</textarea>
                                     </div>
                                 </div>
                                 @endforeach
@@ -218,5 +217,27 @@
 @endsection
 
 @section('dopScripts')
+    <script src="{{asset('assets/admin/js/editor/ckeditor/ckeditor.js')}}"></script>
+    <script src="{{asset('assets/admin/js/editor/ckeditor/adapters/jquery.js')}}"></script>
+    <script src="{{asset('assets/admin/js/editor/ckeditor/styles.js')}}"></script>
+    <script src="{{asset('assets/admin/js/editor/ckeditor/ckeditor.custom.js')}}"></script>
+    <script>
+        CKEDITOR.replace( 'editor1', {
+            filebrowserUploadUrl: "{{route('upload.image', ['_token' => csrf_token() ])}}",
+            filebrowserUploadMethod: 'form',
+            on: {
+                contentDom: function( evt ) {
+                    // Allow custom context menu only with table elemnts.
+                    evt.editor.editable().on( 'contextmenu', function( contextEvent ) {
+                        var path = evt.editor.elementPath();
+
+                        if ( !path.contains( 'table' ) ) {
+                            contextEvent.cancel();
+                        }
+                    }, null, null, 5 );
+                }
+            }
+        } );
+    </script>
     <script src="{{asset('assets/admin/js/sweet-alert/sweetalert.min.js')}}"></script>
 @endsection

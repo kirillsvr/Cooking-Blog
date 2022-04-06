@@ -28,11 +28,11 @@ class StoreCreateUser extends FormRequest
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required',
+            'role_id' => 'required',
             'public_email' => 'nullable',
-            'first_name' => 'nullable',
-            'last_name' => 'nullable',
             'info' => 'nullable',
-            'image' => 'nullable|image',
+            'web' => 'nullable',
+            'image' => 'required|image',
         ];
     }
 }

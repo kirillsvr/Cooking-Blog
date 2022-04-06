@@ -8,17 +8,9 @@ use function bcrypt;
 
 class UserStoreAction
 {
-    protected $service;
-
-    public function __construct(ImageSaveService $service)
-    {
-        $this->service = $service;
-    }
-
     public function execute(array $data): void
     {
-        $data['image'] = $this->service->uploadImage($data['image'], 'image');
-        $data['password'] = bcrypt($data['password']);
+        $data['image'] = ImageSaveService::uploadImage($data['image'], 'image');
         User::create($data);
     }
 }

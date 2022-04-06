@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTag;
 use App\Models\Category;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = Tag::paginate(2);
+        $tags = Tag::paginate(config('settingsAdmin.tags_on_page'));
         return view('admin.tags.index', compact('tags'));
     }
 
@@ -36,11 +37,10 @@ class TagController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTag $request)
     {
         Tag::create($request->all());
-        $request->session()->flash('success', 'Тэг добавлен');
-        return redirect()->route('tags.index');
+        return response()->json('Тэг успешно добавлен', 200);
     }
 
     /**
@@ -72,11 +72,11 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tag $tag)
+    public function update(StoreTag $request, Tag $tag)
     {
         $tag->slug = null;
         $tag->update($request->all());
-        return redirect()->route('tags.index')->with('success', 'Изменения сохранены');
+        return response()->json('Тэг успешно изменен', 200);
     }
 
     /**
@@ -88,6 +88,6 @@ class TagController extends Controller
     public function destroy(Tag $tag)
     {
         $tag->delete();
-        return redirect()->route('tags.index')->with('success', 'Тэг удален');
+        return response()->json('Тэг успешно удален', 200);
     }
 }

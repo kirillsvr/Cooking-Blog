@@ -2,22 +2,25 @@
 
 namespace App\Actions\Post;
 
+use App\DTO\PostUpdateRequestData;
 use App\Models\Post;
+use App\Repositories\PostTagRepository;
 use App\Services\ImageSaveService;
+use Illuminate\Http\UploadedFile;
 
 class PostUpdateAction
 {
-    protected $service;
-
-    public function __construct(ImageSaveService $service)
+    public function execute(PostUpdateRequestData $data, Post $post)
     {
-        $this->service = $service;
+        $data->thumbnail = $this->uploadImage($data->thumbnail, $post);
+        $post->update($data->all());
+        PostTagRepository::addOrDeleteTags($data->tags, $post);
     }
 
-    public function execute(array $data, Post $post)
+    private function uploadImage(UploadedFile|string $thumbnail, Post $post): string
     {
-        $data['thumbnail'] = $this->service->uploadImage($data['thumbnail'], $post->thumbnail);
-        $post->update($data);
-        $post->tags()->sync($data['tags']);
+        if (is_string($thumbnail)) return $thumbnail;
+
+        return ImageSaveService::uploadImage($thumbnail, $post->thumbnail);
     }
 }

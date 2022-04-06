@@ -17,7 +17,7 @@ class AdminPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->role == 3;
+        return $user->role_id == 3;
     }
 
     /**
@@ -29,7 +29,7 @@ class AdminPolicy
      */
     public function view(User $user, User $model)
     {
-        return $user->role == 3 || $user->id == $model->id;
+        return $user->role_id == 3 || $user->id == $model->id;
     }
 
     /**
@@ -40,7 +40,7 @@ class AdminPolicy
      */
     public function create(User $user)
     {
-        return $user->role == 3;
+        return $user->role_id == 3;
     }
 
     /**
@@ -52,7 +52,7 @@ class AdminPolicy
      */
     public function update(User $user, User $model)
     {
-        return $user->role == 3 || $user->id == $model->id;
+        return $user->role_id == 3 || $user->id == $model->id;
     }
 
     /**
@@ -64,7 +64,7 @@ class AdminPolicy
      */
     public function delete(User $user, User $model)
     {
-        return $user->role == 3;
+        return $user->role_id == 3;
     }
 
     /**
@@ -76,7 +76,7 @@ class AdminPolicy
      */
     public function restore(User $user, User $model)
     {
-        return $user->role == 3;
+        return $user->role_id == 3;
     }
 
     /**
@@ -88,6 +88,6 @@ class AdminPolicy
      */
     public function forceDelete(User $user, User $model)
     {
-        return $user->role == 3;
+        return $user->role_id == 3;
     }
 }

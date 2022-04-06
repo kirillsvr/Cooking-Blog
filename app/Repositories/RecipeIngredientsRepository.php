@@ -6,7 +6,7 @@ use App\Models\RecipeIngredients;
 
 class RecipeIngredientsRepository
 {
-    public function deleteIngredients($id)
+    public static function deleteIngredients($id)
     {
         RecipeIngredients::where('recipe_id', $id)->delete();
     }

@@ -50,30 +50,29 @@
                             </ul>
                         </div>
                     @endif
-                    <div><a class="logo" href="index.html"><img class="img-fluid for-light" src="../assets/images/logo/login.png" alt="looginpage"><img class="img-fluid for-dark" src="../assets/images/logo/logo_dark.png" alt="looginpage"></a></div>
+                    <div><a class="logo" href="index.html"><img class="img-fluid for-light" src="/assets/admin/images/logo/login.png" alt="looginpage"><img class="img-fluid for-dark" src="../assets/images/logo/logo_dark.png" alt="looginpage"></a></div>
                     <div class="login-main">
                         <form class="theme-form" action="{{route('auth')}}" method="post">
                             @csrf
-                            <h4>Sign in to account</h4>
-                            <p>Enter your email & password to login</p>
+                            <h4>Вход в аккаунт</h4>
+                            <p>Введите ваш email и пароль</p>
                             <div class="form-group">
-                                <label class="col-form-label">Email Address</label>
+                                <label class="col-form-label">Email</label>
                                 <input class="form-control" type="email" name="email" value="{{old('email')}}" required="" placeholder="Test@gmail.com">
                             </div>
                             <div class="form-group">
-                                <label class="col-form-label">Password</label>
+                                <label class="col-form-label">Пароль</label>
                                 <div class="form-input position-relative">
                                     <input class="form-control" type="password" name="password" required="" placeholder="*********">
-                                    <div class="show-hide"><span class="show">                         </span></div>
                                 </div>
                             </div>
-                            <div class="form-group mb-0">
-                                <a class="link" href="forget-password.html">Forgot password?</a>
+                            <div class="form-group mt-5">
+                                <a class="link" href="{{route('password.request')}}">Забыли пароль?</a>
                                 <div class="text-end mt-3">
-                                    <button class="btn btn-primary btn-block w-100" type="submit">Sign in</button>
+                                    <button class="btn btn-primary btn-block w-100" type="submit">Вход</button>
                                 </div>
                             </div>
-                            <p class="mt-4 mb-0 text-center">Don't have account?<a class="ms-2" href="{{route('register.create')}}">Create Account</a></p>
+                            <p class="mt-4 mb-0 text-center">Еще не регистрировались?<a class="ms-2" href="{{route('register.create')}}">Создать аккаунт</a></p>
                         </form>
                     </div>
                 </div>

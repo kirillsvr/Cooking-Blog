@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
-                        <form class="needs-validation" method="post" action="{{route('categories.store')}}" novalidate="">
+                        <form class="needs-validation create-element" method="post" action="{{route('categories.store')}}" novalidate="">
                             <div class="card-header">
                                 <x-admin-subtitles headtitle="Добавление новой категории" subtitle="Заполните необходимые поля"/>
                             </div>
@@ -19,7 +19,7 @@
                                 <div class="row g-3">
                                     <label class="form-label" for="validationCustom01">Название категории</label>
                                     <input class="form-control @error('title') is-invalid @enderror" id="validationCustom01" type="text" name="title" placeholder="Название категории" required="">
-                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">Заполните название категории</div>
                                 </div>
                             </div>
                             <div class="card-footer text-end">

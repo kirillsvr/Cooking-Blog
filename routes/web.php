@@ -8,12 +8,17 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\RecipeCategoryController;
 use App\Http\Controllers\Admin\RecipeCommentsController;
 use App\Http\Controllers\Admin\RecipeTagController;
+use App\Http\Controllers\Admin\SaveImage;
+use App\Http\Controllers\Admin\SearchController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\StepsController;
 use App\Http\Controllers\Admin\TagController;
-use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\Front\ArticleController;
+use App\Http\Controllers\Front\BlogController;
+use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Front\PostCommentsController;
+use App\Http\Controllers\Front\RaitingController;
+use App\Http\Controllers\Front\RecipeController;
 use App\Http\Controllers\UserController;
 use App\Models\RecipeTags;
 use Illuminate\Support\Facades\Route;
@@ -30,13 +35,24 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/blog', [ArticleController::class, 'index'])->name('article.index');
-Route::get('/article', [ArticleController::class, 'show'])->name('article.show');
-
-Route::get('/recipe', [RecipeController::class, 'index'])->name('recipe.index');
-Route::get('/recipe/{id}', [RecipeController::class, 'show'])
-    ->name('recipe.index')
+Route::post('/registerWithOutPass', [HomeController::class, 'register'])->name('registerWithOutPass');
+Route::get('/blog/live-search', [BlogController::class, 'liveSearch']);
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/article/{id}', [ArticleController::class, 'show'])
+    ->name('article.show')
     ->where('id', '[a-zA-Z0-9_-]+');
+Route::post('/comments/{id}', [PostCommentsController::class, 'store'])->name('post_comments.store');
+Route::get('/about', [\App\Http\Controllers\Front\AboutPageController::class, 'index'])->name('about');
+Route::get('/contact', [\App\Http\Controllers\Front\ContactPageController::class, 'index'])->name('contact');
+Route::post('/contact', [\App\Http\Controllers\Front\ContactPageController::class, 'message'])->name('contact.message');
+Route::get('/recipes', [RecipeController::class, 'index'])->name('front.recipes.index');
+Route::get('/recipe/{id}', [RecipeController::class, 'show'])
+    ->name('front.recipe.index')
+    ->where('id', '[a-zA-Z0-9_-]+');
+Route::post('/recipeComments/{id}', [\App\Http\Controllers\Front\RecipeCommentsController::class, 'store'])->name('recipe_comments.store');
+Route::get('/authors', [UserController::class, 'index'])->name('authors.index');
+Route::get('/author/{id}', [UserController::class, 'show'])->name('authors.show');
+Route::get('/raiting/{id}', [RaitingController::class, 'store'])->name('raiting.store');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function (){
    Route::get('/', [MainController::class, 'index'])->name('admin.index');
@@ -58,6 +74,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function (){
    Route::delete('/steps/{id}', [StepsController::class, 'deleteImage'])->name('steps.deleteImage');
    Route::get('/settings', [SettingController::class, 'edit'])->name('settings.edit');
    Route::put('/settings', [SettingController::class, 'update'])->name('settings.update');
+   Route::get('/search/live-search', [SearchController::class, 'liveSearch'])->name('search.live');
+   Route::get('/search', [SearchController::class, 'index'])->name('search.index');
+   Route::post('/upload_image', [SaveImage::class, 'store'])->name('upload.image');
 });
 
 Route::group(['middleware' => 'guest'], function (){
@@ -65,6 +84,10 @@ Route::group(['middleware' => 'guest'], function (){
     Route::post('/register', [UserController::class, 'store'])->name('register.store');
     Route::get('/login', [UserController::class, 'login'])->name('login');
     Route::post('/login', [UserController::class, 'authLogin'])->name('auth');
+    Route::get('/forgot-password', [UserController::class, 'forgot'])->name('password.request');
+    Route::post('/forgot-password', [UserController::class, 'forgotStore'])->name('password.email');
+    Route::get('/reset-password/{token}', [UserController::class, 'reset'])->name('password.reset');
+    Route::post('/reset-password', [UserController::class, 'resetUpdate'])->name('password.update');
 });
 
 

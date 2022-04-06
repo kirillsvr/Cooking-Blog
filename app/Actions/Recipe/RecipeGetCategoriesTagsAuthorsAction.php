@@ -3,6 +3,7 @@
 namespace App\Actions\Recipe;
 
 use App\Actions\AbstractRecipeAction;
+use App\Models\RecipeLevel;
 
 class RecipeGetCategoriesTagsAuthorsAction extends AbstractRecipeAction
 {
@@ -11,11 +12,13 @@ class RecipeGetCategoriesTagsAuthorsAction extends AbstractRecipeAction
         $categories = $this->getCategories();
         $tags = $this->getTags();
         $authors = $this->getAuthors();
+        $levels = RecipeLevel::all();
 
         return compact(
           'categories',
           'tags',
-          'authors'
+            'authors',
+            'levels'
         );
     }
 }

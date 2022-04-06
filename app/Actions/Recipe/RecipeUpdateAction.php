@@ -2,36 +2,35 @@
 
 namespace App\Actions\Recipe;
 
+use App\Actions\AbstractRecipeAddAction;
+use App\Actions\Action;
+use App\DTO\RecipeUpdateRequestData;
 use App\Models\Recipe;
 use App\Repositories\RecipeIngredientsRepository;
 use App\Repositories\RecipeStepsRepository;
-use App\Services\RecipeComments\ChangeRecipeRequestService;
+use App\Services\ImageSaveService;
 
-class RecipeUpdateAction
+class RecipeUpdateAction extends AbstractRecipeAddAction
 {
-    private $service;
-    private $ingredientsRepository;
-    private $stepsRepository;
-
-    public function __construct(
-        ChangeRecipeRequestService $service,
-        RecipeIngredientsRepository $ingredientsRepository,
-        RecipeStepsRepository $stepsRepository
-    )
+    public function execute(RecipeUpdateRequestData $data, Recipe $recipe): void
     {
-        $this->service = $service;
-        $this->ingredientsRepository = $ingredientsRepository;
-        $this->stepsRepository = $stepsRepository;
+        $this->deleteOldData($recipe);
+        $this->updateRecipe($data->all(), $recipe);
+        $this->createSteps($recipe, $data->steps);
+        $this->createIngredients($recipe, $data->ing);
+        $this->createTags($recipe, $data->tags);
     }
 
-    public function execute(array $data, Recipe $recipe): void
+    private function deleteOldData(Recipe $recipe): void
     {
-        $this->ingredientsRepository->deleteIngredients($recipe->id);
-        $this->stepsRepository->deleteSteps($recipe->id);
+        RecipeIngredientsRepository::deleteIngredients($recipe->id);
+        RecipeStepsRepository::deleteSteps($recipe->id);
+    }
 
-        $data = $this->service->change($data, $recipe->thumbnail);
-        $recipe->update($data['recipe']);
-        if (!is_null($data['steps'])) $recipe->recipeSteps()->createMany($data['steps']);
-        if (!is_null($data['ingredients'])) $recipe->recipeIngredients()->createMany($data['ingredients']);
+    private function updateRecipe(array $data, Recipe $recipe): void
+    {
+        if (!is_string($data['thumbnail'])) $data['thumbnail'] = ImageSaveService::uploadImage($data['thumbnail'], $data['old_image']);
+
+        $recipe->update($data);
     }
 }

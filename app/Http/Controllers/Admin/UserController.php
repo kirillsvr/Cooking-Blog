@@ -11,6 +11,7 @@ use App\Http\Requests\StoreUser;
 use App\Models\User;
 use App\Services\ImageSaveService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -22,7 +23,7 @@ class UserController extends Controller
     public function index()
     {
         $this->authorize('viewAny', User::class);
-        $users = User::all();
+        $users = User::with('role')->get();
         return view('admin.users.index', compact('users'));
     }
 
@@ -47,7 +48,7 @@ class UserController extends Controller
     {
         $this->authorize('create', User::class);
         $action->execute($request->validated());
-        return redirect()->home();
+        return response()->json('Пользователь успешно создан', 200);
     }
 
     /**
@@ -60,7 +61,8 @@ class UserController extends Controller
     {
         $this->authorize('view', $user);
         $recipes = $user->recipes;
-        return view('admin.users.show', compact('user', 'recipes'));
+        $posts = $user->posts;
+        return view('admin.users.show', compact('user', 'recipes', 'posts'));
     }
 
     /**
@@ -86,7 +88,7 @@ class UserController extends Controller
     {
         $this->authorize('update', $user);
         $action->execute($request->validated(), $user);
-        return redirect()->home();
+        return response()->json('Пользователь успешно изменен', 200);
     }
 
     /**
@@ -98,5 +100,8 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $this->authorize('delete', $user);
+        Storage::delete($user->image);
+        $user->delete();
+        return response()->json('Пользователь успешно удален', 200);
     }
 }

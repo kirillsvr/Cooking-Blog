@@ -2,22 +2,17 @@
 
 namespace App\Actions\Post;
 
+use App\DTO\PostCreateRequestData;
 use App\Models\Post;
+use App\Repositories\PostTagRepository;
 use App\Services\ImageSaveService;
 
 class PostStoreAction
 {
-    protected $service;
-
-    public function __construct(ImageSaveService $service)
+    public function execute(PostCreateRequestData $data)
     {
-        $this->service = $service;
-    }
-
-    public function execute($data)
-    {
-        $data['thumbnail'] = $this->service->uploadImage($data['thumbnail']);
-        $post = Post::create($data);
-        $post->tags()->sync($data['tags']);
+        $data->thumbnail = ImageSaveService::uploadImage($data->thumbnail);
+        $post = Post::create($data->all());
+        PostTagRepository::addOrDeleteTags($data->tags, $post);
     }
 }

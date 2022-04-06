@@ -30,10 +30,10 @@ class StoreEditUser extends FormRequest
                 'required',
                 Rule::unique('users', 'email')->ignore($this->user),
             ],
-            'password' => '',
+            'password' => 'nullable',
             'public_email' => 'nullable',
-            'first_name' => 'nullable',
-            'last_name' => 'nullable',
+            'role_id' => 'required',
+            'web' => 'nullable',
             'info' => 'nullable',
             'image' => 'nullable|image',
         ];

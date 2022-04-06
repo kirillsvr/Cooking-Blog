@@ -26,7 +26,12 @@ class FilterRequest extends FormRequest
         return [
             'category' => 'nullable',
             'sort' => 'nullable',
-            'tag' => 'nullable'
+            'tag' => 'nullable',
+            'author' => 'nullable',
+            'month' => 'nullable',
+            'year' => 'nullable',
+            'search' => 'nullable',
+            'level' => 'nullable',
         ];
     }
 
@@ -34,6 +39,9 @@ class FilterRequest extends FormRequest
     {
         $this->merge([
             'category' => isset($this->category) ? explode(",", $this->category) : null,
+            'tag' => isset($this->tag) ? explode(",", $this->tag) : null,
+            'level' => isset($this->level) ? explode(",", $this->level) : null,
+            'sort' => isset($this->sort) ? explode("_", $this->sort) : null,
         ]);
     }
 }

@@ -26,9 +26,10 @@ class StorePost extends FormRequest
         return [
             'title' => 'required',
             'description' => 'required',
-            'content' => 'required',
-            'category_id' => 'integer',
-            'thumbnail' => 'nullable|image'
+            'content' => 'nullable',
+            'category_id' => 'required',
+            'thumbnail' => 'nullable|image',
+            'tags' => 'nullable',
         ];
     }
 }

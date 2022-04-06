@@ -2,24 +2,25 @@
 
 namespace App\Actions\Recipe;
 
+use App\Actions\AbstractRecipeAddAction;
+use App\DTO\RecipeCreateRequestData;
 use App\Models\Recipe;
-use App\Services\RecipeComments\ChangeRecipeRequestService;
+use App\Services\ImageSaveService;
 
-class RecipeStoreAction
+class RecipeStoreAction extends AbstractRecipeAddAction
 {
-    private $service;
-
-    public function __construct(ChangeRecipeRequestService $service)
+    public function execute(RecipeCreateRequestData $data): void
     {
-        $this->service = $service;
+        $recipe = $this->createRecipe($data->all());
+        $this->createSteps($recipe, $data->steps);
+        $this->createIngredients($recipe, $data->ing);
+        $this->createTags($recipe, $data->tags);
     }
 
-    public function execute($data): void
+    private function createRecipe(array $recipe): Recipe
     {
-        $data = $this->service->change($data);
-        $recipe = Recipe::create($data['recipe']);
-        $recipe->recipeSteps()->createMany($data['steps']);
-        $recipe->recipeIngredients()->createMany($data['ingredients']);
-        $recipe->recipeTags()->sync($data['tags']);
+        $recipe['thumbnail'] = ImageSaveService::uploadImage($recipe['thumbnail']);
+
+        return Recipe::create($recipe);
     }
 }

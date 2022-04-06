@@ -4,6 +4,7 @@ namespace App\Actions\RecipeComments;
 
 use App\Exceptions\CheckParentCommentException;
 use App\Models\RecipeComments;
+use App\Repositories\RecipeCommentsRepository;
 use App\Services\RecipeComments\CheckDisableParentComments;
 use App\Services\RecipeComments\GetRelatedIdCommentsService;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +20,7 @@ class RecipeCommentsDisableAction
 
     public function execute($commentId, $recipeId)
     {
-        $comments = RecipeComments::where('recipe_id', $recipeId)->get()->toArray();
+        $comments = RecipeCommentsRepository::sameRecipe($recipeId);
         $relatedComments = $this->relatedComments->generateRelatedIdsArray($commentId, $comments);
         DB::table('recipe_comments')
             ->whereIn('id', $relatedComments)

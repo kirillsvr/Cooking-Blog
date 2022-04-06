@@ -7,6 +7,8 @@ use App\Actions\Post\PostDestroyAction;
 use App\Actions\Post\PostEditAction;
 use App\Actions\Post\PostStoreAction;
 use App\Actions\Post\PostUpdateAction;
+use App\DTO\PostCreateRequestData;
+use App\DTO\PostUpdateRequestData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePost;
 use App\Models\Category;
@@ -24,7 +26,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('category', 'tags')->paginate(config('settings.post_on_page'));
+        $posts = Post::with('category', 'tags', 'user', 'comments')->paginate(config('settingsAdmin.post_on_page'));
         return view('admin.posts.index', compact('posts'));
     }
 
@@ -44,11 +46,10 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePost $request, PostStoreAction $action)
+    public function store(PostCreateRequestData $request, PostStoreAction $action)
     {
-        $action->execute($request->validated());
-        $request->session()->flash('success', 'Статья добавлена');
-        return redirect()->route('posts.index');
+        $action->execute($request);
+        return response()->json('Статья успешно добавлена', 200);
     }
 
     /**
@@ -80,9 +81,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StorePost $request, Post $post, PostUpdateAction $action)
+    public function update(PostUpdateRequestData $request, Post $post, PostUpdateAction $action)
     {
-        $action->execute($request->validated(), $post);
+        $action->execute($request, $post);
         return redirect()->route('posts.index')->with('success', 'Изменения сохранены');
     }
 

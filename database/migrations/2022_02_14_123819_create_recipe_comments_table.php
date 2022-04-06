@@ -18,7 +18,7 @@ class CreateRecipeCommentsTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->text('comment');
-            $table->integer('parent');
+            $table->integer('parent')->default(0);
             $table->integer('is_published')->default(0);
             $table->integer('recipe_id');
             $table->timestamps();

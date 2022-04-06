@@ -20,9 +20,15 @@ class CreateRecipesTable extends Migration
             $table->integer('prep_time');
             $table->integer('cook_time');
             $table->string('skill_level');
-            $table->text('content');
+            $table->text('content')->nullable();
+            $table->string('thumbnail');
             $table->integer('recipe_categories_id');
-            $table->integer('chef_id');
+            $table->integer('user_id');
+            $table->integer('caloric')->nullable();
+            $table->integer('protein')->nullable();
+            $table->integer('fat')->nullable();
+            $table->integer('carbohydrates')->nullable();
+            $table->integer('views')->default(0);
             $table->timestamps();
         });
     }

@@ -20,6 +20,7 @@
                         </div>
                     </div>
                     @if(count($users))
+                        @csrf
                         <div class="table-responsive card-body">
                             <table class="table table-hover">
                                 <thead>
@@ -36,20 +37,18 @@
                                         <th scope="row"><a href="{{route('users.show', $user->id)}}">{{$user->name}}</a>
                                         </th>
                                         <td>{{$user->email}}</td>
-                                        <td>{{$user->role}}</td>
+                                        <td>{{$user->role->name}}</td>
                                         <td>{{$user->created_at}}</td>
                                         <td>
                                             <a class="btn btn-success btn-s" data-original-title="btn btn-danger btn-xs"
                                                title="" href="{{route('users.edit', $user->id)}}"
                                                data-bs-original-title=""><i class="fa fa-pencil"></i></a>
-                                            <form action="{{route('users.destroy', $user->id)}}" class="d-inline-block"
-                                                  method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-danger btn-s" type="submit"
-                                                        data-original-title="btn btn-danger btn-xs" title=""
-                                                        data-bs-original-title=""><i class="fa fa-trash-o"></i></button>
-                                            </form>
+                                            <a class="btn btn-danger btn-s delete-user"
+                                                    data-href="{{route('users.destroy', $user->id)}}"
+                                                    type="submit"
+                                                    data-original-title="btn btn-danger btn-xs"
+                                                    title=""
+                                                    data-bs-original-title=""><i class="fa fa-trash-o"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -29,8 +29,8 @@
                                             <div class="card-body">
                                                 <div class="media row">
                                                     <div class="media-body col-md-8">
-                                                        <h6 class="f-w-600"><?=$value['name']; echo $nesting?></h6>
-                                                        <p> <?=$value['updated_at'];?></p>
+                                                        <h6 class="f-w-600"><?=$value['name'];?></h6>
+                                                        <p> <?=\Carbon\Carbon::parse($value['updated_at'])->format('d.m.Y');?></p>
                                                     </div>
                                                     <div class="row col-md-4">
                                                         <div class="col-md-6 text-end icon-state">

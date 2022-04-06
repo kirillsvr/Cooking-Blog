@@ -8,33 +8,18 @@ use App\Repositories\UsersRepository;
 
 abstract class AbstractRecipeAction
 {
-    protected $categories;
-    protected $tags;
-    protected $authors;
-
-    public function __construct(
-        RecipeCategoryRepository $categories,
-        RecipeTagRepository $tags,
-        UsersRepository $authors
-    )
-    {
-        $this->categories = $categories;
-        $this->tags = $tags;
-        $this->authors = $authors;
-    }
-
     protected function getCategories()
     {
-        return $this->categories->getAllTitle();
+        return RecipeCategoryRepository::getAllTitle();
     }
 
     protected function getTags()
     {
-        return $this->tags->getAllTitle();
+        return RecipeTagRepository::getAllTitle();
     }
 
     protected function getAuthors()
     {
-        return $this->authors->usersWithAccessAdminPanel();
+        return UsersRepository::usersWithAccessAdminPanel();
     }
 }

@@ -13,7 +13,20 @@ class Recipe extends Model
     use Sluggable;
     use Filterable;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'title',
+        'prep_time',
+        'cook_time',
+        'skill_level',
+        'user_id',
+        'content',
+        'recipe_categories_id',
+        'thumbnail',
+        'caloric',
+        'protein',
+        'fat',
+        'carbohydrates',
+    ];
 
     public function recipeCategory()
     {
@@ -48,6 +61,16 @@ class Recipe extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function raiting()
+    {
+        return $this->hasMany(Raiting::class);
+    }
+
+    public function level()
+    {
+        return $this->belongsTo(RecipeLevel::class, 'skill_level', 'id');
     }
 
     public function sluggable(): array

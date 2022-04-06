@@ -28,11 +28,4 @@ class RecipeCategory extends Model
             ]
         ];
     }
-
-    public static function uploadImage(Request $request)
-    {
-        Storage::delete($request->thumbnail);
-        $folder = date('Y-m-d');
-        return $request->file('thumbnail')->store("images/{$folder}");
-    }
 }

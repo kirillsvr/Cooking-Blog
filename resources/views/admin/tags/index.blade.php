@@ -20,6 +20,7 @@
                             </div>
                         </div>
                         @if(count($tags))
+                        @csrf
                         <div class="table-responsive card-body">
                             <table class="table table-hover">
                                 <thead>
@@ -38,11 +39,7 @@
                                         <td>{{$tag->slug}}</td>
                                         <td>
                                             <a class="btn btn-success btn-s" data-original-title="btn btn-danger btn-xs" title="" href="{{route('tags.edit', $tag->id)}}" data-bs-original-title=""><i class="fa fa-pencil"></i></a>
-                                            <form action="{{route('tags.destroy', $tag->id)}}" class="d-inline-block" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-danger btn-s" type="submit" data-original-title="btn btn-danger btn-xs" title="" data-bs-original-title=""><i class="fa fa-trash-o"></i></button>
-                                            </form>
+                                            <a class="btn btn-danger btn-s delete-tag" data-href="{{route('tags.destroy', $tag->id)}}" data-original-title="btn btn-danger btn-xs" title="" data-bs-original-title=""><i class="fa fa-trash-o"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

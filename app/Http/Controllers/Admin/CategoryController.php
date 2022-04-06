@@ -16,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::paginate(2);
+        $categories = Category::paginate(config('settingsAdmin.categories_on_page'));
         return view('admin.categories.index', compact('categories'));
     }
 
@@ -38,14 +38,13 @@ class CategoryController extends Controller
      */
     public function store(StoreCategory $request)
     {
-        Category::create($request->all());
-        $request->session()->flash('success', 'Категория добавлена');
-        return redirect()->route('categories.index');
+        Category::create($request->validated());
+        return response()->json('Категория успешно добавлена', 200);
     }
 
     public function show($id)
     {
-        dd($id);
+
     }
 
     /**
@@ -70,7 +69,7 @@ class CategoryController extends Controller
     {
         $category->slug = null;
         $category->update($request->all());
-        return redirect()->route('categories.index')->with('success', 'Изменения сохранены');
+        return response()->json('Категория успешно изменена', 200);
     }
 
     /**
@@ -82,6 +81,6 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        return redirect()->route('categories.index')->with('success', 'Категория удалена');
+        return response()->json('Категория успешно удалена', 200);
     }
 }
