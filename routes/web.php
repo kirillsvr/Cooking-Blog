@@ -49,7 +49,7 @@ Route::get('/recipes', [RecipeController::class, 'index'])->name('front.recipes.
 Route::get('/recipe/{id}', [RecipeController::class, 'show'])
     ->name('front.recipe.index')
     ->where('id', '[a-zA-Z0-9_-]+');
-Route::post('/recipeComments/{id}', [\App\Http\Controllers\Front\RecipeCommentsController::class, 'store'])->name('recipe_comments.store');
+Route::post('/recipeComments/{id}', [\App\Http\Controllers\Front\RecipeCommentsController::class, 'store'])->name('comments.store');
 Route::get('/authors', [UserController::class, 'index'])->name('authors.index');
 Route::get('/author/{id}', [UserController::class, 'show'])->name('authors.show');
 Route::get('/raiting/{id}', [RaitingController::class, 'store'])->name('raiting.store');
@@ -62,10 +62,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function (){
    Route::resource('/posts', PostController::class);
    Route::resource('/recipe', \App\Http\Controllers\Admin\RecipeController::class);
    Route::resource('/recipe_category', RecipeCategoryController::class);
-   Route::post('/recipe_comments/{id}/disable/', [RecipeCommentsController::class, 'disable'])->name('recipe_comments.disable');
-   Route::post('/recipe_comments/{id}/enable/', [RecipeCommentsController::class, 'enable'])->name('recipe_comments.enable');
-   Route::delete('/recipe_comments/{id}', [RecipeCommentsController::class, 'destroy'])->name('recipe_comments.delete');
-   Route::get('/recipe_comments/{id}', [RecipeCommentsController::class, 'index'])->name('recipe_comments.show');
    Route::resource('/users', \App\Http\Controllers\Admin\UserController::class);
    Route::get('/about', [AboutPageController::class, 'edit'])->name('about.edit');
    Route::post('/about', [AboutPageController::class, 'update'])->name('about.update');
@@ -77,6 +73,18 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function (){
    Route::get('/search/live-search', [SearchController::class, 'liveSearch'])->name('search.live');
    Route::get('/search', [SearchController::class, 'index'])->name('search.index');
    Route::post('/upload_image', [SaveImage::class, 'store'])->name('upload.image');
+   Route::group(['prefix' => 'recipe_comments'], function (){
+       Route::put('/{id}/disable/', [RecipeCommentsController::class, 'disable'])->name('recipe_comments.disable');
+       Route::put('/{id}/enable/', [RecipeCommentsController::class, 'enable'])->name('recipe_comments.enable');
+       Route::delete('/{id}', [RecipeCommentsController::class, 'destroy'])->name('recipe_comments.delete');
+       Route::get('/{id}', [RecipeCommentsController::class, 'index'])->name('recipe_comments.show');
+   });
+   Route::group(['prefix' => 'post_comments'], function (){
+       Route::put('/{id}/disable/', [\App\Http\Controllers\Admin\PostCommentsController::class, 'disable'])->name('post_comments.disable');
+       Route::put('/{id}/enable/', [\App\Http\Controllers\Admin\PostCommentsController::class, 'enable'])->name('post_comments.enable');
+       Route::delete('/{id}', [\App\Http\Controllers\Admin\PostCommentsController::class, 'destroy'])->name('post_comments.delete');
+       Route::get('/{id}', [\App\Http\Controllers\Admin\PostCommentsController::class, 'index'])->name('post_comments.show');
+   });
 });
 
 Route::group(['middleware' => 'guest'], function (){

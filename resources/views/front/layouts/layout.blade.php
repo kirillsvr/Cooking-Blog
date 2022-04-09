@@ -35,7 +35,7 @@
             <span></span>
         </div>
         <form>
-            <input type="text" name="text" placeholder="*Search Here.......">
+            <input type="text" name="text" placeholder="*Поиск.......">
         </form>
     </div>
 </div>
@@ -45,7 +45,7 @@
 <div class="mobile-menu">
     <nav class="mobile-header d-xl-none">
         <div class="header-logo">
-            <a href="index.html" class="logo"><img src="/assets/front/images/logo/01.png" alt="logo"></a>
+            <a href="/" class="logo"><img src="/assets/front/images/logo/01.png" alt="logo"></a>
         </div>
         <div class="header-bar">
             <span></span>
@@ -56,34 +56,7 @@
     <nav class="menu">
         <div class="mobile-menu-area d-xl-none">
             <div class="mobile-menu-area-inner" id="scrollbar">
-                <div class="mobile-search">
-                    <input type="text" placeholder="Search Here.........">
-                    <button type="submit"><i class="icofont-search-2"></i></button>
-                </div>
-                <ul>
-                    <li>
-                        <a class="active" href="/">Главная</a>
-                    </li>
-                    <li>
-                        <a href="/about">О нас</a>
-                    </li>
-                    <li>
-                        <a href="/recipes">Рецепты</a>
-                    </li>
-                    <li>
-                        <a href="/blog">Блог</a>
-                    </li>
-                    <li>
-                        <a href="#0">Shop</a>
-                        <ul>
-                            <li><a href="shop-page.html">Shop Page</a></li>
-                            <li><a href="shop-single.html">Shop Single style-1</a></li>
-                            <li><a href="shop-single-2.html">Shop Single style-2</a></li>
-                            <li><a href="cart-page.html">Cart Page</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="contact-us.html">Contact</a></li>
-                </ul>
+                <x-front-mobile-menu />
                 <div class="scocial-media">
                     <a href="#" class="facebook"><i class="icofont-facebook"></i></a>
                     <a href="#" class="twitter"><i class="icofont-twitter"></i></a>
@@ -177,7 +150,7 @@
         <div class="footer-top">
             <div class="footer-area text-center">
                 <div class="footer-logo">
-                    <a href="index.html"><img src="/assets/front/images/header/footer/01.png" alt="footer-logo"></a>
+                    <a href="/"><img src="/assets/front/images/header/footer/01.png" alt="footer-logo"></a>
                 </div>
                 <div class="scocial-media">
                     <a href="#" class="facebook"><i class="icofont-facebook"></i></a>
@@ -187,18 +160,18 @@
                 </div>
                 <div class="footer-menu">
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">How it works?</a></li>
-                        <li><a href="#">Menus</a></li>
-                        <li><a href="#">Chefs</a></li>
-                        <li><a href="#">Recipes</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li><a href="/">Главная</a></li>
+                        <li><a href="/about">О нас</a></li>
+                        <li><a href="/recipes">Рецепты</a></li>
+                        <li><a href="/blog">Блог</a></li>
+                        <li><a href="/authors">Авторы</a></li>
+                        <li><a href="/contact">Контакты</a></li>
                     </ul>
                 </div>
             </div>
         </div>
         <div class="footer-bottom text-center">
-            <p>&copy; 2019 <a href="#"><span>Mezban</span></a> Design by <a href="#"><span>FoxCoders</span></a>.</p>
+            <p>&copy; 2022</p>
         </div>
     </div>
 </footer>

@@ -7,7 +7,7 @@ use App\Models\Post;
 use App\Repositories\PostCommentsRepository;
 use App\Repositories\PostRepository;
 use App\Services\RecipeComments\CommentsService;
-use Drandin\DeclensionNouns\Facades\DeclensionNoun;
+use Illuminate\Database\Eloquent\Collection;
 
 class PostFrontAction
 {
@@ -22,15 +22,12 @@ class PostFrontAction
     {
         $post = PostRepository::getPostWithRelationsFromSlug($id);
         event(new PostHasViewed($post));
-        $comments = PostCommentsRepository::getPublishedCommentsFromPost($post);
-        $countComments = DeclensionNoun::make($comments->count(), 'комментарий');
-        $comments =  $this->modifyComments($comments);
+        $comments =  $this->modifyComments(PostCommentsRepository::getPublishedCommentsFromPost($post));
         $prevPost = $this->getPrev($post->id);
         $nextPost = $this->getNext($post->id);
         $relatedArticles = PostRepository::getRandom($post->id, 4);
         return compact(
             'post',
-            'countComments',
             'comments',
             'prevPost',
             'nextPost',
@@ -38,7 +35,7 @@ class PostFrontAction
         );
     }
 
-    private function modifyComments($comments)
+    private function modifyComments(Collection $comments): ?array
     {
         if (!$comments->count()) return null;
 

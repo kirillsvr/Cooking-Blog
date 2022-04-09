@@ -1646,7 +1646,7 @@ aside {
     width: calc(100% - 300px); }
     @media (min-width: 1400px) {
       .header-section .main-menu {
-        width: calc(100% - 720px); } }
+        width: calc(100% - 645px); } }
     .header-section .main-menu ul {
       align-items: center;
       justify-content: center;

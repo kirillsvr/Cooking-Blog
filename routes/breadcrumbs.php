@@ -125,8 +125,14 @@ Breadcrumbs::for('admin.recipe_tags.edit', function (BreadcrumbTrail $trail, str
 });
 
 // Home > Recipes > [Recipe] > Comments
-Breadcrumbs::for('admin.comments', function (BreadcrumbTrail $trail, string $id) {
+Breadcrumbs::for('admin.recipe_comments', function (BreadcrumbTrail $trail, string $id) {
     $trail->parent('admin.recipe', $id);
+    $trail->push('Комментарии');
+});
+
+// Home > Recipes > [Recipe] > Comments
+Breadcrumbs::for('admin.post_comments', function (BreadcrumbTrail $trail, string $id) {
+    $trail->parent('admin.post.edit', $id);
     $trail->push('Комментарии');
 });
 

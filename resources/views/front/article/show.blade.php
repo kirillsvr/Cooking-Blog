@@ -32,7 +32,7 @@
                                                 </li>
                                                 <li>
                                                     <i class="icofont-speech-comments"></i>
-                                                    <span class="comment">{{$countComments}}</span>
+                                                    <span class="comment">{{\Drandin\DeclensionNouns\Facades\DeclensionNoun::make($post->comments->where('is_published', 1)->count(), 'комментарий')}}</span>
                                                 </li>
                                             </ul>
                                         </div>
@@ -118,7 +118,7 @@
 
                             @if(!empty($comments))
                             <div id="comments" class="comments">
-                                <h4 class="title-border">{{$countComments}}</h4>
+                                <h4 class="title-border">{{\Drandin\DeclensionNouns\Facades\DeclensionNoun::make($post->comments->where('is_published', 1)->count(), 'комментарий')}}</h4>
                                 <?php function renderComments($comments){?>
                                     <?php foreach($comments as $comment):?>
                                     <ul class="comment-list">

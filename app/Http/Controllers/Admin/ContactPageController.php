@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreContact;
 use App\Models\Contact;
-use Illuminate\Http\Request;
 
 class ContactPageController extends Controller
 {

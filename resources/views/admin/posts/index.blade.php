@@ -40,6 +40,11 @@
                                                             <li>
                                                                 <a class="btn" href="{{route('posts.edit', $post->id)}}"><i class="icon-pencil"></i></a>
                                                             </li>
+                                                            @if($post->comments->count())
+                                                                <li>
+                                                                    <a class="btn" href="{{route('post_comments.show', $post->id)}}"><i class="icon-comment-alt"></i></a>
+                                                                </li>
+                                                            @endif
                                                             <li class="trash">
                                                                 <button class="btn del-post" type="button" data-id="{{$post->id}}"><i class="icon-trash"></i></button>
                                                             </li>

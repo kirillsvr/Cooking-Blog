@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAbout;
 use App\Models\About;
-use Illuminate\Http\Request;
 
 class AboutPageController extends Controller
 {

@@ -2,24 +2,20 @@
 
 namespace App\Actions\RecipeComments;
 
+use App\Actions\AbstractCommentsStoreAction;
 use App\Models\RecipeComments;
 use Illuminate\Support\Facades\Auth;
 
-class RecipeCommentsStoreAction
+class RecipeCommentsStoreAction extends AbstractCommentsStoreAction
 {
-    public function execute(array $data, string $id)
+    public function execute(array $data, string $id): void
     {
         if(Auth::user()) $data = $this->addAuthData($data);
-        $data['recipe_id'] = $id;
-        $data['parent'] = $data['parent'] ?? 0;
-        RecipeComments::create($data);
+        $this->create($this->modify($data, $id));
     }
 
-    private function addAuthData(array $data): array
+    private function create(array $data): void
     {
-        $data['name'] = Auth::user()->name;
-        $data['email'] = Auth::user()->email;
-
-        return $data;
+        RecipeComments::create($data);
     }
 }

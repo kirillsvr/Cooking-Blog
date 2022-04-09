@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Actions\PostComments\PostCommentsStoreAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostComments;
-use App\Models\PostComments;
-use Illuminate\Http\Request;
-use PostCommentsStoreAction;
+
 
 class PostCommentsController extends Controller
 {

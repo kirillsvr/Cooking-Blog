@@ -14,7 +14,7 @@ class RecipeCommentsIndexAction
         $this->service = $service;
     }
 
-    public function execute($id)
+    public function execute(string $id): array
     {
         $recipe = Recipe::with('recipeComments')->find($id);
         $comments = $this->service->modify($recipe->recipeComments->toArray());

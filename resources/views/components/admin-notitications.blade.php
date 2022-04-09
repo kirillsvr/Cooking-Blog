@@ -11,7 +11,7 @@
     @if($comments->count())
         @foreach($comments as $comment)
             <li>
-                <a href="{{route('recipe_comments.show', $comment->recipe_id)}}" class="text-decoration-none text-reset">
+                <a href="{{route('comments.show', $comment->recipe_id)}}" class="text-decoration-none text-reset">
                     <p>
                         <i class="fa fa-circle-o me-3 font-primary"> </i>
                         {{$comment->comment}}

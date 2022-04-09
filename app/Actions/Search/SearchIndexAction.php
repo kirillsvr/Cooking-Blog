@@ -9,23 +9,36 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class SearchIndexAction
 {
+    private int $currentPage;
+    private int $elementPerPage;
+
     public function execute(string $data)
     {
-        $current_page = LengthAwarePaginator::resolveCurrentPage();
-        $per_page = config('settingsAdmin.elements_on_search_page');
+        $this->getCurrentPage();
+        $this->gerElementsPerPage();
 
-        $recipes = Recipe::where('title', 'LIKE', "%{$data}%")->skip(($current_page - 1) * $per_page)->limit(config('settingsAdmin.elements_on_search_page'))->latest()->get();
-        $posts = Post::where('title', 'LIKE', "%{$data}%")->skip(($current_page - 1) * $per_page)->limit(config('settingsAdmin.elements_on_search_page'))->latest()->get();
+        $recipes = Recipe::where('title', 'LIKE', "%{$data}%")->skip(($this->currentPage - 1) * $this->elementPerPage)->limit(config('settingsAdmin.elements_on_search_page'))->latest()->get();
+        $posts = Post::where('title', 'LIKE', "%{$data}%")->skip(($this->currentPage - 1) * $this->elementPerPage)->limit(config('settingsAdmin.elements_on_search_page'))->latest()->get();
 
         $allModels = (collect([$posts, $recipes]))->flatten(0);
         $collection = (new Collection($allModels))->sortBy('created_at');
 
-        $all_three_types_of_models = $collection->slice(($current_page - 1) * $per_page, $per_page)->all();
+        $allThreeTypesOfModels = $collection->slice(($this->currentPage - 1) * $this->elementPerPage, $this->elementPerPage)->all();
 
-        $allModels = new LengthAwarePaginator($all_three_types_of_models, count($collection), $per_page);
+        $allModels = new LengthAwarePaginator($allThreeTypesOfModels, count($collection), $this->elementPerPage);
         $allModels->withPath('');
 
         return compact('allModels', 'data');
 
+    }
+
+    private function getCurrentPage(): void
+    {
+        $this->currentPage = LengthAwarePaginator::resolveCurrentPage();
+    }
+
+    private function gerElementsPerPage(): void
+    {
+        $this->elementPerPage = config('settingsAdmin.elements_on_search_page');
     }
 }

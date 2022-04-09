@@ -218,7 +218,7 @@
                                     <h4 class="title-border" id="title-comments-form">Оставить комментарий</h4>
                                 </div>
                                 <div class="add-comment">
-                                    <form action="{{route('recipe_comments.store', $recipe->id)}}" method="post" class="comment-form">
+                                    <form action="{{route('comments.store', $recipe->id)}}" method="post" class="comment-form">
                                         @guest
                                         <input name="name" type="text" placeholder="Имя">
                                         <input name="email" type="text" placeholder="Email">

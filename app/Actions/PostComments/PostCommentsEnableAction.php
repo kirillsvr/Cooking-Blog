@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Actions\RecipeComments;
+namespace App\Actions\PostComments;
 
 use App\Actions\AbstractCommentsEnableAction;
-use App\Repositories\RecipeCommentsRepository;
+use App\Repositories\PostCommentsRepository;
 use Illuminate\Support\Facades\DB;
 
-class RecipeCommentsEnableAction extends AbstractCommentsEnableAction
+class PostCommentsEnableAction extends AbstractCommentsEnableAction
 {
     public function execute(string $commentId, string $elementId): void
     {
-        $comments = RecipeCommentsRepository::sameRecipe($elementId);
+        $comments = PostCommentsRepository::samePost($elementId);
         $this->checkParentPublish($comments, $commentId);
-        DB::table('recipe_comments')
+        DB::table('post_comments')
             ->where('id', $commentId)
             ->update(['is_published' => 1]);
     }

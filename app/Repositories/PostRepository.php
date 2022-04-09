@@ -11,12 +11,12 @@ class PostRepository
 {
     public static function getPostWithRelations(string $id): Model
     {
-        return Post::with('user', 'tags', 'category')->find($id);
+        return Post::with('user', 'tags', 'category', 'comments')->find($id);
     }
 
     public static function getPostWithRelationsFromSlug(string $id): Model
     {
-        return Post::with('user', 'tags', 'category')->where('slug', $id)->first();
+        return Post::with('user', 'tags', 'category', 'comments')->where('slug', $id)->first();
     }
 
     public static function getPrev(string $id): Post|null

@@ -97,6 +97,11 @@
                                                                     <li>
                                                                         <a class="btn" href="{{route('recipe.edit', $recipe->id)}}"><i class="icon-pencil"></i></a>
                                                                     </li>
+                                                                    @if($recipe->countComm)
+                                                                    <li>
+                                                                        <a class="btn" href="{{route('comments.show', $recipe->id)}}"><i class="icon-comment-alt"></i></a>
+                                                                    </li>
+                                                                    @endif
                                                                     <li class="trash">
                                                                         <button class="btn del-recipe" type="button" data-id="{{$recipe->id}}"><i class="icon-trash"></i></button>
                                                                     </li>
@@ -121,7 +126,7 @@
                                                                 <span class="va-s">{{$recipe->views}}</span>
                                                             </div>
                                                             <div class="comms col-md-6">
-                                                                <a class="text-decoration-none text-reset" href="{{route('recipe_comments.show', $recipe->id)}}">
+                                                                <a class="text-decoration-none text-reset" href="{{route('comments.show', $recipe->id)}}">
                                                                     <i data-feather="message-circle"></i>
                                                                     <span class="va-s">{{$recipe->countComm}}</span>
                                                                 </a>

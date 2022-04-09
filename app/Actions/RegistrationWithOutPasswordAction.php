@@ -16,12 +16,12 @@ class RegistrationWithOutPasswordAction
         $this->sendEmail($data['email'], $data['password']);
     }
 
-    private function generatePassword()
+    private function generatePassword(): string
     {
         return Str::random(10);
     }
 
-    private function saveData(array $data)
+    private function saveData(array $data): void
     {
         User::create($data);
     }

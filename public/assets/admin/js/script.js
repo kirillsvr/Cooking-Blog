@@ -1172,7 +1172,7 @@ $('.add-step').on('click', function () {
                     $.ajax({
                         url: url + '/enable',
                         method: 'POST',
-                        data: {_token: token, id: id},
+                        data: {_token: token, _method: 'PUT', id: id},
                         success: function(data){
                             th.prop('checked', true);
 
@@ -1204,7 +1204,7 @@ $('.add-step').on('click', function () {
                     $.ajax({
                         url: url + '/disable',
                         method: 'POST',
-                        data: {_token: token, id: id},
+                        data: {_token: token, _method: 'PUT', id: id},
                         success: function(data){
                             console.log(data);
                             Swal.fire("Готово!", data, "success");

@@ -24,9 +24,9 @@
             </div>
             <div class="contact-from">
                 <div class="section-header">
-                    <h6>Register Now</h6>
+                    <h6>Регистрация</h6>
                 </div>
-                <form action="/">
+                <form action="{{route('registerWithOutPass')}}" method="POST">
                     <input type="text" name="name" placeholder="Ваше имя">
                     <input type="email" name="email" placeholder="Ваш Email">
                     <input type="submit" value="Зарегистрироваться">

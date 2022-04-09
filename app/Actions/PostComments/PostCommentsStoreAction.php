@@ -1,19 +1,17 @@
 <?php
 
+namespace App\Actions\PostComments;
+
+use App\Actions\AbstractCommentsStoreAction;
 use App\Models\PostComments;
+use Illuminate\Support\Facades\Auth;
 
-class PostCommentsStoreAction
+class PostCommentsStoreAction extends AbstractCommentsStoreAction
 {
-    public function execute(array $data, string $id)
+    public function execute(array $data, string $id): void
     {
+        if(Auth::user()) $data = $this->addAuthData($data);
         $this->create($this->modify($data, $id));
-    }
-
-    private function modify(array $data, string $id): array
-    {
-        $data['post_id'] = $id;
-
-        return $data;
     }
 
     private function create(array $data): void

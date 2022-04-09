@@ -10,6 +10,9 @@
         <li>
             <a href="/blog" class="{{ request()->is('blog') || request()->is('article/*') ? 'active' : null }}">Блог</a>
         </li>
+        <li>
+            <a href="/authors" class="{{ request()->is('authors') || request()->is('author/*') ? 'active' : null }}">Авторы</a>
+        </li>
         <li><a href="/contact" class="{{ request()->is('contact') ? 'active' : null }}">Контакты</a></li>
     </ul>
 </div>

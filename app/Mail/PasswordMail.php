@@ -21,6 +21,7 @@ class PasswordMail extends Mailable
     public function __construct(string $password)
     {
         $this->password = $password;
+        $this->subject = 'Ваш пароль';
     }
 
     /**

@@ -5,11 +5,19 @@
 @endsection
 
 @section('content')
+    @if(isset($recipe))
     <x-admin-titles
         header="Рецепт «{{$recipe->title}}»"
-        breadcrumb="admin.comments"
+        breadcrumb="admin.recipe_comments"
         paramBreadcrumb="{{$recipe->id}}"
     />
+    @else
+    <x-admin-titles
+        header="Статья «{{$post->title}}»"
+        breadcrumb="admin.post_comments"
+        paramBreadcrumb="{{$post->id}}"
+    />
+    @endif
     <!-- Container-fluid starts-->
     <div class="container-fluid">
         <div class="row">
