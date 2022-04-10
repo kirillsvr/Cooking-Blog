@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Recipe;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class RecipePolicy
+class PostPolicy
 {
     use HandlesAuthorization;
 
@@ -25,12 +25,12 @@ class RecipePolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Recipe  $recipe
+     * @param  \App\Models\Post  $post
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Recipe $recipe)
+    public function view(User $user, Post $post)
     {
-        return true;
+        return $user->role_id == 3 || $post->user_id == $user->id;
     }
 
     /**
@@ -41,66 +41,53 @@ class RecipePolicy
      */
     public function create(User $user)
     {
-        return true;
-    }
-
-
-    /**
-     * Determine whether the user can update the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Recipe  $recipe
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function edit(User $user, Recipe $recipe)
-    {
-        return $user->role_id == 3 || $recipe->user_id == $user->id;
+        //
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Recipe  $recipe
+     * @param  \App\Models\Post  $post
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Recipe $recipe)
+    public function update(User $user, Post $post)
     {
-        return $user->role_id == 3 || $recipe->user_id == $user->id;
+        return $user->role_id == 3 || $post->user_id == $user->id;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Recipe  $recipe
+     * @param  \App\Models\Post  $post
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Recipe $recipe)
+    public function delete(User $user, Post $post)
     {
-        return $user->role_id == 3 || $recipe->user_id == $user->id;
+        return $user->role_id == 3 || $post->user_id == $user->id;
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Recipe  $recipe
+     * @param  \App\Models\Post  $post
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Recipe $recipe)
+    public function restore(User $user, Post $post)
     {
-        return $user->role_id == 3 || $recipe->user_id == $user->id;
+        return $user->role_id == 3 || $post->user_id == $user->id;
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Recipe  $recipe
+     * @param  \App\Models\Post  $post
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Recipe $recipe)
+    public function forceDelete(User $user, Post $post)
     {
         //
     }

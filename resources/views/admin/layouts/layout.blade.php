@@ -84,9 +84,6 @@
                     <li class="onhover-dropdown">
                         <x-admin-notitications />
                     </li>
-                    <li>
-                        <div class="mode"><i class="fa fa-moon-o"></i></div>
-                    </li>
                     <li class="maximize"><a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()"><i data-feather="maximize"></i></a></li>
                     <li class="profile-nav onhover-dropdown p-0 me-0">
                         <div class="media profile-media"><img class="b-r-10 img-40 rounded-circle" src="{{asset('uploads/' . auth()->user()->image)}}" alt="">
@@ -96,7 +93,9 @@
                         </div>
                         <ul class="profile-dropdown onhover-show-div">
                             <li><a href="{{route('users.show', auth()->user()->id)}}"><i data-feather="user"></i><span>Аккаунт </span></a></li>
+                            @can('edit', \App\Models\Setting::class)
                             <li><a href="{{route('settings.edit')}}"><i data-feather="settings"></i><span>Настройки</span></a></li>
+                            @endcan
                             <li><a href="{{route('logout')}}"><i data-feather="log-in"> </i><span>Выход</span></a></li>
                         </ul>
                     </li>

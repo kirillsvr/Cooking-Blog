@@ -11,6 +11,7 @@ use App\Models\RecipeLevel;
 use App\Services\GetSettingService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 use function app;
 use function config;
 
@@ -37,7 +38,7 @@ class RecipeIndexAction extends AbstractRecipeAction
     private function getRecipeAfterFilter(array $data): LengthAwarePaginator
     {
         $filter = app()->make(RecipeFilter::class, ['queryParams' => array_filter($data)]);
-        $recipes = Recipe::filter($filter)->with('recipeComments', 'raiting')->paginate(GetSettingService::recipePaginate());
+        $recipes = $this->checkRoles($filter);
 
         foreach ($recipes as &$recipe){
             $recipe['countComm'] = $recipe->recipeComments->count();
@@ -51,6 +52,15 @@ class RecipeIndexAction extends AbstractRecipeAction
         }
 
         return $recipes;
+    }
+
+    private function checkRoles(RecipeFilter $filter): LengthAwarePaginator
+    {
+        if (Auth::user()->can('viewAny', Recipe::class)){
+            return Recipe::filter($filter)->with('recipeComments', 'raiting')->paginate(GetSettingService::recipePaginate());
+        }
+
+        return Recipe::filter($filter)->with('recipeComments', 'raiting')->where('user_id', Auth::user()->id)->paginate(GetSettingService::recipePaginate());
     }
 
     private function getCategory(array $data): Collection|null
