@@ -14,3 +14,25 @@ Here are some of the features it includes:
 <br>
 And many others functions...
 
+<br>
+
+## Demo
+
+To see the site, follow the link - [Cooking Blog](https://github.com/laravel/laravel)
+
+You can also view the administrative part of the site. To do this, you need to follow the link and log in - [Admin Panel](https://github.com/laravel/laravel)
+
+Authorization data:
+
+Admin:
+```
+Login - admin@mail.ru
+Password - qwerty123
+```
+<br>
+Author:
+```
+Login - author@mail.ru
+Password - qwerty123
+```
+<br>
