@@ -51,7 +51,7 @@ For local setup, you need at least 2 terminals open at the same time.
 1. Clone this repository to your machine.
 
    ```bash
-   git clone -b v3 --depth 1 --single-branch https://github.com/hapakaien/portpoliwo.git && cd portpoliwo
+   git clone -b v3 --depth 1 --single-branch https://github.com/kirillsvr/Cooking-Blog.git && cd portpoliwo
    ```
 
 2. Install dependencies.
