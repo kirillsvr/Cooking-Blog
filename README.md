@@ -25,12 +25,15 @@ You can also view the administrative part of the site. To do this, you need to f
 Authorization data:
 
 Admin:
+
 ```
 Login - admin@mail.ru
 Password - qwerty123
 ```
 <br>
+
 Author:
+
 ```
 Login - author@mail.ru
 Password - qwerty123
