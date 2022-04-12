@@ -11,5 +11,6 @@ Here are some of the features it includes:
 - Different categories of access to the administrative panel
 - Filtering recipes by categories, tags, complexity of cooking
 - Changing the site display settings from the administrative panel
+<br>
 And many others functions...
 
