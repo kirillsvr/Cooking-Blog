@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\RecipeComments;
+namespace App\Services\Comments;
 
 class GetRelatedIdCommentsService
 {

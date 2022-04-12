@@ -5,7 +5,7 @@ namespace App\Actions\Recipe;
 use App\Events\RecipeHasViewed;
 use App\Models\Recipe;
 use App\Repositories\RecipeRepository;
-use App\Services\RecipeComments\CommentsService;
+use App\Services\Comments\CommentsService;
 
 class RecipeFrontShowAction
 {

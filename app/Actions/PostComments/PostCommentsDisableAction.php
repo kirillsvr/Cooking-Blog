@@ -3,7 +3,7 @@
 namespace App\Actions\PostComments;
 
 use App\Repositories\PostCommentsRepository;
-use App\Services\RecipeComments\GetRelatedIdCommentsService;
+use App\Services\Comments\GetRelatedIdCommentsService;
 use Illuminate\Support\Facades\DB;
 
 class PostCommentsDisableAction

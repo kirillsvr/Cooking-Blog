@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Unit\Services\RecipeComments;
+namespace Tests\Unit\Services\Comments;
 
-use App\Services\RecipeComments\CommentsService;
+use App\Services\Comments\CommentsService;
 use PHPUnit\Framework\TestCase;
 
 class CommentServiceTest extends TestCase

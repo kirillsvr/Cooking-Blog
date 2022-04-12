@@ -6,7 +6,7 @@ use App\Events\PostHasViewed;
 use App\Models\Post;
 use App\Repositories\PostCommentsRepository;
 use App\Repositories\PostRepository;
-use App\Services\RecipeComments\CommentsService;
+use App\Services\Comments\CommentsService;
 use Illuminate\Database\Eloquent\Collection;
 
 class PostFrontAction

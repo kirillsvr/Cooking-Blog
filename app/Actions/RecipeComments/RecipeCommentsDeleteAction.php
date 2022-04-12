@@ -2,9 +2,8 @@
 
 namespace App\Actions\RecipeComments;
 
-use App\Models\RecipeComments;
 use App\Repositories\RecipeCommentsRepository;
-use App\Services\RecipeComments\GetRelatedIdCommentsService;
+use App\Services\Comments\GetRelatedIdCommentsService;
 use Illuminate\Support\Facades\DB;
 
 class RecipeCommentsDeleteAction

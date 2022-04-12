@@ -3,7 +3,7 @@
 namespace App\Actions;
 
 use App\Exceptions\CheckParentCommentException;
-use App\Services\RecipeComments\CheckDisableParentComments;
+use App\Services\Comments\CheckDisableParentComments;
 
 abstract class AbstractCommentsEnableAction
 {

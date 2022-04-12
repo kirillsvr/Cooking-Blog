@@ -3,7 +3,7 @@
 namespace App\Actions\RecipeComments;
 
 use App\Models\Recipe;
-use App\Services\RecipeComments\CommentsService;
+use App\Services\Comments\CommentsService;
 
 class RecipeCommentsIndexAction
 {
