@@ -22,7 +22,7 @@ To see the site, follow the link - [Cooking Blog](https://github.com/laravel/lar
 
 You can also view the administrative part of the site. To do this, you need to follow the link and log in - [Admin Panel](https://github.com/laravel/laravel)
 
-Authorization data:
+### Authorization
 
 Admin:
 
