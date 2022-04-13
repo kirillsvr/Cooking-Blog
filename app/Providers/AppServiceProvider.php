@@ -34,8 +34,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
 
-        GetSettingsAction::front();
-
         if (!session('unique')){
             session()->put('unique', Str::random(30));
         }

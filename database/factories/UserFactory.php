@@ -16,9 +16,13 @@ class UserFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
+            'email' => 'info@mail.ru',
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => '123456', // password
+            'role_id' => 3,
+            'image' => 'images/2022-02-21/AxO2fuGPHIpOyviSzKuJtz0qVw8BxYeZgEWSImsU.jpg',
+            'info' => 'Привет! Добро пожаловать на мой блог! Меня зовут Юлия. Здесь я делюсь с вами рецептами, которые сама уже успела попробовать на своей кухне.',
+            'public_email' => 'info@mail.ru',
             'remember_token' => Str::random(10),
         ];
     }

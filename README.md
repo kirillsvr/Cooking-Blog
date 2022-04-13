@@ -2,7 +2,7 @@
 
 <br>
 
-Cooking Blog is a website with recipes and posts, as well as an admin panel. This project uses Laravel as back-end.
+Cooking Blog is a website with recipes and posts, as well as an admin panel. This project uses Laravel as backend.
 
 Here are some of the features it includes:
 
@@ -57,7 +57,7 @@ For local setup, you need at least 2 terminals open at the same time.
 2. Install dependencies.
 
     ```bash
-    composer install && pnpm install
+    composer install
     ```
 
 3. Copy `.env.example` file to `.env`.
@@ -65,32 +65,23 @@ For local setup, you need at least 2 terminals open at the same time.
    ```bash
    cp .env.example .env
    ```
-   This file will be used by Laravel, Vue, and Docker Compose during development.
+   This file will be used by Laravel during development.
 
-4. Run all managed services with Docker Compose, and wait for all containers to run perfectly.
-
-   ```bash
-   docker-compose up -d
-   ```
-
-5. Set up application with artisan command.
+4. Make migrate.
 
    ```bash
-   php artisan app:install
+   php artisan migrate
    ```
 
-6. Start Vue development server.
+5. Fill database with data using seed classes.
 
    ```bash
-   pnpm dev
+   php artisan db:seed --class=GenerateSeeder
    ```
 
-7. Open second terminal at the same location, and start Laravel development server.
+6. To login to the admin panel, enter this data.
 
-   ```bash
-   php artisan serve
+    ```
+    Login - info@mail.ru
+    Password - 123456
    ```
-
-   If all goes well, you can immediately try opening http://localhost:8000 in the browser.
-
-   You can try logging in with the account in the [database/seeders/UsersTableSeeder.php](database/seeders/UsersTableSeeder.php) file.

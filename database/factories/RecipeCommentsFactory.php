@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PostCommentsFactory extends Factory
+class RecipeCommentsFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,7 +19,7 @@ class PostCommentsFactory extends Factory
             'comment' => $this->faker->sentence(7, true),
             'parent' => 0,
             'is_published' => 1,
-            'post_id' => $this->faker->numberBetween(1, 25),
+            'recipe_id' => $this->faker->numberBetween(1, 25),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];

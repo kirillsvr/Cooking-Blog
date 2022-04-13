@@ -19,14 +19,16 @@ class RecipeFactory extends Factory
             'cook_time' => 100,
             'skill_level' => 'Легкий',
             'content' => $this->faker->paragraphs(6, true),
-            'recipe_categories_id' => $this->faker->numberBetween(3,10),
+            'recipe_categories_id' => $this->faker->numberBetween(1,6),
             'user_id' => $this->faker->numberBetween(1,6),
             'caloric' => 100,
             'protein' => 100,
             'fat' => 100,
             'carbohydrates' => 100,
             'thumbnail' => 'images/2022-03-02/01.jpg',
-            'views' => 0
+            'views' => 0,
+            'created_at' => $this->faker->dateTime(),
+            'updated_at' => $this->faker->dateTime(),
         ];
     }
 }

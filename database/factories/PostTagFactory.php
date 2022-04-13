@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PostCommentsFactory extends Factory
+class PostTagFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -14,12 +14,7 @@ class PostCommentsFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->firstName(),
-            'email' => $this->faker->email,
-            'comment' => $this->faker->sentence(7, true),
-            'parent' => 0,
-            'is_published' => 1,
-            'post_id' => $this->faker->numberBetween(1, 25),
+            'title' => $this->faker->word,
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];

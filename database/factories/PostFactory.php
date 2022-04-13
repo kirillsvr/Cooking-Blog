@@ -17,7 +17,7 @@ class PostFactory extends Factory
             'title' => $this->faker->sentence(4, true),
             'description' => $this->faker->text(300),
             'content' => $this->faker->paragraphs(6, true),
-            'category_id' => $this->faker->numberBetween(2,3),
+            'category_id' => $this->faker->numberBetween(1,6),
             'user_id' => $this->faker->numberBetween(1,6),
             'thumbnail' => 'images/2022-03-02/01.jpg',
             'created_at' => $this->faker->dateTime(),

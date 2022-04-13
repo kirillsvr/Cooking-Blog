@@ -34,25 +34,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::post('/registerWithOutPass', [HomeController::class, 'register'])->name('registerWithOutPass');
-Route::get('/blog/live-search', [BlogController::class, 'liveSearch']);
-Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
-Route::get('/article/{id}', [ArticleController::class, 'show'])
-    ->name('article.show')
-    ->where('id', '[a-zA-Z0-9_-]+');
-Route::post('/comments/{id}', [PostCommentsController::class, 'store'])->name('post_comments.store');
-Route::get('/about', [\App\Http\Controllers\Front\AboutPageController::class, 'index'])->name('about');
-Route::get('/contact', [\App\Http\Controllers\Front\ContactPageController::class, 'index'])->name('contact');
-Route::post('/contact', [\App\Http\Controllers\Front\ContactPageController::class, 'message'])->name('contact.message');
-Route::get('/recipes', [RecipeController::class, 'index'])->name('front.recipes.index');
-Route::get('/recipe/{id}', [RecipeController::class, 'show'])
-    ->name('front.recipe.index')
-    ->where('id', '[a-zA-Z0-9_-]+');
-Route::post('/recipeComments/{id}', [\App\Http\Controllers\Front\RecipeCommentsController::class, 'store'])->name('comments.store');
-Route::get('/authors', [UserController::class, 'index'])->name('authors.index');
-Route::get('/author/{id}', [UserController::class, 'show'])->name('authors.show');
-Route::get('/raiting/{id}', [RaitingController::class, 'store'])->name('raiting.store');
+Route::group(['middleware' => 'front'], function (){
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::post('/registerWithOutPass', [HomeController::class, 'register'])->name('registerWithOutPass');
+    Route::get('/blog/live-search', [BlogController::class, 'liveSearch']);
+    Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+    Route::get('/article/{id}', [ArticleController::class, 'show'])
+        ->name('article.show')
+        ->where('id', '[a-zA-Z0-9_-]+');
+    Route::post('/comments/{id}', [PostCommentsController::class, 'store'])->name('post_comments.store');
+    Route::get('/about', [\App\Http\Controllers\Front\AboutPageController::class, 'index'])->name('about');
+    Route::get('/contact', [\App\Http\Controllers\Front\ContactPageController::class, 'index'])->name('contact');
+    Route::post('/contact', [\App\Http\Controllers\Front\ContactPageController::class, 'message'])->name('contact.message');
+    Route::get('/recipes', [RecipeController::class, 'index'])->name('front.recipes.index');
+    Route::get('/recipe/{id}', [RecipeController::class, 'show'])
+        ->name('front.recipe.index')
+        ->where('id', '[a-zA-Z0-9_-]+');
+    Route::post('/recipeComments/{id}', [\App\Http\Controllers\Front\RecipeCommentsController::class, 'store'])->name('comments.store');
+    Route::get('/authors', [UserController::class, 'index'])->name('authors.index');
+    Route::get('/author/{id}', [UserController::class, 'show'])->name('authors.show');
+    Route::get('/raiting/{id}', [RaitingController::class, 'store'])->name('raiting.store');
+});
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function (){
    Route::get('/', [MainController::class, 'index'])->name('admin.index');
