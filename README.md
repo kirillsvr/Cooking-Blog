@@ -83,3 +83,7 @@ If you are interested in trying Cooking Blog, you can do the following.
     Login - info@mail.ru
     Password - 123456
    ```
+
+## DB Schema
+
+![DB Schema](https://github.com/kirillsvr/Cooking-Blog/raw/master/public/assets/presentation/db.jpg)
