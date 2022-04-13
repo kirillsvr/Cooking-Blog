@@ -46,8 +46,6 @@ If you are interested in trying Cooking Blog, you can do the following.
 
 ### Local
 
-For local setup, you need at least 2 terminals open at the same time.
-
 1. Clone this repository to your machine.
 
    ```bash
