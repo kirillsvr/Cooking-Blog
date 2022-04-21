@@ -65,6 +65,12 @@ If you are interested in trying Cooking Blog, you can do the following.
    ```
    This file will be used by Laravel during development.
 
+4. Run all managed services with Docker Compose, and wait for all containers to run perfectly.
+
+   ```bash
+   docker-compose up -d
+   ```
+   
 4. Make migrate.
 
    ```bash
@@ -83,6 +89,8 @@ If you are interested in trying Cooking Blog, you can do the following.
     Login - info@mail.ru
     Password - 123456
    ```
+
+If all goes well, you can immediately try opening http://localhost:8886 in the browser.
 
 ## DB Schema
 
