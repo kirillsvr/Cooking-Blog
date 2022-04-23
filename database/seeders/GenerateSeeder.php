@@ -13,6 +13,7 @@ use App\Models\Role;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class GenerateSeeder extends Seeder
 {
@@ -23,7 +24,9 @@ class GenerateSeeder extends Seeder
      */
     public function run()
     {
-        Role::factory(1)->create();
+        DB::table('roles')->insert(['name' => 'Guest']);
+        DB::table('roles')->insert(['name' => 'Author']);
+        DB::table('roles')->insert(['name' => 'Admin']);
         User::factory(1)->create();
         Category::factory(6)->create();
         RecipeCategory::factory(6)->create();

@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class GuestRoleFactory extends Factory
+class TagFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -14,7 +14,7 @@ class GuestRoleFactory extends Factory
     public function definition()
     {
         return [
-            'name' => 'Guest',
+            'title' => $this->faker->word,
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];
