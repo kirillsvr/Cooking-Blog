@@ -224,7 +224,7 @@
                                         </ul>
                                     </div>
                                     <p>{!! \Illuminate\Support\Str::limit($recipe->content, 150, '...') !!}</p>
-                                    <a href="#" class="food-btn style-2"><span>Подробнее</span></a>
+                                    <a href="{{route('front.recipe.index', $recipe->slug)}}" class="food-btn style-2"><span>Подробнее</span></a>
                                 </div>
                             </div>
                         </div>

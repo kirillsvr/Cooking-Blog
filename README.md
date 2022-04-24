@@ -18,9 +18,9 @@ And many others functions...
 
 ## Demo
 
-To see the site, follow the link - [Cooking Blog](https://github.com/laravel/laravel)
+To see the site, follow the link - [Cooking Blog](http://mezban-cooking.ru)
 
-You can also view the administrative part of the site. To do this, you need to follow the link and log in - [Admin Panel](https://github.com/laravel/laravel)
+You can also view the administrative part of the site. To do this, you need to follow the link and log in - [Admin Panel](http://mezban-cooking.ru/login)
 
 ### Authorization
 
@@ -52,12 +52,6 @@ If you are interested in trying Cooking Blog, you can do the following.
    git clone -b v3 --depth 1 --single-branch https://github.com/kirillsvr/Cooking-Blog.git
    ```
 
-2. Install dependencies.
-
-    ```bash
-    composer install
-    ```
-
 3. Copy `.env.example` file to `.env`.
 
    ```bash
@@ -70,6 +64,18 @@ If you are interested in trying Cooking Blog, you can do the following.
    ```bash
    docker-compose up -d
    ```
+
+5. Go to the php container.
+
+    ```bash
+    docker exec -it app bash
+    ```
+   
+5. Install dependencies.
+
+    ```bash
+    composer install
+    ```
    
 4. Make migrate.
 

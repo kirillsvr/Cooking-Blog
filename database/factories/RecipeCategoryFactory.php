@@ -15,7 +15,7 @@ class RecipeCategoryFactory extends Factory
     {
         return [
             'title' => $this->faker->word,
-            'thumbnail' => $this->faker->randomElement(
+            'thumbnail' => $this->faker->randomElement([
                 'images/2022-02-15/mB33X2rw3QpjPNn3MleyH0LB7H05ukLk0crZ9K1X.png',
                     'images/2022-02-15/j9wz5tdCJAnpYCKFk5ff6HFTw1H09wzkOUCJyk7E.png',
                     'images/2022-02-15/XcC6TyfJPXNkQVTSqiVU0f9k2iWG39tcKN21WVA6.png',
@@ -24,7 +24,7 @@ class RecipeCategoryFactory extends Factory
                     'images/2022-02-15/uTT0kKXaDEeZMZtN7FaoSDBviou6PSYcdgOg6Qrm.png',
                     'images/2022-02-15/b59M2cSz6vL6DQI8CwkX66zziDdyl5OhUUcOW2Q8.png',
                     'images/2022-02-15/MmgxSYMmMLwXHZBSrdsk5BOlSGenv8VQjCkXguo1.png',
-            ),
+            ]),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];

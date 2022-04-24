@@ -30,7 +30,7 @@ class RecipeSidebar extends Component
      */
     public function render()
     {
-        $admin = User::find(4);
+        $admin = User::where('role_id', '3')->first();
         $categories = RecipeCategory::all();
         $tags = RecipeTagRepository::tagWithCountPosts();
         $recipes = RecipeRepository::fourMorePopularRecipes();

@@ -24,9 +24,10 @@ class GenerateSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('roles')->insert(['name' => 'Guest']);
-        DB::table('roles')->insert(['name' => 'Author']);
-        DB::table('roles')->insert(['name' => 'Admin']);
+        $this->makeRoles();
+        $this->makeLevels();
+        $this->makeSettings();
+        $this->makeAdminSettings();
         User::factory(1)->create();
         Category::factory(6)->create();
         RecipeCategory::factory(6)->create();
@@ -36,5 +37,34 @@ class GenerateSeeder extends Seeder
         Post::factory(25)->create();
         PostComments::factory(40)->create();
         RecipeComments::factory(40)->create();
+    }
+
+    private function makeRoles(): void
+    {
+        DB::table('roles')->insert(['name' => 'Guest']);
+        DB::table('roles')->insert(['name' => 'Author']);
+        DB::table('roles')->insert(['name' => 'Admin']);
+    }
+
+    private function makeLevels(): void
+    {
+        DB::table('recipe_levels')->insert(['name' => 'Легко']);
+        DB::table('recipe_levels')->insert(['name' => 'Средне']);
+        DB::table('recipe_levels')->insert(['name' => 'Сложно']);
+    }
+
+    private function makeSettings(): void
+    {
+        DB::table('settings')->insert(['key' => 'post_on_page', 'name' => 'Постов на странице', 'value' => '6']);
+        DB::table('settings')->insert(['key' => 'recipe_on_page', 'name' => 'Рецептов на странице', 'value' => '6']);
+    }
+
+    private function makeAdminSettings(): void
+    {
+        DB::table('setting_admins')->insert(['key' => 'post_on_page', 'name' => 'Постов на странице', 'value' => '12']);
+        DB::table('setting_admins')->insert(['key' => 'recipe_on_page', 'name' => 'Рецептов на странице', 'value' => '12']);
+        DB::table('setting_admins')->insert(['key' => 'elements_on_search_page', 'name' => 'Элементов на странице поиска', 'value' => '12']);
+        DB::table('setting_admins')->insert(['key' => 'categories_on_page', 'name' => 'Категорий на странице', 'value' => '12']);
+        DB::table('setting_admins')->insert(['key' => 'tags_on_page', 'name' => 'Тэгов на странице', 'value' => '12']);
     }
 }
