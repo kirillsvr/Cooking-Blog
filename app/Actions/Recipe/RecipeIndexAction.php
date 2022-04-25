@@ -56,7 +56,7 @@ class RecipeIndexAction extends AbstractRecipeAction
 
     private function checkRoles(RecipeFilter $filter): LengthAwarePaginator
     {
-        if (Auth::user()->can('viewAny', Recipe::class)){
+        if (!Auth::check() || Auth::user()->can('viewAny', Recipe::class)){
             return Recipe::filter($filter)->with('recipeComments', 'raiting')->paginate(GetSettingService::recipePaginate());
         }
 
